@@ -82,12 +82,9 @@ img.imageComCel {
 }
 
 .search-container {
-    display: flex; /* Asegúrate de que sea un contenedor flex */
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
-    margin-top: 20px; /* Espacio superior */
-    margin-bottom: 20px; /* Espacio inferior */
-    background-color: rgba(243, 243, 243, 0.05);
+    display: flex;
+    width: 100%;
+
 }
 
 .search-input {
@@ -98,4 +95,8 @@ img.imageComCel {
     border-radius: 10px;
     text-align: center;
     color: rgba(255, 0, 0, 0.5); /* Color del texto del placeholder */
+}
+
+#indicador{
+    width: auto;
 }

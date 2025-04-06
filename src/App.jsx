@@ -19,6 +19,7 @@ function Main() {
     <>
       <CustomNavbar/>
       <Routes>
+        <Route path="" element={<Home/>}/>
         <Route path="/login" element={<LoginPage/>}/>
         <Route path="/bitacora" element={<BitacoraPage/>}/>
         <Route path="/register" element={<RegisterClientPage/>}/>

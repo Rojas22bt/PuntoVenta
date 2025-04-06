@@ -4,10 +4,10 @@
     align-items: center;
     height: 100vh;
   
-    background-image: url('/fondo.jpg'); /* ajusta la ruta */
-    background-size:contain;      /* para que cubra todo */
+    background-image: url('/Registro.jpg'); /* ajusta la ruta */
+    background-size:cover;      /* para que cubra todo */
     background-position: center; /* centrado */
-    background-repeat: repeat-x;
+    background-repeat: no-repeat;
     padding: 10px;
   }
   

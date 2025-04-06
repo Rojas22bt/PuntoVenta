@@ -1,0 +1,75 @@
+.bitacora-container {
+    width: 100%;
+    padding: 20px;
+    overflow-x: auto;
+    background-color: #ffffff; /* Fondo suave */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    margin: auto; /* Centrar el contenedor */
+    height: 100vh;
+  }
+  
+  
+.bitacora-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Arial', sans-serif;
+    background-color: #fff; /* Fondo blanco */
+    border-radius: 10px;
+    overflow: hidden; /* Esconder bordes cuando se hace scroll */
+  }
+  
+  .bitacora-table th,
+  .bitacora-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .bitacora-table th {
+    background-color: #02171a; /* Color de fondo más elegante */
+    color: #fff; /* Texto blanco */
+    font-weight: bold;
+    text-transform: uppercase; /* Texto en mayúsculas */
+  }
+  
+  .bitacora-table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Alternar colores de las filas */
+  }
+  
+  .bitacora-table tr:hover {
+    background-color: #e0f7fa; /* Fondo al pasar el ratón */
+  }
+  
+  .bitacora-table td {
+    white-space: nowrap;
+  }
+  
+  h1 {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+  
+  
+  @media (max-width: 896px) {
+    *{
+      width: 100%;
+    }
+    button{
+      width: 20%;
+    }
+    .bitacora-container {
+      padding: 2px;
+    }
+    .bitacora-table th{
+      font-size: 8px;
+      padding: 3px;
+      width: 100%;
+      text-align: center;
+    }
+  
+  }
+  

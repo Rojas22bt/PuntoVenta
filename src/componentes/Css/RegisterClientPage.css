@@ -1,0 +1,36 @@
+.contenedorRegister {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  
+    background-image: url('/fondo.jpg'); /* ajusta la ruta */
+    background-size:contain;      /* para que cubra todo */
+    background-position: center; /* centrado */
+    background-repeat: repeat-x;
+    padding: 10px;
+  }
+  
+  .cardRegister {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(201, 194, 194, 0.7);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .cardRegister h2{
+    text-align: center;
+  }
+  
+  .formulario input {
+    margin-bottom: 10px;
+  }
+
+   .formulario #inpt{
+        min-width: 300px;
+   }
+  

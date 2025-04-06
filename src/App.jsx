@@ -3,6 +3,7 @@ import Home from "./componentes/Pages/Home";
 import LoginPage from "./componentes/Pages/LoginPage";
 import CustomNavbar from "./componentes/Otros/CustomNavbar";
 import BitacoraPage from "./componentes/Pages/BitacoraPage";
+import RegisterClientPage from "./componentes/Pages/RegisterClientPage";
 
 function App() {
 
@@ -18,8 +19,9 @@ function Main() {
     <>
       <CustomNavbar/>
       <Routes>
-        <Route path="/" element={<LoginPage/>}/>
+        <Route path="/login" element={<LoginPage/>}/>
         <Route path="/bitacora" element={<BitacoraPage/>}/>
+        <Route path="/register" element={<RegisterClientPage/>}/>
       </Routes>
     </>
   )

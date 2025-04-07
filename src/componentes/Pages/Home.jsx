@@ -11,7 +11,7 @@ const Home = () => {
   ];
 
   const imagesComputadoras = [
-    { src: 'fondo1.jpg', name: 'Computadora 1' },
+    { src: 'Iphone 11 pro max.png', name: 'Computadora 1' },
     { src: 'fondo1.jpg', name: 'Computadora 2' },
     { src: 'fondo1.jpg', name: 'Computadora 3' },
   ];

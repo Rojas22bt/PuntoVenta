@@ -49,9 +49,10 @@ html, body {
     cursor: pointer;
 }
 
-img.imageComCel {
-    width: 100%;
-    max-width: 200px;
+.imageComCel {
+    width: 200px; /* Ancho fijo */
+    height: 300px; /* Alto fijo */
+    object-fit: cover; /* Mantiene la proporción y recorta si es necesario */
 }
 
 .image.active {
@@ -85,7 +86,7 @@ img.imageComCel {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgb(27, 91, 79);
+    background-color: rgba(48, 105, 96, 0.1);
     width: 100%;
     padding: 10px;
 }

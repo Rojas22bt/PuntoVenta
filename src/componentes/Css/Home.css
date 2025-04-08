@@ -41,18 +41,11 @@ html, body {
     margin: 0 10px;
 }
 
-.image  {
-    width: 100%;
-    max-width: 200px;
-    height: auto;
-    transition: transform 0.3s;
-    cursor: pointer;
-}
+
 
 .imageComCel {
     width: 70%; /* Ancho fijo */
     height: 70%; /* Alto fijo */
-    object-fit: cover; /* Mantiene la proporción y recorta si es necesario */
 }
 
 .image.active {

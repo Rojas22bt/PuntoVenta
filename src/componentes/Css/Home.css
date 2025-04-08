@@ -50,8 +50,8 @@ html, body {
 }
 
 .imageComCel {
-    width: 200px; /* Ancho fijo */
-    height: 300px; /* Alto fijo */
+    width: 70%; /* Ancho fijo */
+    height: 70%; /* Alto fijo */
     object-fit: cover; /* Mantiene la proporción y recorta si es necesario */
 }
 

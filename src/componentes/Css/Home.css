@@ -38,8 +38,9 @@
 
 
 .imageComCel {
-    width: 70%; /* Ancho fijo */
-    height: 70%; /* Alto fijo */
+    width: 50%; /* Ancho fijo */
+    height: 50%; /* Alto fijo */
+    padding: 10px;
 }
 
 .image.active {
@@ -52,7 +53,11 @@
 }
 
 .section {
-    margin: 20px -10px;
+    width: 90%;
+    margin: 10px;
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+    max-width: 100%;
     text-align: center;
 }
 

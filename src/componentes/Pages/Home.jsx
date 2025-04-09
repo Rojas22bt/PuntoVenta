@@ -11,9 +11,9 @@ const Home = () => {
   ];
 
   const imagesComputadoras = [
-    { src: 'Iphone 11 pro max.png', name: 'Computadora 1' },
-    { src: 'fondo1.jpg', name: 'Computadora 2' },
-    { src: 'fondo1.jpg', name: 'Computadora 3' },
+    { src: 'Iphone 11 pro max.png', name: 'PC 1' },
+    { src: 'fondo1.jpg', name: 'PC 2' },
+    { src: 'fondo1.jpg', name: 'PC 3' },
   ];
 
   return (
@@ -83,8 +83,8 @@ const Home = () => {
         </div>
 
         <div className='section'>
-          <h3 className='section-title'>Computadoras</h3>
-          <p className='home_titulo2'>Aquí puedes encontrar una variedad de Computadoras de última generación.</p>
+          <h3 className='section-title'>Celulares</h3>
+          <p className='home_titulo2'>Aquí puedes encontrar una variedad de celulares de última generación.</p>
           <div className='home-image-container'>
             {imagesComputadoras.map((image, index) => (
               <div key={index} className='image-wrapper'>

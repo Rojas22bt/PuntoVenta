@@ -84,53 +84,53 @@
 
 .search-input {
     padding: 8px;
-    width: 60%; /* Ancho del input */
+    width: 60%; 
     border: 1px solid #ccc;
     border-radius: 10px;
     text-align: center;
-    color: rgba(255, 0, 0, 0.5); /* Color del texto del placeholder */
+    color: rgba(255, 0, 0, 0.5); 
 }
 
 #indicador {
     width: auto;
 }
 
-/* Media Queries para mejorar la responsividad */
+
 @media (max-width: 768px) {
     .home_titulo {
-        font-size: 2rem; /* Reduce el tamaño del título en pantallas pequeñas */
+        font-size: 2rem; 
     }
 
     .section-title {
-        font-size: 1.2rem; /* Reduce el tamaño del título de la sección */
+        font-size: 1.2rem; 
     }
 
     .image-wrapper {
-        flex: 1 1 45%; /* Aumenta el tamaño de las imágenes en pantallas pequeñas */
-        max-width: 150px; /* Limita el ancho máximo de cada imagen */
+        flex: 1 1 45%; 
+        max-width: 150px; 
     }
 
     .search-input {
-        width: 80%; /* Aumenta el ancho del input en pantallas pequeñas */
+        width: 80%; 
     }
 }
 
 @media (max-width: 480px) {
     .home_titulo {
-        font-size: 1.5rem; /* Reduce aún más el tamaño del título en pantallas muy pequeñas */
+        font-size: 1.5rem; 
     }
 
     .section-title {
-        font-size: 20px; /* Reduce el tamaño del título de la sección */
+        font-size: 20px;
         text-align: center;
     }
 
     .image-wrapper {
         flex: 1 1 100%; /* Las imágenes ocupan el 100% del ancho en pantallas muy pequeñas */
-        max-width: 100%; /* Limita el ancho máximo de cada imagen */
+        max-width: 100%; 
     }
 
     .search-input {
-        width: 90%; /* Aumenta el ancho del input en pantallas muy pequeñas */
+        width: 90%; 
     }
 }

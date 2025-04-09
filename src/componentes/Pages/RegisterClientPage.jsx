@@ -2,6 +2,7 @@ import React from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import '../Css/RegisterClientPage.css'
+import axios from "axios"
 
 const RegisterClientPage = () => {
   const validationSchema = Yup.object({
@@ -28,9 +29,33 @@ const RegisterClientPage = () => {
       genero: "",
     },
     validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
-    },
+    onSubmit: async (values) => {
+      try {
+        const response = await fetch("https://backendpuntoventa-production.up.railway.app/usuarios/register/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nombre: values.nombre,
+            correo: values.email,
+            contraseña: values.password,
+          }),
+        })
+    
+        const data = await response.json()
+    
+        if (response.ok) {
+          alert("✅ Usuario registrado correctamente si")
+        } else {
+          alert("❌ Error: " + data.error)
+        }
+      } catch (error) {
+        console.error("Error en el registro:", error)
+        alert("❌ Error de conexión con el servidor")
+      }
+    }
+    
   })
 
   return (

@@ -2,7 +2,6 @@ import React from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import '../Css/RegisterClientPage.css'
-import axios from "axios"
 
 const RegisterClientPage = () => {
   const validationSchema = Yup.object({
@@ -31,7 +30,7 @@ const RegisterClientPage = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await fetch("https://backendpuntoventa-production.up.railway.app/usuarios/register/", {
+        const response = await fetch("https://web-production-ab6a3.up.railway.app/api/usuarios2/register/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

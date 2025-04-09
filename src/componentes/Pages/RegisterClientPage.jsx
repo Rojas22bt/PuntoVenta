@@ -31,7 +31,7 @@ const RegisterClientPage = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await fetch("https://backendpuntoventa-production.up.railway.app/register/", {
+        const response = await fetch("https://backendpuntoventa-production.up.railway.app/usuarios/register/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

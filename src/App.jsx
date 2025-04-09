@@ -4,6 +4,7 @@ import LoginPage from "./componentes/Pages/LoginPage";
 import CustomNavbar from "./componentes/Otros/CustomNavbar";
 import BitacoraPage from "./componentes/Pages/BitacoraPage";
 import RegisterClientPage from "./componentes/Pages/RegisterClientPage";
+import CategoriaProductPage from "./componentes/Pages/CategoriaProductPage";
 
 function App() {
 
@@ -23,6 +24,7 @@ function Main() {
         <Route path="/login" element={<LoginPage/>}/>
         <Route path="/bitacora" element={<BitacoraPage/>}/>
         <Route path="/register" element={<RegisterClientPage/>}/>
+        <Route path="/categoriaproductos" element={<CategoriaProductPage/>}/>
       </Routes>
     </>
   )

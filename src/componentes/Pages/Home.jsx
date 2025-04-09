@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import '../Css/Home.css';
@@ -58,12 +58,10 @@ const Home = () => {
           </button>
         </div>
 
-
         <div className='search-container'>
-           <h1 className='home_titulo'>Scrum Stack</h1>
+          <h1 className='home_titulo'>Scrum Stack</h1>
           <input type="text" className="search-input" placeholder="Buscar Producto" />
         </div>
- 
 
         <div className='section'>
           <h3 className='section-title'>Celulares</h3>
@@ -83,14 +81,14 @@ const Home = () => {
         </div>
 
         <div className='section'>
-          <h3 className='section-title'>Celulares</h3>
-          <p className='home_titulo2'>Aquí puedes encontrar una variedad de celulares de última generación.</p>
+          <h3 className='section-title'>Computadoras</h3>
+          <p className='home_titulo2'>Aquí puedes encontrar una variedad de computadoras de última generación.</p>
           <div className='home-image-container'>
             {imagesComputadoras.map((image, index) => (
               <div key={index} className='image-wrapper'>
                 <img
                   src={image.src}
-                  alt={`Celular ${index + 1}`}
+                  alt={`Computadora ${index + 1}`}
                   className='imageComCel'
                 />
                 <p className='image-name'>{image.name}</p>

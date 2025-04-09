@@ -46,7 +46,7 @@ const RegisterClientPage = () => {
         const data = await response.json()
     
         if (response.ok) {
-          alert("✅ Usuario registrado correctamente")
+          alert("✅ Usuario registrado correctamente si")
         } else {
           alert("❌ Error: " + data.error)
         }

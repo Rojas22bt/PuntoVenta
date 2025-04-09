@@ -66,7 +66,6 @@ const Home = () => {
  
 
         <div className='section'>
-
           <h3 className='section-title'>Celulares</h3>
           <p className='home_titulo2'>Aquí puedes encontrar una variedad de celulares de última generación.</p>
           <div className='home-image-container'>
@@ -85,13 +84,13 @@ const Home = () => {
 
         <div className='section'>
           <h3 className='section-title'>Computadoras</h3>
-          <p className='home_titulo2'>Explora nuestra selección de computadoras y laptops para todos los gustos.</p>
+          <p className='home_titulo2'>Aquí puedes encontrar una variedad de Computadoras de última generación.</p>
           <div className='home-image-container'>
             {imagesComputadoras.map((image, index) => (
               <div key={index} className='image-wrapper'>
                 <img
                   src={image.src}
-                  alt={`Computadora ${index + 1}`}
+                  alt={`Celular ${index + 1}`}
                   className='imageComCel'
                 />
                 <p className='image-name'>{image.name}</p>

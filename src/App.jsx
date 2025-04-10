@@ -7,6 +7,7 @@ import RegisterClientPage from "./componentes/Pages/RegisterClientPage";
 import CategoriaProductPage from "./componentes/Pages/CategoriaProductPage";
 import UsuarioPage from "./componentes/Pages/UsuarioPage";
 import PrivilegioPage from "./componentes/Pages/PrivilegioPage";
+import ProductoPage from "./componentes/Pages/ProductoPage";
 
 function App() {
 
@@ -28,7 +29,8 @@ function Main() {
         <Route path="/register" element={<RegisterClientPage/>}/>
         <Route path="/categoriaproductos" element={<CategoriaProductPage/>}/>
         <Route path="/usuarios" element={<UsuarioPage/>}/>
-        <Route path="/privilegios" element={<PrivilegioPage/>}/>
+        <Route path="/privilegio" element={<PrivilegioPage/>}/>
+        <Route path="/producto" element={<ProductoPage/>}/>
       </Routes>
     </>
   )

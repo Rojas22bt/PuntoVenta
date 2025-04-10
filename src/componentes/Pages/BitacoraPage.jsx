@@ -135,48 +135,49 @@ const BitacoraPage = () => {
         }
     ]
 
-    return (
-        <div className="bitacora-container">
-            <div >
-                <h2>Registros de acciones en el Sistema</h2>
-                <table className="bitacora-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Usuario</th>
-                            <th>Nombre</th>
-                            <th>Correo</th>
-                            <th>Dirección IP</th>
-                            <th>Fecha</th>
-                            <th>Hora</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {/* Verifica si bitacoras es un array antes de mapear */}
-                        {Array.isArray(bitacoras) && bitacoras.length > 0 ? (
-                            bitacoras.map((bitacora) => (
-                                <tr key={bitacora.BitacoraID}>
-                                    <td>{bitacora.BitacoraID}</td>
-                                    <td>{bitacora.UsuarioID}</td>
-                                    <td>{bitacora.Nombre}</td>
-                                    <td>{bitacora.Correo}</td>
-                                    <td>{bitacora.ip}</td>
-                                    <td>{bitacora.fecha}</td> {/* Formato de fecha */}
-                                    <td>{bitacora.Hora}</td>
-                                    <td>{bitacora.Accion}</td>
+        return (
+            <div className="bitacora-container">
+                <div>
+                    <h2>Registros de acciones en el Sistema</h2>
+                    <div className="table-responsive"> {/* Contenedor para el scroll horizontal */}
+                        <table className="bitacora-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Usuario</th>
+                                    <th>Nombre</th>
+                                    <th>Correo</th>
+                                    <th>Dirección IP</th>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th>Acción</th>
                                 </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="5">No se encontraron registros de bitácora.</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
+                            </thead>
+                            <tbody>
+                                {Array.isArray(bitacoras) && bitacoras.length > 0 ? (
+                                    bitacoras.map((bitacora) => (
+                                        <tr key={bitacora.BitacoraID}>
+                                            <td>{bitacora.BitacoraID}</td>
+                                            <td>{bitacora.UsuarioID}</td>
+                                            <td>{bitacora.Nombre}</td>
+                                            <td>{bitacora.Correo}</td>
+                                            <td>{bitacora.ip}</td>
+                                            <td>{bitacora.fecha}</td>
+                                            <td>{bitacora.Hora}</td>
+                                            <td>{bitacora.Accion}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="8">No se encontraron registros de bitácora.</td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
-    )
-}
-
-export default BitacoraPage
+        );
+    }
+    
+    export default BitacoraPage;

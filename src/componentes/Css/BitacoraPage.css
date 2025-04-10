@@ -1,11 +1,12 @@
 .bitacora-container {
-  padding: 35px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   width: 100%;
-  padding-left: 15%;
-  padding-right: 15%;
+  padding: 20px;
+  overflow-x: auto;
+  background-color: #f4f4f9; 
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  max-width: 1200px; 
+  margin: auto; 
 }
 
 h2 {
@@ -13,10 +14,14 @@ h2 {
   margin-bottom: 20px;
 }
 
+
+
 .bitacora-table {
   width: 100%;
   border-collapse: collapse;
-  overflow-x: auto; 
+  background-color: #fff; /* Fondo blanco */
+  border-radius: 10px;
+  overflow: hidden; /* Esconder bordes cuando se hace scroll */
 }
 
 .bitacora-table th, .bitacora-table td {

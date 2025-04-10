@@ -5,6 +5,7 @@ import CustomNavbar from "./componentes/Otros/CustomNavbar";
 import BitacoraPage from "./componentes/Pages/BitacoraPage";
 import RegisterClientPage from "./componentes/Pages/RegisterClientPage";
 import CategoriaProductPage from "./componentes/Pages/CategoriaProductPage";
+import UsuarioPage from "./componentes/Pages/UsuarioPage";
 
 function App() {
 
@@ -25,6 +26,8 @@ function Main() {
         <Route path="/bitacora" element={<BitacoraPage/>}/>
         <Route path="/register" element={<RegisterClientPage/>}/>
         <Route path="/categoriaproductos" element={<CategoriaProductPage/>}/>
+        <Route path="/usuarios" element={<UsuarioPage/>}/>
+        
       </Routes>
     </>
   )

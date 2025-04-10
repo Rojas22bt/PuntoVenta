@@ -29,7 +29,7 @@ function Main() {
         <Route path="/register" element={<RegisterClientPage/>}/>
         <Route path="/categoriaproductos" element={<CategoriaProductPage/>}/>
         <Route path="/usuarios" element={<UsuarioPage/>}/>
-        <Route path="/privilegio" element={<PrivilegioPage/>}/>
+        <Route path="/privilegioss" element={<PrivilegioPage/>}/>
         <Route path="/producto" element={<ProductoPage/>}/>
       </Routes>
     </>

@@ -2,7 +2,7 @@ import React from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import '../Css/RegisterClientPage.css'
-import axios from "axios"
+{/*import axios from "axios"*/}
 
 const RegisterClientPage = () => {
   const validationSchema = Yup.object({

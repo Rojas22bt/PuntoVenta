@@ -1,75 +1,50 @@
 .bitacora-container {
-    width: 100%;
-    padding: 20px;
-    overflow-x: auto;
-    background-color: #ffffff; /* Fondo suave */
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-    margin: auto; /* Centrar el contenedor */
-    height: 100vh;
-  }
-  
+  padding: 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
 .bitacora-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: 'Arial', sans-serif;
-    background-color: #fff; /* Fondo blanco */
-    border-radius: 10px;
-    overflow: hidden; /* Esconder bordes cuando se hace scroll */
+  width: 100%;
+  border-collapse: collapse;
+  overflow-x: auto; 
+}
+
+.bitacora-table th, .bitacora-table td {
+  border: 1px solid #ccc;
+  text-align: center;
+  padding: 10px;
+}
+
+.bitacora-table th {
+  background-color: rgb(50, 119, 247);
+  color: white;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+  .bitacora-container {
+      padding-left: 5%;
+      padding-right: 5%;
   }
-  
-  .bitacora-table th,
-  .bitacora-table td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+
+  .bitacora-table {
+      display: block; 
+      overflow-x: auto; 
+      white-space: nowrap; 
   }
-  
-  .bitacora-table th {
-    background-color: #02171a; /* Color de fondo más elegante */
-    color: #fff; /* Texto blanco */
-    font-weight: bold;
-    text-transform: uppercase; /* Texto en mayúsculas */
+
+  .bitacora-table th, .bitacora-table td {
+      font-size: 12px; 
+      padding: 8px;
   }
-  
-  .bitacora-table tr:nth-child(even) {
-    background-color: #f9f9f9; /* Alternar colores de las filas */
-  }
-  
-  .bitacora-table tr:hover {
-    background-color: #e0f7fa; /* Fondo al pasar el ratón */
-  }
-  
-  .bitacora-table td {
-    white-space: nowrap;
-  }
-  
-  h1 {
-    font-family: 'Arial', sans-serif;
-    color: #333;
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 24px;
-  }
-  
-  
-  @media (max-width: 896px) {
-    *{
-      width: 100%;
-    }
-    button{
-      width: 20%;
-    }
-    .bitacora-container {
-      padding: 2px;
-    }
-    .bitacora-table th{
-      font-size: 8px;
-      padding: 3px;
-      width: 100%;
-      text-align: center;
-    }
-  
-  }
-  
+}

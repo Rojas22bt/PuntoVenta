@@ -39,7 +39,7 @@ const LoginPage = () => {
               console.log(data)
           
               if (response.ok) {
-                alert("✅ Login Exitoso")
+                alert("✅ Login Exitoso" + data.access)
               } else {
                 alert("❌ Error: " + data.error)
               }

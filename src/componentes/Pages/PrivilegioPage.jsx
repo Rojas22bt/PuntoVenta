@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../css/PrivilegioPage.css';
 
-function PrivilegioPages() {
+function PrivilegioPage() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [privilegios, setPrivilegios] = useState([]);
     const [rolSeleccionado, setRolSeleccionado] = useState("administrador");
@@ -92,4 +92,4 @@ function PrivilegioPages() {
     );
 }
 
-export default PrivilegioPages;
+export default PrivilegioPage;

@@ -22,9 +22,32 @@ const LoginPage = () => {
             password: "",
         },
         validationSchema: validationSchema,
-        onSubmit: (values) => {
-            alert(JSON.stringify(values, null, 2)); // Simula envío de datos
-        },
+        onSubmit: async (values) => {
+            try {
+              const response = await fetch("https://web-production-ab6a3.up.railway.app/api/usuarios2/login/", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json", 
+                },
+                body: JSON.stringify({
+                  correo: values.email,
+                  password: values.password,
+                }),
+              })
+          
+              const data = await response.json()
+              console.log(data)
+          
+              if (response.ok) {
+                alert("✅ Login Exitoso")
+              } else {
+                alert("❌ Error: " + data.error)
+              }
+            } catch (error) {
+              console.error("Error en el registro:", error)
+              alert("❌ Error de conexión con el servidor")
+            }
+          }
     });
 
 

@@ -30,14 +30,18 @@ const RegisterClientPage = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await fetch("https://web-production-ab6a3.up.railway.app/api/usuarios2/register/", {
+        const response = await fetch("https://web-production-ab6a3.up.railway.app/api/usuarios2/usuarios/", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json", 
           },
           body: JSON.stringify({
             nombre: values.nombre,
             correo: values.email,
+            telefono: values.telefono,
+            fecha_nacimiento: values.date,
+            sexo: values.genero,
+            estado: true,
             contraseña: values.password,
           }),
         })

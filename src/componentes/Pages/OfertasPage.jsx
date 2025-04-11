@@ -86,6 +86,15 @@ function OfertasPage() {
         setShowImage(null);
     };
 
+    const handleListOfertas = () => {
+        if (ofertas.length > 0) {
+            console.log("Ofertas existentes:", ofertas);
+            alert("Ofertas existentes: " + ofertas.map(oferta => oferta.Descripcion).join(", "));
+        } else {
+            alert("No hay ofertas existentes.");
+        }
+    };
+
     return (
         <div className="mercaderia-container">
             <h1>{editIndex !== null ? 'Editar mercadería' : 'Agregar mercadería'}</h1>
@@ -132,6 +141,11 @@ function OfertasPage() {
                     </button>
                 </div>
             </form>
+            <div className="text-center mt-3">
+                <button onClick={handleListOfertas} className="btn btn-primary">
+                    Listar Ofertas Existentes
+                </button>
+            </div>
 
             <div>
                 <h1>Lista de Ofertas</h1>

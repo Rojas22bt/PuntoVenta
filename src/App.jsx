@@ -11,6 +11,8 @@ import PrivilegioPage from "./componentes/Pages/PrivilegioPage";
 import MercaderiaPage from "./componentes/Pages/MercaderiaPage";
 import FacturacionPage from "./componentes/Pages/FacturacionPage";
 import OfertasPage from "./componentes/Pages/OfertasPage";
+import ComputadorasPage from "./componentes/Pages/ComputadorasPage";
+import CelularesPage from "./componentes/Pages/CelularesPage";
 
 function App() {
 
@@ -37,6 +39,9 @@ function Main() {
         <Route path="/mercaderia" element={<MercaderiaPage/>}/>
         <Route path="/facturacion" element={<FacturacionPage/>}/>
         <Route path="/oferta" element={<OfertasPage/>}/>
+        <Route path="/computadoras" element={<ComputadorasPage/>}/>
+        <Route path="/celulares" element={<CelularesPage/>}/>
+      
       </Routes>
     </>
   )

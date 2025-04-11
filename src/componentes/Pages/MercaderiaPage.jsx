@@ -77,7 +77,14 @@ function MercaderiaPage() {
     const handleCloseImage = () => {
         setShowImage(null);
     };
-
+    const handleListMercaderias= () => {
+        if (mercaderias.length > 0) {
+            console.log("mercaderias existentes:", mercaderias);
+            alert("mercaderias existentes: " + mercaderias.map(mercaderia => mercaderia.NroFactura).join(", "));
+        } else {
+            alert("No hay mercaderias existentes.");
+        }
+    };
     return (
         <div className="mercaderia-container">
             <h1>{editIndex !== null ? 'Editar mercaderia' : 'Agregar mercaderia'}</h1>
@@ -137,6 +144,11 @@ function MercaderiaPage() {
                 </div>
             </form>
             <div>
+            <div className="text-center mt-3">
+                <button onClick={handleListMercaderias} className="btn btn-primary">
+                    Listar Mercaderias Existentes
+                </button>
+            </div>
                 <h1>Lista de mercaderias</h1>
                 <div className="table-responsive">
                     <table className="mercaderia-table">

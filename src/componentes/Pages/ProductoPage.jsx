@@ -79,7 +79,14 @@ const ProductoPage = () => {
     const handleCloseImage = () => {
         setShowImage(null);
     };
-
+    const handleListProductos= () => {
+        if (productos.length > 0) {
+            console.log("Productos existentes:", productos);
+            alert("Productos existentes: " + productos.map(producto => producto.productoID).join(", "));
+        } else {
+            alert("No hay Productos existentes.");
+        }
+    };
     return (
         <div className="producto-container">
             <h1>{editIndex !== null ? 'Editar Producto' : 'Agregar Producto'}</h1>
@@ -146,6 +153,12 @@ const ProductoPage = () => {
                     </button>
                 </div>
             </form>
+            
+            <div className="text-center mt-3">
+                <button onClick={handleListProductos} className="btn btn-primary">
+                    Listar Productos Existentes
+                </button>
+            </div>
             <div>
                 <h1>Lista de Productos</h1>
                 <div className="table-responsive">

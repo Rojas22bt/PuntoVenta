@@ -8,6 +8,7 @@ import CategoriaProductPage from "./componentes/Pages/CategoriaProductPage";
 import UsuarioPage from "./componentes/Pages/UsuarioPage";
 import ProductoPage from "./componentes/Pages/ProductoPage";
 import PrivilegioPage from "./componentes/Pages/PrivilegioPage";
+import MercaderiaPage from "./componentes/Pages/MercaderiaPage";
 
 function App() {
 
@@ -31,6 +32,7 @@ function Main() {
         <Route path="/usuarios" element={<UsuarioPage/>}/>
         <Route path="/producto" element={<ProductoPage/>}/>
         <Route path="/privilegio" element={<PrivilegioPage/>}/>
+        <Route path="/mercaderia" element={<MercaderiaPage/>}/>
       </Routes>
     </>
   )

@@ -74,7 +74,9 @@ h2 {
 
 
 
+
 .privilege-item {
+    justify-content: flex-end; /* Aligns buttons to the end */
     display: flex;
     align-items: center;
     padding: 10px 40px;

@@ -26,23 +26,27 @@ const LoginPage = () => {
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             try {
-                
               const datos = {
                 correo: values.email,
-                password : values. password
-              }
-              console.log(datos)
-              const response = await signin(datos)   
-              if (response.ok) {
-                alert("✅ Login Exitoso" );
-              } else {
-                alert("❌ Error: ");
-              }
+                password: values.password
+              };
+          
+              console.log(datos);
+          
+              const response = await signin(datos); // Esto ya devuelve la respuesta
+          
+              // ✅ Si llegaste aquí, todo fue bien
+              alert("✅ Login Exitoso");
+          
             } catch (error) {
-              console.error("Error en el registro:", error)
-              alert("❌ Error de conexión con el servidor")
+              console.error("❌ Error en el login:", error);
+          
+              const mensaje =
+                error?.response?.data?.message || "Error de conexión con el servidor";
+          
+              alert("❌ " + mensaje);
             }
-          }
+        }  
     });
 
 

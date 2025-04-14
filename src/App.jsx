@@ -1,16 +1,16 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from "./componentes/Pages/Home";
-import LoginPage from "./componentes/Pages/LoginPage";
+import LoginPage from "./componentes/Pages/PaqueteUsuario/LoginPage";
 import CustomNavbar from "./componentes/Otros/CustomNavbar";
-import BitacoraPage from "./componentes/Pages/BitacoraPage";
-import RegisterClientPage from "./componentes/Pages/RegisterClientPage";
-import CategoriaProductPage from "./componentes/Pages/CategoriaProductPage";
-import UsuarioPage from "./componentes/Pages/UsuarioPage";
-import ProductoPage from "./componentes/Pages/ProductoPage";
-import PrivilegioPage from "./componentes/Pages/PrivilegioPage";
-import MercaderiaPage from "./componentes/Pages/MercaderiaPage";
-import FacturacionPage from "./componentes/Pages/FacturacionPage";
-import OfertasPage from "./componentes/Pages/OfertasPage";
+import BitacoraPage from "./componentes/Pages/PaqueteUsuario/BitacoraPage";
+import RegisterClientPage from "./componentes/Pages/PaqueteUsuario/RegisterClientPage";
+import CategoriaProductPage from "./componentes/Pages/PaqueteInventario/CategoriaProductPage";
+import UsuarioPage from "./componentes/Pages/PaqueteUsuario/UsuarioPage";
+import ProductoPage from "./componentes/Pages/PaqueteInventario/ProductoPage";
+import PrivilegioPage from "./componentes/Pages/PaqueteUsuario/PrivilegioPage";
+import MercaderiaPage from "./componentes/Pages/PaqueteInventario/MercaderiaPage";
+import FacturacionPage from "./componentes/Pages/PaqueteVenta/FacturacionPage";
+import OfertasPage from "./componentes/Pages/PaqueteInventario/OfertasPage";
 import ComputadorasPage from "./componentes/Pages/ComputadorasPage";
 import CelularesPage from "./componentes/Pages/CelularesPage";
 

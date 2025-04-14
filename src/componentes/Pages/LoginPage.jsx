@@ -33,8 +33,7 @@ const LoginPage = () => {
               }
               console.log(datos)
               const response = await signin(datos)   
-              const data = await response.json()
-              console.log(data)
+              console.log(response.data)
           
               if (response.ok) {
                 alert("✅ Login Exitoso" + data.access)

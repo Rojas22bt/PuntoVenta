@@ -14,34 +14,38 @@ import OfertasPage from "./componentes/Pages/OfertasPage";
 import ComputadorasPage from "./componentes/Pages/ComputadorasPage";
 import CelularesPage from "./componentes/Pages/CelularesPage";
 
+import { AusthProvider } from "./context/AuthContext";
+
 function App() {
 
   return (
-    <BrowserRouter>
-      <Main/>
-    </BrowserRouter>
+    <AusthProvider>
+      <BrowserRouter>
+        <Main />
+      </BrowserRouter>
+    </AusthProvider>
   )
 }
 
 function Main() {
-  return(
+  return (
     <>
-      <CustomNavbar/>
+      <CustomNavbar />
       <Routes>
-        <Route path="" element={<Home/>}/>
-        <Route path="/login" element={<LoginPage/>}/>
-        <Route path="/bitacora" element={<BitacoraPage/>}/>
-        <Route path="/register" element={<RegisterClientPage/>}/>
-        <Route path="/categoriaproductos" element={<CategoriaProductPage/>}/>
-        <Route path="/usuarios" element={<UsuarioPage/>}/>
-        <Route path="/producto" element={<ProductoPage/>}/>
-        <Route path="/privilegio" element={<PrivilegioPage/>}/>
-        <Route path="/mercaderia" element={<MercaderiaPage/>}/>
-        <Route path="/facturacion" element={<FacturacionPage/>}/>
-        <Route path="/oferta" element={<OfertasPage/>}/>
-        <Route path="/computadoras" element={<ComputadorasPage/>}/>
-        <Route path="/celulares" element={<CelularesPage/>}/>
-      
+        <Route path="" element={<Home />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/bitacora" element={<BitacoraPage />} />
+        <Route path="/register" element={<RegisterClientPage />} />
+        <Route path="/categoriaproductos" element={<CategoriaProductPage />} />
+        <Route path="/usuarios" element={<UsuarioPage />} />
+        <Route path="/producto" element={<ProductoPage />} />
+        <Route path="/privilegio" element={<PrivilegioPage />} />
+        <Route path="/mercaderia" element={<MercaderiaPage />} />
+        <Route path="/facturacion" element={<FacturacionPage />} />
+        <Route path="/oferta" element={<OfertasPage />} />
+        <Route path="/computadoras" element={<ComputadorasPage />} />
+        <Route path="/celulares" element={<CelularesPage />} />
+
       </Routes>
     </>
   )

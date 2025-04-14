@@ -15,6 +15,7 @@ import ComputadorasPage from "./componentes/Pages/ComputadorasPage";
 import CelularesPage from "./componentes/Pages/CelularesPage";
 
 import { AusthProvider } from "./context/AuthContext";
+import HistorialClientePage from "./componentes/Pages/PaqueteUsuario/HistorialClientePage";
 
 function App() {
 
@@ -45,6 +46,10 @@ function Main() {
         <Route path="/oferta" element={<OfertasPage />} />
         <Route path="/computadoras" element={<ComputadorasPage />} />
         <Route path="/celulares" element={<CelularesPage />} />
+
+
+
+        <Route path="/historialcliente" element={<HistorialClientePage />} />
 
       </Routes>
     </>

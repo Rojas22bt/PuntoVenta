@@ -2,8 +2,11 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import '../Css/LoginPage.css'
+import { useAuth } from '../../context/AuthContext';
 
 const LoginPage = () => {
+
+    const { signin } = useAuth();
 
     // Validación con Yup
     const validationSchema = Yup.object({
@@ -15,7 +18,6 @@ const LoginPage = () => {
             .required("La contraseña es obligatoria"),
     });
 
-    // Configuración de Formik
     const formik = useFormik({
         initialValues: {
             email: "",
@@ -24,17 +26,7 @@ const LoginPage = () => {
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             try {
-              const response = await fetch("https://web-production-ab6a3.up.railway.app/api/usuarios2/login/", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json", 
-                },
-                body: JSON.stringify({
-                  correo: values.email,
-                  password: values.password,
-                }),
-              })
-          
+              const response = await signin(values)   
               const data = await response.json()
               console.log(data)
           

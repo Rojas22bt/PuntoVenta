@@ -1,0 +1,103 @@
+.historialConteiner {
+    padding: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px;
+}
+.input-group button{
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 15px;
+}
+.table-historial {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.table-historial th,
+.table-historial td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.table-historial th {
+    background-color: rgb(50, 119, 247);
+    color: white;
+}
+
+.table-historial tr:hover {
+    background-color: #f1f1f1;
+}
+
+.table-historial th:nth-child(1),
+.table-historial td:nth-child(1) {
+    width: 20%;
+}
+
+.table-historial th:nth-child(2),
+.table-historial td:nth-child(2) {
+    width: 18%;
+}
+
+.table-historial th:nth-child(3),
+.table-historial td:nth-child(3) {
+    width: 8%;
+}
+
+.table-historial th:nth-child(4),
+.table-historial td:nth-child(4) {
+    width: 18%;
+}
+
+.table-historial th:nth-child(5),
+.table-historial td:nth-child(5) {
+    width: 20%;
+}
+
+#VerImprimir {
+    background-color: rgb(247, 211, 50);
+    border: none;
+    width: 70%;
+    text-align: center;
+    font-size: 12px;
+}
+
+.historial-table {
+    width: 100%;
+    overflow-x: auto;
+    padding: 0 20%;
+}
+
+@media screen and (max-width: 768px) {
+    .historial-table {
+        padding: 0; /* Elimina el padding lateral en pantallas pequeñas */
+        overflow-x: auto;
+    }
+
+    .table-historial {
+        min-width: 600px; /* Establece un ancho mínimo para que aparezca el scroll si no cabe */
+    }
+
+    .input-group {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .input-group button {
+        font-size: 14px;
+    }
+}
+
+.btn {
+    margin-left: 5px;
+    width: 75%;
+}

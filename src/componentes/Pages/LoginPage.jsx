@@ -26,8 +26,13 @@ const LoginPage = () => {
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             try {
-              console.log(values)
-              const response = await signin(values)   
+                
+              const datos = {
+                correo: values.email,
+                password : values. password
+              }
+              console.log(datos)
+              const response = await signin(datos)   
               const data = await response.json()
               console.log(data)
           

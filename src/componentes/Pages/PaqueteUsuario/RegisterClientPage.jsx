@@ -17,7 +17,15 @@ const RegisterClientPage = () => {
       .required("La contraseña es obligatoria"),
     date: Yup.date().required("La fecha es obligatoria"),
     genero: Yup.string().required("El género es obligatorio"),
-  })
+    nit: Yup.string(),
+    ci: Yup.string(),
+  }).test(
+    "al-menos-un-documento",
+    "Debe ingresar al menos NIT o CI",
+    (values) => {
+      return values?.nit?.trim() || values?.ci?.trim();;
+    }
+  )
 
   const formik = useFormik({
     initialValues: {
@@ -27,9 +35,16 @@ const RegisterClientPage = () => {
       password: "",
       date: "",
       genero: "",
+      nit: "",
+      ci: ""
     },
     validationSchema,
     onSubmit: async (values) => {
+
+      const docs = [];
+      if (values.nit) docs.push({ id: 2, numero: values.nit });
+      if (values.ci) docs.push({ id: 1, numero: values.ci });
+
       const data = {
         nombre: values.nombre,
         correo: values.email,
@@ -39,10 +54,7 @@ const RegisterClientPage = () => {
         estado: true,
         password: values.password,
         rol: 2,
-        documentos: [
-          { id: 1, numero: 123456 },
-          { id: 2, numero: 17456126 }
-        ]
+        documentos: docs
       }
 
       console.log(data)
@@ -74,6 +86,35 @@ const RegisterClientPage = () => {
             />
             {formik.errors.nombre && <div className="text-danger">{formik.errors.nombre}</div>}
           </div>
+
+
+          <label>Agregar Almenos un documento</label>
+          <div className="mb-3">
+            <label>NIT</label>
+            <input
+              type="number"
+              name="nit"
+              className="form-control"
+              onChange={formik.handleChange}
+              value={formik.values.nit}
+            />
+          </div>
+
+          <div className="mb-3">
+            <label>CI</label>
+            <input
+              type="number"
+              name="ci"
+              className="form-control"
+              onChange={formik.handleChange}
+              value={formik.values.ci}
+            />
+             {formik.errors.nombre && <div className="text-danger">{formik.errors.nombre}</div>}
+          </div>
+
+
+
+
 
           <div className="mb-3">
             <label>Correo Electrónico</label>

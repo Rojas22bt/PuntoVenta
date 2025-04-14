@@ -26,6 +26,7 @@ const LoginPage = () => {
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             try {
+              console.log(values)
               const response = await signin(values)   
               const data = await response.json()
               console.log(data)

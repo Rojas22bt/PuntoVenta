@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import '../Css/ProductoPage.css';
+import '../../Css/ProductoPage.css';
 
 const ProductoPage = () => {
     const [productos, setProductos] = useState([]);

@@ -1,5 +1,5 @@
 import React from 'react'
-import '../Css/BitacoraPage.css'
+import '../../Css/BitacoraPage.css'
 const BitacoraPage = () => {
 
     const bitacoras = [

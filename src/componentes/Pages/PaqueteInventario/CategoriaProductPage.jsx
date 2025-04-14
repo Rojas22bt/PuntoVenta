@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../Css/CategoriaProductPage.css';
+import '../../Css/CategoriaProductPage.css';
 
 function CategoriaProductPage() {
   const [nombreCategoria, setNombreCategoria] = useState('');

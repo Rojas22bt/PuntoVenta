@@ -1,5 +1,5 @@
 import React from 'react'
-import '../Css/FacturacionPage.css'
+import '../../Css/FacturacionPage.css'
 
 function FacturacionPage() {
   return (

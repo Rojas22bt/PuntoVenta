@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import '../Css/OfertasPage.css';
+import '../../Css/OfertasPage.css';
 
 function OfertasPage() {
     const [ofertas, setofertas] = useState([]);

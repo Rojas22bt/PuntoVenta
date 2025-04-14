@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import '../Css/MercaderiaPage.css';
+import '../../Css/MercaderiaPage.css';
 
 function MercaderiaPage() {
     const [mercaderias, setmercaderias] = useState([]);

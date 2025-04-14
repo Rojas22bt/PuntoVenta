@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../Css/PrivilegioPage.css'
+import '../../Css/PrivilegioPage.css'
 
 function PrivilegioPage() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Css/UsuarioPage.css';
+import '../../Css/UsuarioPage.css';
 
 function UsuarioPage() {
     const handleEdit = (index) => {

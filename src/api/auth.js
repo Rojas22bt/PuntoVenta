@@ -8,3 +8,10 @@ export const loginRequest = data => instance.post(`/usuario/login`,data,{
       },
     withCredentials:true
 })
+
+export const registerClienteRequest = (data) => instance.post(`/usuario/registro`,data,{
+    headers:{
+        "Content-Type" : "application/json"
+    },
+    withCredentials:true
+})

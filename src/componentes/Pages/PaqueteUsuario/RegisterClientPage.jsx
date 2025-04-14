@@ -1,6 +1,7 @@
 import React from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { registerClienteRequest } from '../../../api/auth'
 import '../../Css/RegisterClientPage.css'
 
 const RegisterClientPage = () => {
@@ -29,36 +30,31 @@ const RegisterClientPage = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
+      const data = {
+        nombre: values.nombre,
+        correo: values.email,
+        telefono: values.telefono,
+        fecha_nacimiento: values.date,
+        sexo: values.genero,
+        estado: true,
+        password: values.password,
+        rol: 2,
+        documentos: [
+          { id: 1, numero: 123456 },
+          { id: 2, numero: 17456126 }
+        ]
+      }
+
+      console.log(data)
       try {
-        const response = await fetch("https://web-production-ab6a3.up.railway.app/api/usuarios2/usuarios/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json", 
-          },
-          body: JSON.stringify({
-            nombre: values.nombre,
-            correo: values.email,
-            telefono: values.telefono,
-            fecha_nacimiento: values.date,
-            sexo: values.genero,
-            estado: true,
-            contraseña: values.password,
-          }),
-        })
-    
-        const data = await response.json()
-    
-        if (response.ok) {
-          alert("✅ Usuario registrado correctamente si")
-        } else {
-          alert("❌ Error: " + data.error)
-        }
+        await registerClienteRequest(data)
+        alert("✅ Usuario registrado correctamente si")
       } catch (error) {
         console.error("Error en el registro:", error)
         alert("❌ Error de conexión con el servidor")
       }
     }
-    
+
   })
 
   return (

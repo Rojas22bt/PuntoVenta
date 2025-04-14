@@ -19,7 +19,7 @@ const BitacoraPage = () => {
             <div className="bitacora-container">
                 <div>
                     <h2>Registros de acciones en el Sistema</h2>
-                    <button onClick={obtenerBitacora}>Listar Bitacora</button>
+                    <button onClick={obtenerBitacora} className='btn btn-primary'>Listar Bitacora</button>
                     <div className="table-responsive"> {/* Contenedor para el scroll horizontal */}
                         <table className="bitacora-table">
                             <thead>

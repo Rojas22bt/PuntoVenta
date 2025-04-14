@@ -15,3 +15,10 @@ export const registerClienteRequest = (data) => instance.post(`/usuario/registro
     },
     withCredentials:true
 })
+
+
+export const obtenerBitacoraRequest = () => {
+    return instance.get(`/usuario/bitacora`, {
+        withCredentials: true,
+        timeout: tiempoEspera
+    })}

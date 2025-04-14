@@ -1,6 +1,18 @@
 import React from 'react'
 import '../../Css/BitacoraPage.css'
+import { obtenerBitacoraRequest } from '../../../api/auth'
+
 const BitacoraPage = () => {
+
+    const obtenerBitacora = async () => {
+        try {
+            const res = await obtenerBitacoraRequest();
+            console.log(res.data); 
+        } catch (error) {
+            console.error("Error al obtener la bitácora:", error);
+        }
+    };
+    
 
     const bitacoras = [
         {
@@ -139,6 +151,7 @@ const BitacoraPage = () => {
             <div className="bitacora-container">
                 <div>
                     <h2>Registros de acciones en el Sistema</h2>
+                    <button onClick={obtenerBitacora}>Listar Bitacora</button>
                     <div className="table-responsive"> {/* Contenedor para el scroll horizontal */}
                         <table className="bitacora-table">
                             <thead>

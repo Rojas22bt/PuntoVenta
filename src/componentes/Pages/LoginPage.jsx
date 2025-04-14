@@ -33,12 +33,10 @@ const LoginPage = () => {
               }
               console.log(datos)
               const response = await signin(datos)   
-              console.log(response.data)
-          
               if (response.ok) {
-                alert("✅ Login Exitoso" + data.access)
+                alert("✅ Login Exitoso" );
               } else {
-                alert("❌ Error: " + data.error)
+                alert("❌ Error: ");
               }
             } catch (error) {
               console.error("Error en el registro:", error)

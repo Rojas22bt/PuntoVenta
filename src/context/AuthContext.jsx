@@ -20,8 +20,9 @@ export const AusthProvider = ({ children }) =>{
     const signin = async ( user ) =>{
         try {
             const res = await loginRequest(user);
-            setUser(res.data.usuario);
-            localStorage.setItem('token', res.data.token);
+            console.log(res.data)
+            // setUser(res.data);
+            // localStorage.setItem('token', res.data.token);
         } catch (err) {
             throw err;
         }

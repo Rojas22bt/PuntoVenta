@@ -6,7 +6,7 @@ import { useAuth } from '../../../context/AuthContext';
 
 const LoginPage = () => {
 
-    const { signin } = useAuth();
+    const { signin, cargarDatos } = useAuth();
 
     // Validación con Yup
     const validationSchema = Yup.object({
@@ -34,6 +34,7 @@ const LoginPage = () => {
               console.log(datos);
           
               const response = await signin(datos); // Esto ya devuelve la respuesta
+              await cargarDatos();
           
               // ✅ Si llegaste aquí, todo fue bien
               alert("✅ Login Exitoso");

@@ -1,5 +1,5 @@
 import { createContext , useState, useContext, useEffect } from "react";
-import { loginRequest } from "../api/auth";
+import { loginRequest,obtenerUsuariosRequest } from "../api/auth";
 
 
 const AuthContext = createContext();
@@ -16,6 +16,7 @@ export const AusthProvider = ({ children }) =>{
 
     const [ user, setUser ] = useState([]);
     const [ loading, setLoading] = useState(true);
+    const [usuarios, setUsuarios] = useState([])
 
     const signin = async ( user ) =>{
         try {
@@ -23,6 +24,16 @@ export const AusthProvider = ({ children }) =>{
             console.log(res.data)
             // setUser(res.data);
             // localStorage.setItem('token', res.data.token);
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    const cargarDatos = async() =>{
+        try {
+            const uss = await obtenerUsuariosRequest();
+            setUsuarios(uss.data)
+            console.log(uss.data)
         } catch (err) {
             throw err;
         }
@@ -57,6 +68,7 @@ export const AusthProvider = ({ children }) =>{
     return (
         <AuthContext.Provider value={{
             signin,
+            cargarDatos,
             user
         }}>
             { children }

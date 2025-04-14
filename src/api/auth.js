@@ -22,3 +22,10 @@ export const obtenerBitacoraRequest = () => {
         withCredentials: true,
         timeout: tiempoEspera
     })}
+
+export const obtenerUsuariosRequest = () => {
+    return instance.get('/usuario',{
+        withCredentials: true,
+        timeout: tiempoEspera
+    })
+}

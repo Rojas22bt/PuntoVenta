@@ -40,9 +40,13 @@ function UsuarioPage() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Usuario editado:", formData);
+    try {
+        await actualizarUsuario(formData);
+    } catch (err) {
+        throw err
+    }
     setEditIndex(null);
   };
 

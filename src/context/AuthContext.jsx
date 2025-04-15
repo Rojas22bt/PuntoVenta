@@ -43,6 +43,15 @@ export const AusthProvider = ({ children }) =>{
         }
     }
 
+    const recargarUsuarios = async() => {
+        try {
+            const uss = await obtenerUsuariosRequest();
+            setUsuarios(uss.data)
+        } catch (err) {
+            throw err;
+        }
+    }
+
     useEffect(() => {
         async function checklogin() {
             const token = localStorage.getItem('token');
@@ -75,6 +84,7 @@ export const AusthProvider = ({ children }) =>{
             cargarDatos,
             user,
             roles,
+            recargarUsuarios,
             usuarios
         }}>
             { children }

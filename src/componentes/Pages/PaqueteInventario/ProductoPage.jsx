@@ -215,7 +215,7 @@ const ProductoPage = () => {
                                 <th>Acción</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        {/* <tbody>
                             {productos.length > 0 ? (
                                 productos.map((producto, index) => (
                                     <tr key={producto.productoID}>
@@ -247,7 +247,7 @@ const ProductoPage = () => {
                                     <td colSpan="11">No se encontraron registros de productos.</td>
                                 </tr>
                             )}
-                        </tbody>
+                        </tbody> */}
                     </table>
                 </div>
             </div>

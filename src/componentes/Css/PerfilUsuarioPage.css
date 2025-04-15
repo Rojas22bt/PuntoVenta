@@ -10,7 +10,7 @@
     background-color: white;
     padding: 30px 40px;
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
@@ -59,3 +59,9 @@ label {
     border-bottom: 2px solid #ccc;
     margin-top: 5px;
 }
+
+.perfilCard h2{
+    color: black;
+    font-size: 28px;
+}
+

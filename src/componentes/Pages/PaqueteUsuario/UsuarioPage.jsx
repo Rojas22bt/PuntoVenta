@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import '../../Css/UsuarioPage.css';
 import { useAuth } from '../../../context/AuthContext';
-import { actualizarUsuario, obtenerUsuariosRequest } from '../../../api/auth';
+import { actualizarUsuario} from '../../../api/auth';
 
 function UsuarioPage() {
-  const { usuarios, roles, setUsuarios } = useAuth(); // Asegúrate que `setUsuarios` exista en el context
+  const { usuarios, roles,recargarUsuarios } = useAuth(); // Asegúrate que `setUsuarios` exista en el context
   const [filtroLetra, setFiltroLetra] = useState('');
   const [editIndex, setEditIndex] = useState(null);
   const [formData, setFormData] = useState({
@@ -55,8 +55,6 @@ function UsuarioPage() {
       throw err
     }
     setEditIndex(null);
-    setRefreshKey((prev) => prev + 1); 
-
   };
 
   const handleCancel = () => {
@@ -73,17 +71,15 @@ function UsuarioPage() {
   };
 
   const handleRefresh = async () => {
-    await fetchUsuarios();
+    try {
+      await recargarUsuarios();
+    } catch (error) {
+        console.log(error)
+    }
+
   };
 
-  const fetchUsuarios = async () => {
-    try {
-      const nuevosUsuarios = await obtenerUsuariosRequest();
-      setUsuarios(nuevosUsuarios);
-    } catch (err) {
-      console.error("Error al obtener usuarios:", err);
-    }
-  };
+
   
 
   const usuariosFiltrados = usuarios

@@ -4,7 +4,7 @@ import { useAuth } from '../../../context/AuthContext';
 
 const ProductoPage = () => {
 
-    const {marca, categoria, almacen} = useAuth();
+    const {marcas, categorias, almacenes} = useAuth();
 
     const [productos, setProductos] = useState([]);
     const [nuevoProducto, setNuevoProducto] = useState({
@@ -113,7 +113,7 @@ const ProductoPage = () => {
                     required
                     >
                         <option value="">Selecciona una Marca</option>
-                        {marca.map((mar) =>(
+                        {marcas.map((mar) =>(
                             <option key={mar.id} value={mar.id}>
                                 {mar.nombre}
                             </option>
@@ -132,7 +132,7 @@ const ProductoPage = () => {
                     required
                     >
                         <option value="">Selecciona una categoría</option>
-                        {categoria.map((cat) =>(
+                        {categorias.map((cat) =>(
                             <option key={cat.id} value={cat.id}>
                                 {cat.nombre}
                             </option>
@@ -157,7 +157,7 @@ const ProductoPage = () => {
                     required
                     >
                         <option value="">Selecciona un Almacén</option>
-                        {almacen.map((alma) =>(
+                        {almacenes.map((alma) =>(
                             <option key={alma.id} value={alma.id}>
                                 {alma.descripcion}
                             </option>

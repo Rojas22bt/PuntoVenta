@@ -37,7 +37,11 @@ function CategoriaProductPage() {
           setCategorias(updated);
           setEditCategoriaIndex(null);
         } else {
-          console.log(nombreCategoria);
+          const data = {
+            nombre: nombreCategoria
+          }
+          await crearCategoriaRequest(data);
+          console.log(data);
           setCategorias([...categorias, { id: idCategoria, nombre: nombreCategoria }]);
           setIdCategoria(idCategoria + 1);
         }
@@ -50,7 +54,12 @@ function CategoriaProductPage() {
           setAlmacenes(updated);
           setEditAlmacenIndex(null);
         } else {
-          console.log(nombreAlmacen)
+          const dato2 = {
+            nombre: nombreAlmacen,
+            cantidad: 0
+          }
+          console.log(dato2)
+          await crearAlmacenRequest(dato2);
           setAlmacenes([...almacenes, { id: idAlmacen, nombre: nombreAlmacen }]);
           setIdAlmacen(idAlmacen + 1);
         }
@@ -63,7 +72,11 @@ function CategoriaProductPage() {
           setMarcas(updated);
           setEditMarcaIndex(null);
         } else {
-          console.log(nombreMarca)
+          const dato3 = {
+            nombre: nombreMarca
+          }
+          await crearMarcaRequest(dato3)
+          console.log(dato3)
           setMarcas([...marcas, { id: idMarca, nombre: nombreMarca }]);
           setIdMarca(idMarca + 1);
         }

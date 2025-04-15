@@ -33,42 +33,50 @@ function FacturacionPage() {
           <div className="mb-3">
             <label>Fecha:</label>
             <input type="date" className="form-control" />
-          </div> 
+          </div>
         </div>
       </div>
 
       <div className='boxTabla'>
-  <div className='tablaScroll'>
-    <table className='tablaFacturacion'>
-      <thead>
-        <tr>
-          <th>Producto</th>
-          <th>Precio</th>
-          <th>Cantidad</th>
-          <th>SubTotal</th>
-          <th>Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-        {productos.map((prod, index) => (
-          <tr key={index}>
-            <td>{prod.nombre}</td>
-            <td>{prod.precio}</td>
-            <td>{prod.cantidad}</td>
-            <td>{prod.precio * prod.cantidad}</td>
-            <td>
-              <button className="btn btn-danger" onClick={() => eliminarProducto(index)}>Eliminar</button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-  <div className='totalTabla'>
-    <label>Total:</label>
-    <input type="text" readOnly className='inputTotal' value={calcularTotal()} />
-  </div>
-</div>
+        <h2 className='pedido'>Tu pedido:</h2>
+        <div className='tablaScroll'>
+          <table className='tablaFacturacion'>
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>SubTotal</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              {productos.map((prod, index) => (
+                <tr key={index}>
+                  <td>{prod.nombre}</td>
+                  <td>{prod.precio}</td>
+                  <td>{prod.cantidad}</td>
+                  <td>{prod.precio * prod.cantidad}</td>
+                  <td>
+                    <button className="btn btn-danger" onClick={() => eliminarProducto(index)}>Eliminar</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="filaFinal">
+          <a href="/tarjet" className="btn btn-primary btnTarjeta">
+            Pagar con Tarjeta
+          </a>
+          <div className="totalFinal">
+            <label>Total:</label>
+            <input type="text" readOnly className="inputTotal" value={calcularTotal()} />
+          </div>
+        </div>
+
+      </div>
 
     </div>
   );

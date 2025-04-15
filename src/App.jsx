@@ -19,6 +19,7 @@ import HistorialClientePage from "./componentes/Pages/PaqueteUsuario/HistorialCl
 import PerfilUsuarioPage from "./componentes/Pages/PaqueteUsuario/PerfilUsuarioPage";
 import ComentarioPage from "./componentes/Pages/PaqueteVenta/ComentarioPage";
 
+import StripeContainer from "./componentes/Pages/StripeContainer"
 function App() {
 
   return (
@@ -48,7 +49,6 @@ function Main() {
         <Route path="/oferta" element={<OfertasPage />} />
         <Route path="/computadoras" element={<ComputadorasPage />} />
         <Route path="/celulares" element={<CelularesPage />} />
-
 
         <Route path="/historialcliente" element={<HistorialClientePage />} />
         <Route path="/perfilUsuario" element={<PerfilUsuarioPage />} />

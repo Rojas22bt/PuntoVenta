@@ -1,10 +1,11 @@
 import React, { useState, useRef } from 'react';
 import '../../Css/ProductoPage.css';
 import { useAuth } from '../../../context/AuthContext';
+import { crearProductoRequest } from '../../../api/auth';
 
 const ProductoPage = () => {
 
-    const {marcas, categorias, almacenes} = useAuth();
+    const { marcas, categorias, almacenes } = useAuth();
 
     const [productos, setProductos] = useState([]);
     const [nuevoProducto, setNuevoProducto] = useState({
@@ -40,42 +41,47 @@ const ProductoPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (editIndex !== null) {
-            const updatedProductos = [...productos];
-            updatedProductos[editIndex] = nuevoProducto;
-            setProductos(updatedProductos);
-        } else {
-            const datos ={
-                nombre: nuevoProducto.nombre,
-                modelo: nuevoProducto.modelo,
-                stock: Number(nuevoProducto.stock),
-                precio: Number(nuevoProducto.precio),
-                estado: true,
-                url: "http/img",
-                almacen: Number(nuevoProducto.almacen),
-                categoria: Number(nuevoProducto.categoria),
-                marca: Number(nuevoProducto.marca)
+        try {
+            if (editIndex !== null) {
+                const updatedProductos = [...productos];
+                updatedProductos[editIndex] = nuevoProducto;
+                setProductos(updatedProductos);
+            } else {
+                const datos = {
+                    nombre: nuevoProducto.nombre,
+                    modelo: nuevoProducto.modelo,
+                    stock: Number(nuevoProducto.stock),
+                    precio: Number(nuevoProducto.precio),
+                    estado: true,
+                    url: "http/img",
+                    almacen: Number(nuevoProducto.almacen),
+                    categoria: Number(nuevoProducto.categoria),
+                    marca: Number(nuevoProducto.marca)
 
+                }
+                await crearProductoRequest(datos)
+                console.log(datos)
+                setProductos([...productos, { ...nuevoProducto, productoID: productos.length + 1 }]);
             }
-            console.log(datos)
-            setProductos([...productos, { ...nuevoProducto, productoID: productos.length + 1 }]);
-        }
-        setNuevoProducto({
-            nombre: '',
-            modelo: '',
-            marca: '',
-            categoria: '',
-            stock: '',
-            precio: '',
-            almacen: '',
-            estado: '',
-            imagen: '' // Reiniciar el campo de imagen
-        });
-        setEditIndex(null);
-        
-        // Restablecer el input de archivo
-        if (fileInputRef.current) {
-            fileInputRef.current.value = null; // Esto restablece el campo de archivo
+            setNuevoProducto({
+                nombre: '',
+                modelo: '',
+                marca: '',
+                categoria: '',
+                stock: '',
+                precio: '',
+                almacen: '',
+                estado: '',
+                imagen: '' // Reiniciar el campo de imagen
+            });
+            setEditIndex(null);
+
+            // Restablecer el input de archivo
+            if (fileInputRef.current) {
+                fileInputRef.current.value = null; // Esto restablece el campo de archivo
+            }
+        } catch (error) {
+
         }
     };
 
@@ -96,7 +102,7 @@ const ProductoPage = () => {
     const handleCloseImage = () => {
         setShowImage(null);
     };
-    const handleListProductos= () => {
+    const handleListProductos = () => {
         if (productos.length > 0) {
             console.log("Productos existentes:", productos);
             alert("Productos existentes: " + productos.map(producto => producto.productoID).join(", "));
@@ -118,15 +124,15 @@ const ProductoPage = () => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="Marca">Marca</label>
-                    <select 
-                    name="marca" 
-                    value={nuevoProducto.marca} 
-                    onChange={handleInputChange} 
-                    className='form-control' 
-                    required
+                    <select
+                        name="marca"
+                        value={nuevoProducto.marca}
+                        onChange={handleInputChange}
+                        className='form-control'
+                        required
                     >
                         <option value="">Selecciona una Marca</option>
-                        {marcas.map((mar) =>(
+                        {marcas.map((mar) => (
                             <option key={mar.id} value={mar.id}>
                                 {mar.nombre}
                             </option>
@@ -137,15 +143,15 @@ const ProductoPage = () => {
 
                 <div className="form-group">
                     <label htmlFor="Categoria">Categoría</label>
-                    <select 
-                    name="categoria" 
-                    value={nuevoProducto.categoria} 
-                    onChange={handleInputChange} 
-                    className='form-control' 
-                    required
+                    <select
+                        name="categoria"
+                        value={nuevoProducto.categoria}
+                        onChange={handleInputChange}
+                        className='form-control'
+                        required
                     >
                         <option value="">Selecciona una categoría</option>
-                        {categorias.map((cat) =>(
+                        {categorias.map((cat) => (
                             <option key={cat.id} value={cat.id}>
                                 {cat.nombre}
                             </option>
@@ -156,21 +162,21 @@ const ProductoPage = () => {
                     <label htmlFor="Stock">Stock</label>
                     <input type="number" name="stock" value={nuevoProducto.stock} onChange={handleInputChange} className='form-control' required />
                 </div>
-                               <div className="form-group">
+                <div className="form-group">
                     <label htmlFor="Precio">Precio</label>
                     <input type="number" name="precio" value={nuevoProducto.precio} onChange={handleInputChange} className='form-control' required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="Almacen">Almacén</label>
-                    <select 
-                    name="almacen" 
-                    value={nuevoProducto.almacen} 
-                    onChange={handleInputChange} 
-                    className='form-control' 
-                    required
+                    <select
+                        name="almacen"
+                        value={nuevoProducto.almacen}
+                        onChange={handleInputChange}
+                        className='form-control'
+                        required
                     >
                         <option value="">Selecciona un Almacén</option>
-                        {almacenes.map((alma) =>(
+                        {almacenes.map((alma) => (
                             <option key={alma.id} value={alma.id}>
                                 {alma.descripcion}
                             </option>
@@ -187,13 +193,13 @@ const ProductoPage = () => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="imagen">Imagen</label>
-                    <input 
-                        type="file" 
-                        name="Imagen" 
-                        accept="image/*" 
-                        onChange={handleImageChange} 
-                        className='form-control' 
-                        required 
+                    <input
+                        type="file"
+                        name="Imagen"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className='form-control'
+                        required
                         ref={fileInputRef} // Asignar la referencia aquí
                     />
                 </div>
@@ -203,7 +209,7 @@ const ProductoPage = () => {
                     </button>
                 </div>
             </form>
-            
+
             <div className="text-center mt-3">
                 <button onClick={handleListProductos} className="btn btn-primary">
                     Listar Productos Existentes

@@ -42,10 +42,6 @@ function UsuarioPage() {
     setEditIndex(null);
   };
 
-  const handleDelete = (index) => {
-    // Lógica para eliminar
-    console.log("Eliminar usuario", usuarios[index]);
-  };
 
   return (
     <div className="usuario-container">
@@ -55,17 +51,21 @@ function UsuarioPage() {
         <div className="usuario-form">
           <h3>Editar Usuario</h3>
           <form onSubmit={handleSubmit}>
+            <label htmlFor="">Nombre</label>
             <input type="text" name="nombre" placeholder="Nombre" className="form-control" value={formData.nombre} onChange={handleChange} required />
+            <label htmlFor="">Correo</label>
             <input type="email" name="correo" placeholder="Correo" className="form-control" value={formData.correo} onChange={handleChange} required />
+            <label htmlFor="">Telefono</label>
             <input type="text" name="telefono" placeholder="Teléfono" className="form-control" value={formData.telefono} onChange={handleChange} required />
+            <label htmlFor="">Fechaa de nacimiento</label>
             <input type="date" name="fecha_nacimiento" className="form-control" value={formData.fecha_nacimiento} onChange={handleChange} required />
-
+            <label htmlFor="">Genero</label>
             <select name="sexo" className="form-control" value={formData.sexo} onChange={handleChange} required>
               <option value="">Seleccione sexo</option>
               <option value="M">Masculino</option>
               <option value="F">Femenino</option>
             </select>
-
+            <label htmlFor="">Tipo de rol</label>
             <select name="rol" className="form-control" value={formData.rol} onChange={handleChange} required>
               <option value="">Seleccione rol</option>
               {roles.map((rol) => (
@@ -74,7 +74,7 @@ function UsuarioPage() {
                 </option>
               ))}
             </select>
-
+            <label htmlFor="">Estado del usuario</label>  
             <select name="estado" className="form-control" value={formData.estado} onChange={handleChange} required>
               <option value={true}>Activo</option>
               <option value={false}>Inactivo</option>
@@ -114,7 +114,6 @@ function UsuarioPage() {
                   <td>{usuario.estado ? 'Activo' : 'Inactivo'}</td>
                   <td>
                     <button onClick={() => handleEdit(index)} className="btn btn-warning">Editar</button>
-                    <button onClick={() => handleDelete(index)} className="btn btn-danger">Eliminar</button>
                   </td>
                 </tr>
               ))

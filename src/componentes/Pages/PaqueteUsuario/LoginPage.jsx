@@ -3,10 +3,12 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import '../../Css/LoginPage.css'
 import { useAuth } from '../../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
 
     const { signin, cargarDatos } = useAuth();
+    const navigate = useNavigate();
 
     // Validación con Yup
     const validationSchema = Yup.object({
@@ -35,9 +37,7 @@ const LoginPage = () => {
           
               const response = await signin(datos); // Esto ya devuelve la respuesta
               await cargarDatos();
-          
-              // ✅ Si llegaste aquí, todo fue bien
-              alert("✅ Login Exitoso");
+              navigate('/usuarios')
           
             } catch (error) {
               console.error("❌ Error en el login:", error);

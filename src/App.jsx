@@ -4,7 +4,7 @@ import LoginPage from "./componentes/Pages/PaqueteUsuario/LoginPage";
 import CustomNavbar from "./componentes/Otros/CustomNavbar";
 import BitacoraPage from "./componentes/Pages/PaqueteUsuario/BitacoraPage";
 import RegisterClientPage from "./componentes/Pages/PaqueteUsuario/RegisterClientPage";
-import CategoriaProductPage from "./componentes/Pages/PaqueteInventario/CategoriaProductPage";
+import CaracteristicasPage from "./componentes/Pages/PaqueteInventario/CaracteristicasPage";
 import UsuarioPage from "./componentes/Pages/PaqueteUsuario/UsuarioPage";
 import ProductoPage from "./componentes/Pages/PaqueteInventario/ProductoPage";
 import PrivilegioPage from "./componentes/Pages/PaqueteUsuario/PrivilegioPage";
@@ -39,7 +39,7 @@ function Main() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/bitacora" element={<BitacoraPage />} />
         <Route path="/register" element={<RegisterClientPage />} />
-        <Route path="/categoriaproductos" element={<CategoriaProductPage />} />
+        <Route path="/CaracteristicasPage" element={<CaracteristicasPage />} />
         <Route path="/usuarios" element={<UsuarioPage />} />
         <Route path="/producto" element={<ProductoPage />} />
         <Route path="/privilegio" element={<PrivilegioPage />} />

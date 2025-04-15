@@ -69,7 +69,8 @@ export const AusthProvider = ({ children }) =>{
         <AuthContext.Provider value={{
             signin,
             cargarDatos,
-            user
+            user,
+            uss
         }}>
             { children }
         </AuthContext.Provider>

@@ -110,7 +110,7 @@ function UsuarioPage() {
 
             <div className="botones-formulario">
               <button type="submit" className="btn btn-primary">Guardar Cambios</button>
-              <button type="button" className="btn btn-secondary" onClick={handleCancel}>Cancelar Cambios</button>
+              <button type="button" className="btn btn-danger" onClick={handleCancel}>Cancelar Cambios</button>
             </div>
           </form>
         </div>

@@ -1,7 +1,8 @@
+import React, { useState } from 'react';
 import React, { useState, useEffect } from 'react';
 import '../../Css/UsuarioPage.css';
 import { useAuth } from '../../../context/AuthContext';
-import { actualizarUsuario, obtenerUsuarios } from '../../../api/auth'; // 👈 importa la función que recupera usuarios
+import { actualizarUsuario, obtenerUsuariosRequest } from '../../../api/auth';
 
 function UsuarioPage() {
   const { usuarios, roles, setUsuarios } = useAuth(); // Asegúrate que `setUsuarios` exista en el context
@@ -49,12 +50,14 @@ function UsuarioPage() {
       estado: formData.estado === "true" || formData.estado === true,
     };
     try {
-      await actualizarUsuario(data);
-      await fetchUsuarios(); // 👈 recargamos usuarios luego de editar
+      console.log(data)
+        await actualizarUsuario(data);
     } catch (err) {
-      console.error(err);
+      throw err
     }
     setEditIndex(null);
+    setRefreshKey((prev) => prev + 1); 
+
   };
 
   const handleCancel = () => {
@@ -80,8 +83,8 @@ function UsuarioPage() {
 
   const fetchUsuarios = async () => {
     try {
-      const nuevosUsuarios = await obtenerUsuarios();
-      setUsuarios(nuevosUsuarios);
+      const nuevosUsuarios = await obtenerUsuariosRequest();
+      {/*setUsuarios(nuevosUsuarios)*/}
     } catch (err) {
       console.error("Error al obtener usuarios:", err);
     }

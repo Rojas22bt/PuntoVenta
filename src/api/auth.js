@@ -45,6 +45,8 @@ export const actualizarUsuario = data =>
         'Content-Type': 'application/json',
       },
     });
+
+    //-------------------------TODOS DE CATEGORIAS PRODUCTOS-----------------//
   
 export const crearMarcaRequest = data => instance.post ('/inventario/marca',data,{
     headers:{
@@ -66,4 +68,25 @@ export const crearAlmacenRequest = data => instance.post ('/inventario/almacen',
 })
     '/inventario/marca'
 
+   // https://web-production-ab6a3.up.railway.app/api/inventario/obtener-almacen
+export const obtenerMarcaRequest = () => {
+    return instance.get('/inventario/obtener-marca',{
+        withCredentials: true,
+        timeout: tiempoEspera
+    })
+}
+
+export const obtenerCategoriaRequest = () =>{
+    return instance.get('/inventario/obtener-categoria',{
+        withCredentials: true,
+        timeout: tiempoEspera
+    })
+}
+
+export const obtenerAlmacenRequest = () =>{
+    return instance.get('/inventario/obtener-almacen',{
+        withCredentials: true,
+        timeout: tiempoEspera
+    })
+}
     

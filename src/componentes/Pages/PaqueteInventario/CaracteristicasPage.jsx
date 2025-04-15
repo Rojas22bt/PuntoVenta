@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../Css/CaracteristicasPage.css';
-import { crearMarcaRequest, crearCategoriaRequest, crearAlmacenRequest } from '../../../api/auth';
+import { crearMarcaRequest, crearCategoriaRequest, crearAlmacenRequest, obtenerAlmacenRequest, obtenerMarcaRequest, obtenerCategoriaRequest } from '../../../api/auth';
 
 function CategoriaProductPage() {
   // Estados para Categoría
@@ -100,6 +100,29 @@ function CategoriaProductPage() {
       setEditMarcaIndex(index);
     }
   };
+  
+  useEffect(() => {
+    const cargarDatos = async () => {
+      try {
+        const [resCategorias, resMarcas, resAlmacenes] = await Promise.all([
+          obtenerCategoriaRequest(),
+          obtenerMarcaRequest(),
+          obtenerAlmacenRequest()
+        ]);
+        console.log(resCategorias.data)
+        console.log(resMarcas.data)
+        console.log(resAlmacenes.data)
+        // setCategorias(resCategorias.data); 
+        // setMarcas(resMarcas.data);
+        // setAlmacenes(resAlmacenes.data);
+      } catch (error) {
+        console.error('Error al cargar datos:', error);
+      }
+    };
+  
+    cargarDatos();
+  }, []);
+
 
   return (
     <div>

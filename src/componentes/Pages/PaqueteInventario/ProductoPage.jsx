@@ -53,7 +53,7 @@ const ProductoPage = () => {
                     stock: Number(nuevoProducto.stock),
                     precio: Number(nuevoProducto.precio),
                     estado: nuevoProducto.estado === "true",
-                    url: "http/img",
+                    url: "https://fakeimg.pl/250x100/",
                     almacen: Number(nuevoProducto.almacen),
                     categoria: Number(nuevoProducto.categoria),
                     marca: Number(nuevoProducto.marca)

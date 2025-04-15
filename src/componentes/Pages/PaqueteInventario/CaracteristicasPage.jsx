@@ -30,6 +30,16 @@ function CategoriaProductPage() {
     try {
       if (tipo === 'categoria' && nombreCategoria) {
         if (editCategoriaIndex !== null) {
+
+          const categoriaEditada = categorias[editCategoriaIndex];
+
+          const datosNuevosCategoria ={
+            id: categoriaEditada.id,
+            nombre: nombreCategoria
+          }
+
+          console.log(datosNuevosCategoria)
+
           const updated = categorias.map((item, idx) =>
             idx === editCategoriaIndex ? { ...item, nombre: nombreCategoria } : item
           );

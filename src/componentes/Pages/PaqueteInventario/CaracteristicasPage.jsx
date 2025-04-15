@@ -1,5 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../Css/CaracteristicasPage.css';
+import { crearMarcaRequest, crearCategoriaRequest, crearAlmacenRequest, 
+        obtenerAlmacenRequest, obtenerMarcaRequest, obtenerCategoriaRequest,
+        actualizarAlmacenRequest,actualizarMarcaRequest,actualizarCategoriaRequest
+      
+      } from '../../../api/auth';
 
 function CategoriaProductPage() {
   // Estados para Categoría
@@ -24,45 +29,96 @@ function CategoriaProductPage() {
   const [mostrarAlmacenes, setMostrarAlmacenes] = useState(true);
   const [mostrarMarcas, setMostrarMarcas] = useState(true);
 
-  const handleFormSubmit = (e, tipo) => {
+  const handleFormSubmit = async (e, tipo) => {
     e.preventDefault();
-    if (tipo === 'categoria' && nombreCategoria) {
-      if (editCategoriaIndex !== null) {
-        const updated = categorias.map((item, idx) =>
-          idx === editCategoriaIndex ? { ...item, nombre: nombreCategoria } : item
-        );
-        setCategorias(updated);
-        setEditCategoriaIndex(null);
-      } else {
-        setCategorias([...categorias, { id: idCategoria, nombre: nombreCategoria }]);
-        setIdCategoria(idCategoria + 1);
+    try {
+      if (tipo === 'categoria' && nombreCategoria) {
+        if (editCategoriaIndex !== null) {
+
+          const categoriaEditada = categorias[editCategoriaIndex];
+
+          const datosNuevosCategoria ={
+            id: categoriaEditada.id,
+            nombre: nombreCategoria
+          }
+
+          await actualizarCategoriaRequest(datosNuevosCategoria);
+
+          const updated = categorias.map((item, idx) =>
+            idx === editCategoriaIndex ? { ...item, nombre: nombreCategoria } : item
+          );
+          console.log(updated)
+          setCategorias(updated);
+          setEditCategoriaIndex(null);
+        } else {
+          const data = {
+            nombre: nombreCategoria
+          }
+          await crearCategoriaRequest(data);
+          setCategorias([...categorias, { id: idCategoria, nombre: nombreCategoria }]);
+          setIdCategoria(idCategoria + 1);
+        }
+        setNombreCategoria('');
+      } else if (tipo === 'almacen' && nombreAlmacen) {
+        if (editAlmacenIndex !== null) {
+
+          const almacenEditada = almacenes[editAlmacenIndex]
+
+          const datoNuevosAlmacen ={
+            id : almacenEditada.id,
+            descripcion: nombreAlmacen
+          }
+
+          await actualizarAlmacenRequest(datoNuevosAlmacen);
+
+          const updated = almacenes.map((item, idx) =>
+            idx === editAlmacenIndex ? { ...item, nombre: nombreAlmacen } : item
+          );
+          setAlmacenes(updated);
+          setEditAlmacenIndex(null);
+        } else {
+          const dato2 = {
+            descripcion: nombreAlmacen,
+            cantidad: 0
+          }
+          console.log(dato2)
+          await crearAlmacenRequest(dato2);
+          setAlmacenes([...almacenes, { id: idAlmacen, descripcion: nombreAlmacen }]);
+          setIdAlmacen(idAlmacen + 1);
+        }
+        setNombreAlmacen('');
+      } else if (tipo === 'marca' && nombreMarca) {
+        if (editMarcaIndex !== null) {
+
+          const marcaEditada = marcas[editMarcaIndex]
+
+          const datosNuevosMarca = {
+            id: marcaEditada.id,
+            nombre: nombreMarca
+          }
+
+          await actualizarMarcaRequest(datosNuevosMarca);
+
+          const updated = marcas.map((item, idx) =>
+            idx === editMarcaIndex ? { ...item, nombre: nombreMarca } : item
+          );
+          setMarcas(updated);
+          setEditMarcaIndex(null);
+        } else {
+          const dato3 = {
+            nombre: nombreMarca
+          }
+          await crearMarcaRequest(dato3)
+          console.log(dato3)
+          setMarcas([...marcas, { id: idMarca, nombre: nombreMarca }]);
+          setIdMarca(idMarca + 1);
+        }
+        setNombreMarca('');
       }
-      setNombreCategoria('');
-    } else if (tipo === 'almacen' && nombreAlmacen) {
-      if (editAlmacenIndex !== null) {
-        const updated = almacenes.map((item, idx) =>
-          idx === editAlmacenIndex ? { ...item, nombre: nombreAlmacen } : item
-        );
-        setAlmacenes(updated);
-        setEditAlmacenIndex(null);
-      } else {
-        setAlmacenes([...almacenes, { id: idAlmacen, nombre: nombreAlmacen }]);
-        setIdAlmacen(idAlmacen + 1);
-      }
-      setNombreAlmacen('');
-    } else if (tipo === 'marca' && nombreMarca) {
-      if (editMarcaIndex !== null) {
-        const updated = marcas.map((item, idx) =>
-          idx === editMarcaIndex ? { ...item, nombre: nombreMarca } : item
-        );
-        setMarcas(updated);
-        setEditMarcaIndex(null);
-      } else {
-        setMarcas([...marcas, { id: idMarca, nombre: nombreMarca }]);
-        setIdMarca(idMarca + 1);
-      }
-      setNombreMarca('');
+    } catch (error) {
+      console.log(error)
     }
+
   };
 
   const handleEdit = (index, tipo) => {
@@ -70,13 +126,33 @@ function CategoriaProductPage() {
       setNombreCategoria(categorias[index].nombre);
       setEditCategoriaIndex(index);
     } else if (tipo === 'almacen') {
-      setNombreAlmacen(almacenes[index].nombre);
+      setNombreAlmacen(almacenes[index].descripcion);
       setEditAlmacenIndex(index);
     } else if (tipo === 'marca') {
       setNombreMarca(marcas[index].nombre);
       setEditMarcaIndex(index);
     }
   };
+  
+  useEffect(() => {
+    const cargarDatos = async () => {
+      try {
+        const [resCategorias, resMarcas, resAlmacenes] = await Promise.all([
+          obtenerCategoriaRequest(),
+          obtenerMarcaRequest(),
+          obtenerAlmacenRequest()
+        ]);
+        setCategorias(resCategorias.data); 
+        setMarcas(resMarcas.data);
+        setAlmacenes(resAlmacenes.data);
+      } catch (error) {
+        console.error('Error al cargar datos:', error);
+      }
+    };
+  
+    cargarDatos();
+  }, []);
+
 
   return (
     <div>
@@ -182,7 +258,7 @@ function CategoriaProductPage() {
                 {almacenes.map((item, index) => (
                   <tr key={item.id}>
                     <td>{item.id}</td>
-                    <td>{item.nombre}</td>
+                    <td>{item.descripcion}</td>
                     <td>
                       <button id='butoneditCarac' className="btn btn-warning" onClick={() => handleEdit(index, 'almacen')}>Editar</button>
                     </td>

@@ -146,7 +146,7 @@ const ProductoPage = () => {
                 </div>
                                <div className="form-group">
                     <label htmlFor="Precio">Precio</label>
-                    <input type="number" name="Precio" value={nuevoProducto.precio} onChange={handleInputChange} className='form-control' required />
+                    <input type="number" name="precio" value={nuevoProducto.precio} onChange={handleInputChange} className='form-control' required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="Almacen">Almacén</label>

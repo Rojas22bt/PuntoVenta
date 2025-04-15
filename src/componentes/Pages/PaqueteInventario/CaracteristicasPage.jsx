@@ -37,7 +37,7 @@ function CategoriaProductPage() {
           setCategorias(updated);
           setEditCategoriaIndex(null);
         } else {
-          console.log(categorias);
+          console.log(nombreCategoria);
           setCategorias([...categorias, { id: idCategoria, nombre: nombreCategoria }]);
           setIdCategoria(idCategoria + 1);
         }
@@ -47,10 +47,10 @@ function CategoriaProductPage() {
           const updated = almacenes.map((item, idx) =>
             idx === editAlmacenIndex ? { ...item, nombre: nombreAlmacen } : item
           );
-          console.log(nombreAlmacen)
           setAlmacenes(updated);
           setEditAlmacenIndex(null);
         } else {
+          console.log(nombreAlmacen)
           setAlmacenes([...almacenes, { id: idAlmacen, nombre: nombreAlmacen }]);
           setIdAlmacen(idAlmacen + 1);
         }
@@ -60,10 +60,10 @@ function CategoriaProductPage() {
           const updated = marcas.map((item, idx) =>
             idx === editMarcaIndex ? { ...item, nombre: nombreMarca } : item
           );
-          console.log(nombreMarca)
           setMarcas(updated);
           setEditMarcaIndex(null);
         } else {
+          console.log(nombreMarca)
           setMarcas([...marcas, { id: idMarca, nombre: nombreMarca }]);
           setIdMarca(idMarca + 1);
         }

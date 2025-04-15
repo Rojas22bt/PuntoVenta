@@ -33,7 +33,7 @@ function CategoriaProductPage() {
           const updated = categorias.map((item, idx) =>
             idx === editCategoriaIndex ? { ...item, nombre: nombreCategoria } : item
           );
-          // await crearCategoriaRequest();
+          console.log(updated)
           setCategorias(updated);
           setEditCategoriaIndex(null);
         } else {

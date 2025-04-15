@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import '../../Css/UsuarioPage.css';
 import { useAuth } from '../../../context/AuthContext';
+import { actualizarUsuario } from '../../../api/auth';
 
 function UsuarioPage() {
   const { usuarios, roles } = useAuth();
 
   const [editIndex, setEditIndex] = useState(null);
   const [formData, setFormData] = useState({
+    id: '',
     nombre: '',
     correo: '',
     telefono: '',
@@ -22,6 +24,7 @@ function UsuarioPage() {
     const usuario = usuarios[index];
     setEditIndex(index);
     setFormData({
+      id: usuario.id,
       nombre: usuario.nombre,
       correo: usuario.correo,
       telefono: usuario.telefono,

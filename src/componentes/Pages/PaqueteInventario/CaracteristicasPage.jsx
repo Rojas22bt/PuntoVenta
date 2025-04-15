@@ -55,7 +55,7 @@ function CategoriaProductPage() {
           setEditAlmacenIndex(null);
         } else {
           const dato2 = {
-            nombre: nombreAlmacen,
+            descripcion: nombreAlmacen,
             cantidad: 0
           }
           console.log(dato2)

@@ -52,7 +52,7 @@ const ProductoPage = () => {
                     modelo: nuevoProducto.modelo,
                     stock: Number(nuevoProducto.stock),
                     precio: Number(nuevoProducto.precio),
-                    estado: true,
+                    estado: nuevoProducto.estado === "true",
                     url: "http/img",
                     almacen: Number(nuevoProducto.almacen),
                     categoria: Number(nuevoProducto.categoria),
@@ -187,7 +187,7 @@ const ProductoPage = () => {
                     <label htmlFor="Estado">Estado</label>
                     <select name="estado" value={nuevoProducto.estado} onChange={handleInputChange} className='form-control' required>
                         <option value="">Estado</option>
-                        <option value="Disponible">Disponible</option>
+                        <option value="true">Disponible</option>
                     </select>
                 </div>
                 <div className="form-group">

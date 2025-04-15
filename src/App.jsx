@@ -16,6 +16,7 @@ import CelularesPage from "./componentes/Pages/CelularesPage";
 
 import { AusthProvider } from "./context/AuthContext";
 import HistorialClientePage from "./componentes/Pages/PaqueteUsuario/HistorialClientePage";
+import PerfilUsuarioPage from "./componentes/Pages/PaqueteUsuario/PerfilUsuarioPage";
 
 function App() {
 
@@ -50,7 +51,8 @@ function Main() {
 
 
         <Route path="/historialcliente" element={<HistorialClientePage />} />
-
+        <Route path="/perfilUsuario" element={<PerfilUsuarioPage />} />
+      
       </Routes>
     </>
   )

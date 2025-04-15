@@ -38,14 +38,26 @@ const ProductoPage = () => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (editIndex !== null) {
             const updatedProductos = [...productos];
             updatedProductos[editIndex] = nuevoProducto;
             setProductos(updatedProductos);
         } else {
-            console.log(nuevoProducto)
+            const datos ={
+                nombre: nuevoProducto.nombre,
+                modelo: nuevoProducto.modelo,
+                stock: Number(nuevoProducto.stock),
+                precio: Number(nuevoProducto.precio),
+                estado: true,
+                url: "http/img",
+                almacen: Number(nuevoProducto.almacen),
+                categoria: Number(nuevoProducto.categoria),
+                marca: Number(nuevoProducto.marca)
+
+            }
+            console.log(datos)
             setProductos([...productos, { ...nuevoProducto, productoID: productos.length + 1 }]);
         }
         setNuevoProducto({

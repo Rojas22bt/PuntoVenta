@@ -59,8 +59,8 @@ const ProductoPage = () => {
                     marca: Number(nuevoProducto.marca)
 
                 }
-                await crearProductoRequest(datos)
                 console.log(datos)
+                await crearProductoRequest(datos)
                 setProductos([...productos, { ...nuevoProducto, productoID: productos.length + 1 }]);
             }
             setNuevoProducto({
@@ -181,7 +181,6 @@ const ProductoPage = () => {
                                 {alma.descripcion}
                             </option>
                         ))}
-                        <option value="Almacén A">Almacén A</option>
                     </select>
                 </div>
                 <div className="form-group">

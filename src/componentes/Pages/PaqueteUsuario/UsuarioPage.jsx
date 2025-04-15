@@ -43,6 +43,7 @@ function UsuarioPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+        console.log(formData)
         await actualizarUsuario(formData);
     } catch (err) {
         throw err

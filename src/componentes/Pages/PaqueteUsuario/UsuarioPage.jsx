@@ -4,7 +4,7 @@ import { useAuth } from '../../../context/AuthContext';
 
 function UsuarioPage() {
 
-    const { uss } = useAuth();
+    const { usuarios } = useAuth();
 
     const handleEdit = (index) => {
         setNombreCategoria(productos[index].nombre);
@@ -15,30 +15,7 @@ function UsuarioPage() {
         const updatedProductos = productos.filter((_, i) => i !== index);
         setProductos(updatedProductos);
       };
-    const usuarios = [
-        {
-            usuarioID: 1,
-            UsuarioID: 'U001',
-            Nombre: 'quintero',
-            Correo: 'quintero@example.com',
-            telefono: '12345678',
-            fechanacimiento: '1990-05-15',
-            sexo: 'Masculino',
-            rol: 'Administrador',
-            estado: 'Activo'
-        },
-        {
-            usuarioID: 2,
-            UsuarioID: 'U002',
-            Nombre: 'quintero',
-            Correo: 'quintero@example.com',
-            telefono: '123456781',
-            fechanacimiento: '1990-05-15',
-            sexo: 'Femenino',
-            rol: 'Usuario',
-            estado: 'Inactivo'
-        }
-    ];
+    
 
     return (
         <div className='usuario-container'>
@@ -60,8 +37,8 @@ function UsuarioPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {Array.isArray(uss) && uss.length > 0 ? (
-                                uss.map((usuario) => (
+                            {Array.isArray(usuarios) && usuarios.length > 0 ? (
+                                usuarios.map((usuario) => (
                                     <tr key={usuario.id}>
                                         <td>{usuario.id}</td>
                                         <td>{usuario.nombre}</td>

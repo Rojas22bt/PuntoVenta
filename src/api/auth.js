@@ -36,3 +36,12 @@ export const obtenerRolesRequest = () => {
         timeout: tiempoEspera
     })
 }
+
+
+export const actualizarUsuario = data =>
+    instance.patch(`/usuario/actualizar`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  

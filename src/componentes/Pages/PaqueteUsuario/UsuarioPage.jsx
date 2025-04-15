@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import '../../Css/UsuarioPage.css';
 import { useAuth } from '../../../context/AuthContext';
+import { actualizarUsuario } from '../../../api/auth';
 
 function UsuarioPage() {
   const { usuarios, roles } = useAuth();
   const [filtroLetra, setFiltroLetra] = useState('');
   const [editIndex, setEditIndex] = useState(null);
   const [formData, setFormData] = useState({
+    id: '',
     nombre: '',
     correo: '',
     telefono: '',
@@ -25,6 +27,7 @@ function UsuarioPage() {
     const usuario = usuarios[index];
     setEditIndex(index);
     setFormData({
+      id: usuario.id,
       nombre: usuario.nombre,
       correo: usuario.correo,
       telefono: usuario.telefono,
@@ -40,9 +43,18 @@ function UsuarioPage() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Usuario editado:", formData);
+    const data = {
+        ...formData,
+        estado: formData.estado === "true", // ✅ convierte string a booleano
+      };
+    try {
+        console.log(data)
+        await actualizarUsuario(data);
+    } catch (err) {
+        throw err
+    }
     setEditIndex(null);
     setRefreshKey((prev) => prev + 1); // Actualizamos tabla
   };

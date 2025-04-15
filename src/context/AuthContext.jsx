@@ -34,30 +34,7 @@ export const AusthProvider = ({ children }) =>{
             throw err;
         }
     }
-
-    useEffect(() => {
-        const cargarDatos = async () => {
-          try {
-            const [resCategorias, resMarcas, resAlmacenes] = await Promise.all([
-              obtenerCategoriaRequest(),
-              obtenerMarcaRequest(),
-              obtenerAlmacenRequest()
-            ]);
-            setCategorias(resCategorias.data); 
-            setMarcas(resMarcas.data);
-            setAlmacenes(resAlmacenes.data);
-            console.log(resCategorias.data)
-            console.log(resMarcas.data)
-            console.log(resAlmacenes.data)
-          } catch (error) {
-            console.error('Error al cargar datos:', error);
-          }
-        };
-      
-        cargarDatos();
-      }, []);
     
-
     const cargarDatos = async() =>{
         try {
             const uss = await obtenerUsuariosRequest();
@@ -72,6 +49,9 @@ export const AusthProvider = ({ children }) =>{
               setCategorias(resCategorias.data); 
               setMarcas(resMarcas.data);
               setAlmacenes(resAlmacenes.data);
+              console.log(resCategorias.data)
+              console.log(resMarcas.data)
+              console.log(resAlmacenes.data)
         } catch (err) {
             throw err;
         }

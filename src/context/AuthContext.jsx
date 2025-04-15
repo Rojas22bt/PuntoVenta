@@ -46,6 +46,9 @@ export const AusthProvider = ({ children }) =>{
             setCategorias(resCategorias.data); 
             setMarcas(resMarcas.data);
             setAlmacenes(resAlmacenes.data);
+            console.log(resCategorias.data)
+            console.log(resMarcas.data)
+            console.log(resAlmacenes.data)
           } catch (error) {
             console.error('Error al cargar datos:', error);
           }

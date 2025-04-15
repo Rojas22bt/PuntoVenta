@@ -1,3 +1,4 @@
+import { data } from "react-router-dom";
 import instance from "./axios";
 
 const tiempoEspera = 10000;
@@ -45,3 +46,24 @@ export const actualizarUsuario = data =>
       },
     });
   
+export const crearMarcaRequest = data => instance.post ('/inventario/marca',data,{
+    headers:{
+        "Content-Type" : "application/json"
+    },
+    withCredentials:true
+})
+export const crearCategoriaRequest = data => instance.post ('/inventario/categoria',data,{
+    headers:{
+        "Content-Type" : "application/json"
+    },
+    withCredentials:true
+})
+export const crearAlmacenRequest = data => instance.post ('/inventario/almacen',data,{
+    headers:{
+        "Content-Type" : "application/json"
+    },
+    withCredentials:true
+})
+    '/inventario/marca'
+
+    

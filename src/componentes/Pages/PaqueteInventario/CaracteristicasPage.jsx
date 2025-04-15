@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../Css/CaracteristicasPage.css';
+import { crearMarcaRequest, crearCategoriaRequest, crearAlmacenRequest } from '../../../api/auth';
 
 function CategoriaProductPage() {
   // Estados para Categoría
@@ -24,45 +25,54 @@ function CategoriaProductPage() {
   const [mostrarAlmacenes, setMostrarAlmacenes] = useState(true);
   const [mostrarMarcas, setMostrarMarcas] = useState(true);
 
-  const handleFormSubmit = (e, tipo) => {
+  const handleFormSubmit = async (e, tipo) => {
     e.preventDefault();
-    if (tipo === 'categoria' && nombreCategoria) {
-      if (editCategoriaIndex !== null) {
-        const updated = categorias.map((item, idx) =>
-          idx === editCategoriaIndex ? { ...item, nombre: nombreCategoria } : item
-        );
-        setCategorias(updated);
-        setEditCategoriaIndex(null);
-      } else {
-        setCategorias([...categorias, { id: idCategoria, nombre: nombreCategoria }]);
-        setIdCategoria(idCategoria + 1);
+    try {
+      if (tipo === 'categoria' && nombreCategoria) {
+        if (editCategoriaIndex !== null) {
+          const updated = categorias.map((item, idx) =>
+            idx === editCategoriaIndex ? { ...item, nombre: nombreCategoria } : item
+          );
+          // await crearCategoriaRequest();
+          console.log(nombreCategoria);
+          setCategorias(updated);
+          setEditCategoriaIndex(null);
+        } else {
+          setCategorias([...categorias, { id: idCategoria, nombre: nombreCategoria }]);
+          setIdCategoria(idCategoria + 1);
+        }
+        setNombreCategoria('');
+      } else if (tipo === 'almacen' && nombreAlmacen) {
+        if (editAlmacenIndex !== null) {
+          const updated = almacenes.map((item, idx) =>
+            idx === editAlmacenIndex ? { ...item, nombre: nombreAlmacen } : item
+          );
+          console.log(nombreAlmacen)
+          setAlmacenes(updated);
+          setEditAlmacenIndex(null);
+        } else {
+          setAlmacenes([...almacenes, { id: idAlmacen, nombre: nombreAlmacen }]);
+          setIdAlmacen(idAlmacen + 1);
+        }
+        setNombreAlmacen('');
+      } else if (tipo === 'marca' && nombreMarca) {
+        if (editMarcaIndex !== null) {
+          const updated = marcas.map((item, idx) =>
+            idx === editMarcaIndex ? { ...item, nombre: nombreMarca } : item
+          );
+          console.log(nombreMarca)
+          setMarcas(updated);
+          setEditMarcaIndex(null);
+        } else {
+          setMarcas([...marcas, { id: idMarca, nombre: nombreMarca }]);
+          setIdMarca(idMarca + 1);
+        }
+        setNombreMarca('');
       }
-      setNombreCategoria('');
-    } else if (tipo === 'almacen' && nombreAlmacen) {
-      if (editAlmacenIndex !== null) {
-        const updated = almacenes.map((item, idx) =>
-          idx === editAlmacenIndex ? { ...item, nombre: nombreAlmacen } : item
-        );
-        setAlmacenes(updated);
-        setEditAlmacenIndex(null);
-      } else {
-        setAlmacenes([...almacenes, { id: idAlmacen, nombre: nombreAlmacen }]);
-        setIdAlmacen(idAlmacen + 1);
-      }
-      setNombreAlmacen('');
-    } else if (tipo === 'marca' && nombreMarca) {
-      if (editMarcaIndex !== null) {
-        const updated = marcas.map((item, idx) =>
-          idx === editMarcaIndex ? { ...item, nombre: nombreMarca } : item
-        );
-        setMarcas(updated);
-        setEditMarcaIndex(null);
-      } else {
-        setMarcas([...marcas, { id: idMarca, nombre: nombreMarca }]);
-        setIdMarca(idMarca + 1);
-      }
-      setNombreMarca('');
+    } catch (error) {
+      console.log(error)
     }
+
   };
 
   const handleEdit = (index, tipo) => {

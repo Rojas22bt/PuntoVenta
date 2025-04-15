@@ -1,5 +1,5 @@
 import { createContext , useState, useContext, useEffect } from "react";
-import { loginRequest,obtenerUsuariosRequest } from "../api/auth";
+import { loginRequest,obtenerUsuariosRequest,obtenerRolesRequest } from "../api/auth";
 
 
 const AuthContext = createContext();
@@ -16,7 +16,8 @@ export const AusthProvider = ({ children }) =>{
 
     const [ user, setUser ] = useState([]);
     const [ loading, setLoading] = useState(true);
-    const [usuarios, setUsuarios] = useState([])
+    const [usuarios, setUsuarios] = useState([]);
+    const [roles, setRoles] = useState([]);
 
     const signin = async ( user ) =>{
         try {
@@ -32,7 +33,10 @@ export const AusthProvider = ({ children }) =>{
     const cargarDatos = async() =>{
         try {
             const uss = await obtenerUsuariosRequest();
+            const ross = await obtenerRolesRequest();
             setUsuarios(uss.data)
+            setRoles(ross.data)
+            console.log(ross.data)
             console.log(uss.data)
         } catch (err) {
             throw err;
@@ -70,6 +74,7 @@ export const AusthProvider = ({ children }) =>{
             signin,
             cargarDatos,
             user,
+            roles,
             usuarios
         }}>
             { children }

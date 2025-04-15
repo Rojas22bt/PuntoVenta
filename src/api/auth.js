@@ -29,3 +29,10 @@ export const obtenerUsuariosRequest = () => {
         timeout: tiempoEspera
     })
 }
+
+export const obtenerRolesRequest = () => {
+    return instance.get('/roles',{
+        withCredentials: true,
+        timeout: tiempoEspera
+    })
+}

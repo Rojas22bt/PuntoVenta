@@ -109,12 +109,9 @@ function CategoriaProductPage() {
           obtenerMarcaRequest(),
           obtenerAlmacenRequest()
         ]);
-        console.log(resCategorias.data)
-        console.log(resMarcas.data)
-        console.log(resAlmacenes.data)
-        // setCategorias(resCategorias.data); 
-        // setMarcas(resMarcas.data);
-        // setAlmacenes(resAlmacenes.data);
+        setCategorias(resCategorias.data); 
+        setMarcas(resMarcas.data);
+        setAlmacenes(resAlmacenes.data);
       } catch (error) {
         console.error('Error al cargar datos:', error);
       }
@@ -228,7 +225,7 @@ function CategoriaProductPage() {
                 {almacenes.map((item, index) => (
                   <tr key={item.id}>
                     <td>{item.id}</td>
-                    <td>{item.nombre}</td>
+                    <td>{item.descripcion}</td>
                     <td>
                       <button id='butoneditCarac' className="btn btn-warning" onClick={() => handleEdit(index, 'almacen')}>Editar</button>
                     </td>

@@ -72,7 +72,7 @@ function CategoriaProductPage() {
           await actualizarAlmacenRequest(datoNuevosAlmacen);
 
           const updated = almacenes.map((item, idx) =>
-            idx === editAlmacenIndex ? { ...item, descripcion: nombreAlmacen } : item
+            idx === editAlmacenIndex ? { ...item, nombre: nombreAlmacen } : item
           );
           setAlmacenes(updated);
           setEditAlmacenIndex(null);
@@ -83,7 +83,7 @@ function CategoriaProductPage() {
           }
           console.log(dato2)
           await crearAlmacenRequest(dato2);
-          setAlmacenes([...almacenes, { id: idAlmacen, descripcion: nombreAlmacen }]);
+          setAlmacenes([...almacenes, { id: idAlmacen, nombre: nombreAlmacen }]);
           setIdAlmacen(idAlmacen + 1);
         }
         setNombreAlmacen('');

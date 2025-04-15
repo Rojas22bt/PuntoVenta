@@ -34,10 +34,10 @@ function CategoriaProductPage() {
             idx === editCategoriaIndex ? { ...item, nombre: nombreCategoria } : item
           );
           // await crearCategoriaRequest();
-          console.log(nombreCategoria);
           setCategorias(updated);
           setEditCategoriaIndex(null);
         } else {
+          console.log(categorias);
           setCategorias([...categorias, { id: idCategoria, nombre: nombreCategoria }]);
           setIdCategoria(idCategoria + 1);
         }

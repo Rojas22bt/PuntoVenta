@@ -35,7 +35,7 @@ const LoginPage = () => {
           
               console.log(datos);
           
-              const response = await signin(datos); // Esto ya devuelve la respuesta
+              await signin(datos); // Esto ya devuelve la respuesta
               await cargarDatos();
               navigate('/producto')
           

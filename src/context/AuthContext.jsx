@@ -23,7 +23,7 @@ export const AusthProvider = ({ children }) =>{
         try {
             const res = await loginRequest(user);
             console.log(res.data.usuario)
-            setUser(res.data);
+            setUser(res.data.usuario);
             // localStorage.setItem('token', res.data.token);
         } catch (err) {
             throw err;

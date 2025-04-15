@@ -4,7 +4,7 @@ import { useAuth } from '../../../context/AuthContext';
 
 function UsuarioPage() {
   const { usuarios, roles } = useAuth();
-
+  const [filtroLetra, setFiltroLetra] = useState('');
   const [editIndex, setEditIndex] = useState(null);
   const [formData, setFormData] = useState({
     nombre: '',
@@ -17,6 +17,9 @@ function UsuarioPage() {
   });
 
   const [filtroCorreo, setFiltroCorreo] = useState('');
+  const [filtroSexo, setFiltroSexo] = useState('');
+  const [filtroEstado, setFiltroEstado] = useState('');
+  const [refreshKey, setRefreshKey] = useState(0); // Forzamos renderizado con refresh
 
   const handleEdit = (index) => {
     const usuario = usuarios[index];
@@ -41,6 +44,7 @@ function UsuarioPage() {
     e.preventDefault();
     console.log("Usuario editado:", formData);
     setEditIndex(null);
+    setRefreshKey((prev) => prev + 1); // Actualizamos tabla
   };
 
   const handleCancel = () => {
@@ -56,44 +60,138 @@ function UsuarioPage() {
     });
   };
 
+  const handleRefresh = () => {
+    setFiltroCorreo('');
+    setFiltroSexo('');
+    setFiltroEstado('');
+    setRefreshKey((prev) => prev + 1); // Forzar refresh de la tabla
+  };
+
+  const usuariosFiltrados = usuarios
+  .filter((u) =>
+    u.correo.toLowerCase().includes(filtroCorreo.toLowerCase())
+  )
+  .filter((u) => (filtroSexo ? u.sexo === filtroSexo : true))
+  .filter((u) =>
+    filtroEstado !== '' ? u.estado === (filtroEstado === 'true') : true
+  )
+  .filter((u) =>
+    filtroLetra ? u.nombre.toUpperCase().startsWith(filtroLetra) : true
+  );
+
+
   return (
     <div className="usuario-container">
-      <div className="titulo-busqueda">
-        <h1>Lista de Usuarios</h1>
-        <input
-          type="text"
-          className="form-control buscador-gmail"
-          placeholder="Buscar por Gmail"
-          value={filtroCorreo}
-          onChange={(e) => setFiltroCorreo(e.target.value)}
-        />
-      </div>
+      <h1>Lista de Usuarios</h1>
+
+      <div className="filtros-horizontal">
+  <input
+    type="text"
+    className="form-control"
+    placeholder="Buscar por Gmail"
+    value={filtroCorreo}
+    onChange={(e) => setFiltroCorreo(e.target.value)}
+  />
+
+  <input
+    type="text"
+    className="form-control"
+    placeholder="Buscar por letra (A-Z)"
+    maxLength="1"
+    value={filtroLetra}
+    onChange={(e) => setFiltroLetra(e.target.value.toUpperCase())}
+  />
+
+  <select
+    className="form-control"
+    value={filtroSexo}
+    onChange={(e) => setFiltroSexo(e.target.value)}
+  >
+    <option value="">Todos los sexos</option>
+    <option value="M">Masculino</option>
+    <option value="F">Femenino</option>
+  </select>
+
+  <select
+    className="form-control"
+    value={filtroEstado}
+    onChange={(e) => setFiltroEstado(e.target.value)}
+  >
+    <option value="">Todos los estados</option>
+    <option value="true">Activo</option>
+    <option value="false">Inactivo</option>
+  </select>
+
+  <button className="btn btn-primary w-50" onClick={handleRefresh}>
+    Refrescar
+  </button>
+</div>
 
       {editIndex !== null && (
         <div className="usuario-form">
           <h3>Editar Usuario</h3>
           <form onSubmit={handleSubmit}>
             <label>Nombre</label>
-            <input type="text" name="nombre" className="form-control" value={formData.nombre} onChange={handleChange} required />
+            <input
+              type="text"
+              name="nombre"
+              className="form-control"
+              value={formData.nombre}
+              onChange={handleChange}
+              required
+            />
 
             <label>Correo</label>
-            <input type="email" name="correo" className="form-control" value={formData.correo} onChange={handleChange} required />
+            <input
+              type="email"
+              name="correo"
+              className="form-control"
+              value={formData.correo}
+              onChange={handleChange}
+              required
+            />
 
             <label>Telefono</label>
-            <input type="text" name="telefono" className="form-control" value={formData.telefono} onChange={handleChange} required />
+            <input
+              type="text"
+              name="telefono"
+              className="form-control"
+              value={formData.telefono}
+              onChange={handleChange}
+              required
+            />
 
             <label>Fecha de nacimiento</label>
-            <input type="date" name="fecha_nacimiento" className="form-control" value={formData.fecha_nacimiento} onChange={handleChange} required />
+            <input
+              type="date"
+              name="fecha_nacimiento"
+              className="form-control"
+              value={formData.fecha_nacimiento}
+              onChange={handleChange}
+              required
+            />
 
             <label>Género</label>
-            <select name="sexo" className="form-control" value={formData.sexo} onChange={handleChange} required>
+            <select
+              name="sexo"
+              className="form-control"
+              value={formData.sexo}
+              onChange={handleChange}
+              required
+            >
               <option value="">Seleccione sexo</option>
               <option value="M">Masculino</option>
               <option value="F">Femenino</option>
             </select>
 
             <label>Tipo de rol</label>
-            <select name="rol" className="form-control" value={formData.rol} onChange={handleChange} required>
+            <select
+              name="rol"
+              className="form-control"
+              value={formData.rol}
+              onChange={handleChange}
+              required
+            >
               <option value="">Seleccione rol</option>
               {roles.map((rol) => (
                 <option key={rol.id} value={rol.id}>
@@ -103,14 +201,28 @@ function UsuarioPage() {
             </select>
 
             <label>Estado del usuario</label>
-            <select name="estado" className="form-control" value={formData.estado} onChange={handleChange} required>
+            <select
+              name="estado"
+              className="form-control"
+              value={formData.estado}
+              onChange={handleChange}
+              required
+            >
               <option value={true}>Activo</option>
               <option value={false}>Inactivo</option>
             </select>
 
             <div className="botones-formulario">
-              <button type="submit" className="btn btn-primary">Guardar Cambios</button>
-              <button type="button" className="btn btn-danger" onClick={handleCancel}>Cancelar Cambios</button>
+              <button type="submit" className="btn btn-primary">
+                Guardar Cambios
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={handleCancel}
+              >
+                Cancelar Cambios
+              </button>
             </div>
           </form>
         </div>
@@ -132,24 +244,27 @@ function UsuarioPage() {
             </tr>
           </thead>
           <tbody>
-            {Array.isArray(usuarios) && usuarios.length > 0 ? (
-              usuarios
-                .filter((u) => u.correo.toLowerCase().includes(filtroCorreo.toLowerCase()))
-                .map((usuario, index) => (
-                  <tr key={usuario.id}>
-                    <td>{usuario.id}</td>
-                    <td>{usuario.nombre}</td>
-                    <td>{usuario.correo}</td>
-                    <td>{usuario.telefono}</td>
-                    <td>{usuario.fecha_nacimiento}</td>
-                    <td>{usuario.sexo}</td>
-                    <td>{roles.find((r) => r.id === usuario.rol)?.nombre || usuario.rol}</td>
-                    <td>{usuario.estado ? 'Activo' : 'Inactivo'}</td>
-                    <td>
-                      <button onClick={() => handleEdit(index)} className="btn btn-warning">Editar</button>
-                    </td>
-                  </tr>
-                ))
+            {Array.isArray(usuariosFiltrados) && usuariosFiltrados.length > 0 ? (
+              usuariosFiltrados.map((usuario, index) => (
+                <tr key={usuario.id}>
+                  <td>{usuario.id}</td>
+                  <td>{usuario.nombre}</td>
+                  <td>{usuario.correo}</td>
+                  <td>{usuario.telefono}</td>
+                  <td>{usuario.fecha_nacimiento}</td>
+                  <td>{usuario.sexo}</td>
+                  <td>{roles.find((r) => r.id === usuario.rol)?.nombre || usuario.rol}</td>
+                  <td>{usuario.estado ? 'Activo' : 'Inactivo'}</td>
+                  <td>
+                    <button
+                      onClick={() => handleEdit(index)}
+                      className="btn btn-warning"
+                    >
+                      Editar
+                    </button>
+                  </td>
+                </tr>
+              ))
             ) : (
               <tr>
                 <td colSpan="9">No se encontraron registros de usuarios.</td>

@@ -98,16 +98,16 @@ const ProductoPage = () => {
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="Nombre">Nombre</label>
-                    <input type="text" name="Nombre" value={nuevoProducto.nombre} onChange={handleInputChange} className='form-control' required />
+                    <input type="text" name="nombre" value={nuevoProducto.nombre} onChange={handleInputChange} className='form-control' required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="Modelo">Modelo</label>
-                    <input type="text" name="Modelo" value={nuevoProducto.modelo} onChange={handleInputChange} className='form-control' required />
+                    <input type="text" name="modelo" value={nuevoProducto.modelo} onChange={handleInputChange} className='form-control' required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="Marca">Marca</label>
                     <select 
-                    name="Marca" 
+                    name="marca" 
                     value={nuevoProducto.marca} 
                     onChange={handleInputChange} 
                     className='form-control' 
@@ -126,7 +126,7 @@ const ProductoPage = () => {
                 <div className="form-group">
                     <label htmlFor="Categoria">Categoría</label>
                     <select 
-                    name="Categoria" 
+                    name="categoria" 
                     value={nuevoProducto.categoria} 
                     onChange={handleInputChange} 
                     className='form-control' 
@@ -142,7 +142,7 @@ const ProductoPage = () => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="Stock">Stock</label>
-                    <input type="number" name="Stock" value={nuevoProducto.stock} onChange={handleInputChange} className='form-control' required />
+                    <input type="number" name="stock" value={nuevoProducto.stock} onChange={handleInputChange} className='form-control' required />
                 </div>
                                <div className="form-group">
                     <label htmlFor="Precio">Precio</label>
@@ -151,7 +151,7 @@ const ProductoPage = () => {
                 <div className="form-group">
                     <label htmlFor="Almacen">Almacén</label>
                     <select 
-                    name="Almacen" 
+                    name="almacen" 
                     value={nuevoProducto.almacen} 
                     onChange={handleInputChange} 
                     className='form-control' 
@@ -168,13 +168,13 @@ const ProductoPage = () => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="Estado">Estado</label>
-                    <select name="Estado" value={nuevoProducto.estado} onChange={handleInputChange} className='form-control' required>
+                    <select name="estado" value={nuevoProducto.estado} onChange={handleInputChange} className='form-control' required>
                         <option value="">Estado</option>
                         <option value="Disponible">Disponible</option>
                     </select>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="Imagen">Imagen</label>
+                    <label htmlFor="imagen">Imagen</label>
                     <input 
                         type="file" 
                         name="Imagen" 

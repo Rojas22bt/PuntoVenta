@@ -38,9 +38,10 @@ export const obtenerRolesRequest = () => {
 }
 
 
-export const actualizarUsuario = user => instance.patch(`/usuario/actualizar`, {
-    data: user,
-    headers: {
+export const actualizarUsuario = data =>
+    instance.patch(`/usuario/actualizar`, data, {
+      headers: {
         'Content-Type': 'application/json',
-    },
-});
+      },
+    });
+  

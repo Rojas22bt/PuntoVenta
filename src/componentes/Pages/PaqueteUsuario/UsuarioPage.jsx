@@ -16,6 +16,8 @@ function UsuarioPage() {
     estado: true,
   });
 
+  const [filtroCorreo, setFiltroCorreo] = useState('');
+
   const handleEdit = (index) => {
     const usuario = usuarios[index];
     setEditIndex(index);
@@ -38,34 +40,59 @@ function UsuarioPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Usuario editado:", formData);
-    // Aquí deberías llamar a una función para hacer el update en el backend
     setEditIndex(null);
   };
 
+  const handleCancel = () => {
+    setEditIndex(null);
+    setFormData({
+      nombre: '',
+      correo: '',
+      telefono: '',
+      fecha_nacimiento: '',
+      sexo: '',
+      rol: '',
+      estado: true,
+    });
+  };
 
   return (
     <div className="usuario-container">
-      <h1>Lista de Usuarios</h1>
+      <div className="titulo-busqueda">
+        <h1>Lista de Usuarios</h1>
+        <input
+          type="text"
+          className="form-control buscador-gmail"
+          placeholder="Buscar por Gmail"
+          value={filtroCorreo}
+          onChange={(e) => setFiltroCorreo(e.target.value)}
+        />
+      </div>
 
       {editIndex !== null && (
         <div className="usuario-form">
           <h3>Editar Usuario</h3>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="">Nombre</label>
-            <input type="text" name="nombre" placeholder="Nombre" className="form-control" value={formData.nombre} onChange={handleChange} required />
-            <label htmlFor="">Correo</label>
-            <input type="email" name="correo" placeholder="Correo" className="form-control" value={formData.correo} onChange={handleChange} required />
-            <label htmlFor="">Telefono</label>
-            <input type="text" name="telefono" placeholder="Teléfono" className="form-control" value={formData.telefono} onChange={handleChange} required />
-            <label htmlFor="">Fechaa de nacimiento</label>
+            <label>Nombre</label>
+            <input type="text" name="nombre" className="form-control" value={formData.nombre} onChange={handleChange} required />
+
+            <label>Correo</label>
+            <input type="email" name="correo" className="form-control" value={formData.correo} onChange={handleChange} required />
+
+            <label>Telefono</label>
+            <input type="text" name="telefono" className="form-control" value={formData.telefono} onChange={handleChange} required />
+
+            <label>Fecha de nacimiento</label>
             <input type="date" name="fecha_nacimiento" className="form-control" value={formData.fecha_nacimiento} onChange={handleChange} required />
-            <label htmlFor="">Genero</label>
+
+            <label>Género</label>
             <select name="sexo" className="form-control" value={formData.sexo} onChange={handleChange} required>
               <option value="">Seleccione sexo</option>
               <option value="M">Masculino</option>
               <option value="F">Femenino</option>
             </select>
-            <label htmlFor="">Tipo de rol</label>
+
+            <label>Tipo de rol</label>
             <select name="rol" className="form-control" value={formData.rol} onChange={handleChange} required>
               <option value="">Seleccione rol</option>
               {roles.map((rol) => (
@@ -74,13 +101,17 @@ function UsuarioPage() {
                 </option>
               ))}
             </select>
-            <label htmlFor="">Estado del usuario</label>  
+
+            <label>Estado del usuario</label>
             <select name="estado" className="form-control" value={formData.estado} onChange={handleChange} required>
               <option value={true}>Activo</option>
               <option value={false}>Inactivo</option>
             </select>
 
-            <button type="submit" className="btn btn-primary">Guardar Cambios</button>
+            <div className="botones-formulario">
+              <button type="submit" className="btn btn-primary">Guardar Cambios</button>
+              <button type="button" className="btn btn-secondary" onClick={handleCancel}>Cancelar Cambios</button>
+            </div>
           </form>
         </div>
       )}
@@ -102,21 +133,23 @@ function UsuarioPage() {
           </thead>
           <tbody>
             {Array.isArray(usuarios) && usuarios.length > 0 ? (
-              usuarios.map((usuario, index) => (
-                <tr key={usuario.id}>
-                  <td>{usuario.id}</td>
-                  <td>{usuario.nombre}</td>
-                  <td>{usuario.correo}</td>
-                  <td>{usuario.telefono}</td>
-                  <td>{usuario.fecha_nacimiento}</td>
-                  <td>{usuario.sexo}</td>
-                  <td>{roles.find((r) => r.id === usuario.rol)?.nombre || usuario.rol}</td>
-                  <td>{usuario.estado ? 'Activo' : 'Inactivo'}</td>
-                  <td>
-                    <button onClick={() => handleEdit(index)} className="btn btn-warning">Editar</button>
-                  </td>
-                </tr>
-              ))
+              usuarios
+                .filter((u) => u.correo.toLowerCase().includes(filtroCorreo.toLowerCase()))
+                .map((usuario, index) => (
+                  <tr key={usuario.id}>
+                    <td>{usuario.id}</td>
+                    <td>{usuario.nombre}</td>
+                    <td>{usuario.correo}</td>
+                    <td>{usuario.telefono}</td>
+                    <td>{usuario.fecha_nacimiento}</td>
+                    <td>{usuario.sexo}</td>
+                    <td>{roles.find((r) => r.id === usuario.rol)?.nombre || usuario.rol}</td>
+                    <td>{usuario.estado ? 'Activo' : 'Inactivo'}</td>
+                    <td>
+                      <button onClick={() => handleEdit(index)} className="btn btn-warning">Editar</button>
+                    </td>
+                  </tr>
+                ))
             ) : (
               <tr>
                 <td colSpan="9">No se encontraron registros de usuarios.</td>

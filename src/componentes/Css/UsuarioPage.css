@@ -69,4 +69,25 @@
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
     border-radius: 8px;
   }
+  .titulo-busqueda {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0 30px 0;
+  }
+  
+  .buscador-gmail {
+    max-width: 300px;
+    margin-left: 20px;
+  }
+  
+  .botones-formulario {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .botones-formulario .btn {
+    width: 48%;
+  }
   

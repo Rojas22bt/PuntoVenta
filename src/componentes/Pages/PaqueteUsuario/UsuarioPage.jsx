@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import React, { useState, useEffect } from 'react';
 import '../../Css/UsuarioPage.css';
 import { useAuth } from '../../../context/AuthContext';
 import { actualizarUsuario, obtenerUsuariosRequest } from '../../../api/auth';

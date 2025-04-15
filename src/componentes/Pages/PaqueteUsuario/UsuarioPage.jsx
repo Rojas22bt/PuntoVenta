@@ -4,7 +4,7 @@ import { useAuth } from '../../../context/AuthContext';
 import { actualizarUsuario, obtenerUsuariosRequest } from '../../../api/auth';
 
 function UsuarioPage() {
-  const { usuarios, roles, setUsuarios } = useAuth(); // Asegúrate que `setUsuarios` exista en el context
+  const { usuarios, roles, setUsuarios, cargarDatos } = useAuth(); // Asegúrate que `setUsuarios` exista en el context
   const [filtroLetra, setFiltroLetra] = useState('');
   const [editIndex, setEditIndex] = useState(null);
   const [formData, setFormData] = useState({
@@ -72,8 +72,7 @@ function UsuarioPage() {
 
   const handleRefresh = async () => {
     try {
-      const nuevosUsuarios = await obtenerUsuariosRequest();
-      setUsuarios(nuevosUsuarios.data);
+      await cargarDatos();
     } catch (error) {
         console.log(error)
     }

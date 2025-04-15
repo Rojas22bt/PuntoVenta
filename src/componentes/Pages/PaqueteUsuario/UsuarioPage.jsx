@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../Css/UsuarioPage.css';
 import { useAuth } from '../../../context/AuthContext';
-import { actualizarUsuario } from '../../../api/auth';
+import { actualizarUsuario, obtenerUsuarios } from '../../../api/auth'; // 👈 importa la función que recupera usuarios
 
 function UsuarioPage() {
-  const { usuarios, roles } = useAuth();
+  const { usuarios, roles, setUsuarios } = useAuth(); // Asegúrate que `setUsuarios` exista en el context
   const [filtroLetra, setFiltroLetra] = useState('');
   const [editIndex, setEditIndex] = useState(null);
   const [formData, setFormData] = useState({
@@ -21,7 +21,6 @@ function UsuarioPage() {
   const [filtroCorreo, setFiltroCorreo] = useState('');
   const [filtroSexo, setFiltroSexo] = useState('');
   const [filtroEstado, setFiltroEstado] = useState('');
-  const [refreshKey, setRefreshKey] = useState(0); // Forzamos renderizado con refresh
 
   const handleEdit = (index) => {
     const usuario = usuarios[index];
@@ -46,17 +45,16 @@ function UsuarioPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
-        ...formData,
-        estado: formData.estado === "true", // ✅ convierte string a booleano
-      };
+      ...formData,
+      estado: formData.estado === "true" || formData.estado === true,
+    };
     try {
-        console.log(data)
-        await actualizarUsuario(data);
+      await actualizarUsuario(data);
+      await fetchUsuarios(); // 👈 recargamos usuarios luego de editar
     } catch (err) {
-        throw err
+      console.error(err);
     }
     setEditIndex(null);
-    setRefreshKey((prev) => prev + 1); // Actualizamos tabla
   };
 
   const handleCancel = () => {
@@ -72,72 +70,81 @@ function UsuarioPage() {
     });
   };
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     setFiltroCorreo('');
     setFiltroSexo('');
     setFiltroEstado('');
-    setRefreshKey((prev) => prev + 1); // Forzar refresh de la tabla
+    setFiltroLetra('');
+    await fetchUsuarios(); // 👈 fuerza recarga
+  };
+
+  const fetchUsuarios = async () => {
+    try {
+      const nuevosUsuarios = await obtenerUsuarios();
+      setUsuarios(nuevosUsuarios);
+    } catch (err) {
+      console.error("Error al obtener usuarios:", err);
+    }
   };
 
   const usuariosFiltrados = usuarios
-  .filter((u) =>
-    u.correo.toLowerCase().includes(filtroCorreo.toLowerCase())
-  )
-  .filter((u) => (filtroSexo ? u.sexo === filtroSexo : true))
-  .filter((u) =>
-    filtroEstado !== '' ? u.estado === (filtroEstado === 'true') : true
-  )
-  .filter((u) =>
-    filtroLetra ? u.nombre.toUpperCase().startsWith(filtroLetra) : true
-  );
-
+    .filter((u) =>
+      u.correo.toLowerCase().includes(filtroCorreo.toLowerCase())
+    )
+    .filter((u) => (filtroSexo ? u.sexo === filtroSexo : true))
+    .filter((u) =>
+      filtroEstado !== '' ? u.estado === (filtroEstado === 'true') : true
+    )
+    .filter((u) =>
+      filtroLetra ? u.nombre.toUpperCase().startsWith(filtroLetra) : true
+    );
 
   return (
     <div className="usuario-container">
       <h1>Lista de Usuarios</h1>
 
       <div className="filtros-horizontal">
-  <input
-    type="text"
-    className="form-control"
-    placeholder="Buscar por Gmail"
-    value={filtroCorreo}
-    onChange={(e) => setFiltroCorreo(e.target.value)}
-  />
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Buscar por Gmail"
+          value={filtroCorreo}
+          onChange={(e) => setFiltroCorreo(e.target.value)}
+        />
 
-  <input
-    type="text"
-    className="form-control"
-    placeholder="Buscar por letra (A-Z)"
-    maxLength="1"
-    value={filtroLetra}
-    onChange={(e) => setFiltroLetra(e.target.value.toUpperCase())}
-  />
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Buscar por letra (A-Z)"
+          maxLength="1"
+          value={filtroLetra}
+          onChange={(e) => setFiltroLetra(e.target.value.toUpperCase())}
+        />
 
-  <select
-    className="form-control"
-    value={filtroSexo}
-    onChange={(e) => setFiltroSexo(e.target.value)}
-  >
-    <option value="">Todos los sexos</option>
-    <option value="M">Masculino</option>
-    <option value="F">Femenino</option>
-  </select>
+        <select
+          className="form-control"
+          value={filtroSexo}
+          onChange={(e) => setFiltroSexo(e.target.value)}
+        >
+          <option value="">Todos los sexos</option>
+          <option value="M">Masculino</option>
+          <option value="F">Femenino</option>
+        </select>
 
-  <select
-    className="form-control"
-    value={filtroEstado}
-    onChange={(e) => setFiltroEstado(e.target.value)}
-  >
-    <option value="">Todos los estados</option>
-    <option value="true">Activo</option>
-    <option value="false">Inactivo</option>
-  </select>
+        <select
+          className="form-control"
+          value={filtroEstado}
+          onChange={(e) => setFiltroEstado(e.target.value)}
+        >
+          <option value="">Todos los estados</option>
+          <option value="true">Activo</option>
+          <option value="false">Inactivo</option>
+        </select>
 
-  <button className="btn btn-primary w-50" onClick={handleRefresh}>
-    Refrescar
-  </button>
-</div>
+        <button className="btn btn-primary w-50" onClick={handleRefresh}>
+          Refrescar
+        </button>
+      </div>
 
       {editIndex !== null && (
         <div className="usuario-form">
@@ -159,8 +166,7 @@ function UsuarioPage() {
               name="correo"
               className="form-control"
               value={formData.correo}
-              onChange={handleChange}
-              required
+              disabled
             />
 
             <label>Telefono</label>
@@ -179,8 +185,7 @@ function UsuarioPage() {
               name="fecha_nacimiento"
               className="form-control"
               value={formData.fecha_nacimiento}
-              onChange={handleChange}
-              required
+              disabled
             />
 
             <label>Género</label>
@@ -188,8 +193,7 @@ function UsuarioPage() {
               name="sexo"
               className="form-control"
               value={formData.sexo}
-              onChange={handleChange}
-              required
+              disabled
             >
               <option value="">Seleccione sexo</option>
               <option value="M">Masculino</option>

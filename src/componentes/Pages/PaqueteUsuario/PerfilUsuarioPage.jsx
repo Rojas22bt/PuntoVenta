@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../Css/PerfilUsuarioPage.Css';
+import '../../Css/PerfilUsuarioPage.css';
 
 function PerfilUsuarioPage() {
     const [nombreUsuario] = useState('Vini Vini');

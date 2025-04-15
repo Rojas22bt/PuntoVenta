@@ -1,6 +1,5 @@
 import React from 'react'
 import '../../Css/ComentarioPage.css'
-
 function ComentarioPage() {
     return (
         <div className='ComentarioConteiner'>

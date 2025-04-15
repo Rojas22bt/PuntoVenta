@@ -71,17 +71,16 @@ function UsuarioPage() {
   };
 
   const handleRefresh = async () => {
-    await fetchUsuarios();
-  };
-
-  const fetchUsuarios = async () => {
     try {
       const nuevosUsuarios = await obtenerUsuariosRequest();
       setUsuarios(nuevosUsuarios.data);
-    } catch (err) {
-      console.error("Error al obtener usuarios:", err);
+    } catch (error) {
+        console.log(error)
     }
+
   };
+
+
   
 
   const usuariosFiltrados = usuarios

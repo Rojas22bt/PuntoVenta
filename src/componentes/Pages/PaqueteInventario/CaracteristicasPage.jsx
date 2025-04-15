@@ -83,7 +83,7 @@ function CategoriaProductPage() {
           }
           console.log(dato2)
           await crearAlmacenRequest(dato2);
-          setAlmacenes([...almacenes, { id: idAlmacen, nombre: nombreAlmacen }]);
+          setAlmacenes([...almacenes, { id: idAlmacen, descripcion: nombreAlmacen }]);
           setIdAlmacen(idAlmacen + 1);
         }
         setNombreAlmacen('');

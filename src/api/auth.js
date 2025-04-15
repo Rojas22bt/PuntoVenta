@@ -89,4 +89,25 @@ export const obtenerAlmacenRequest = () =>{
         timeout: tiempoEspera
     })
 }
-    
+   
+export const actualizarMarcaRequest = data => instance.patch('/inventario/actualizar-marca',
+    data,{
+        headers: {
+            'Content-Type': 'application/json',
+          },  
+    }
+)
+export const actualizarCategoriaRequest = data => instance.patch('/inventario/actualizar-categoria',
+    data,{
+        headers: {
+            'Content-Type': 'application/json',
+          },  
+    }
+)
+export const actualizarAlmacenRequest = data => instance.patch('/inventario/actualizar-almacen',
+    data,{
+        headers: {
+            'Content-Type': 'application/json',
+          },  
+    }
+)

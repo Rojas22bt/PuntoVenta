@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import '../../Css/CaracteristicasPage.css';
-import { crearMarcaRequest, crearCategoriaRequest, crearAlmacenRequest, obtenerAlmacenRequest, obtenerMarcaRequest, obtenerCategoriaRequest } from '../../../api/auth';
+import { crearMarcaRequest, crearCategoriaRequest, crearAlmacenRequest, 
+        obtenerAlmacenRequest, obtenerMarcaRequest, obtenerCategoriaRequest,
+        actualizarAlmacenRequest,actualizarMarcaRequest,actualizarCategoriaRequest
+      
+      } from '../../../api/auth';
 
 function CategoriaProductPage() {
   // Estados para Categoría
@@ -38,7 +42,7 @@ function CategoriaProductPage() {
             nombre: nombreCategoria
           }
 
-          console.log(datosNuevosCategoria)
+          await actualizarCategoriaRequest(datosNuevosCategoria);
 
           const updated = categorias.map((item, idx) =>
             idx === editCategoriaIndex ? { ...item, nombre: nombreCategoria } : item
@@ -58,6 +62,16 @@ function CategoriaProductPage() {
         setNombreCategoria('');
       } else if (tipo === 'almacen' && nombreAlmacen) {
         if (editAlmacenIndex !== null) {
+
+          const almacenEditada = almacenes[editAlmacenIndex]
+
+          const datoNuevosAlmacen ={
+            id : almacenEditada.id,
+            descripcion: nombreAlmacen
+          }
+
+          await actualizarAlmacenRequest(datoNuevosAlmacen);
+
           const updated = almacenes.map((item, idx) =>
             idx === editAlmacenIndex ? { ...item, nombre: nombreAlmacen } : item
           );
@@ -76,6 +90,16 @@ function CategoriaProductPage() {
         setNombreAlmacen('');
       } else if (tipo === 'marca' && nombreMarca) {
         if (editMarcaIndex !== null) {
+
+          const marcaEditada = marcas[editMarcaIndex]
+
+          const datosNuevosMarca = {
+            id: marcaEditada.id,
+            nombre: nombreMarca
+          }
+
+          await actualizarMarcaRequest(datosNuevosMarca);
+
           const updated = marcas.map((item, idx) =>
             idx === editMarcaIndex ? { ...item, nombre: nombreMarca } : item
           );

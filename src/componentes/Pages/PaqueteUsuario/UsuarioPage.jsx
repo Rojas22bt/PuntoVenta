@@ -42,9 +42,13 @@ function UsuarioPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const data = {
+        ...formData,
+        estado: formData.estado === "true", // ✅ convierte string a booleano
+      };
     try {
-        console.log(formData)
-        await actualizarUsuario(formData);
+        console.log(data)
+        await actualizarUsuario(data);
     } catch (err) {
         throw err
     }

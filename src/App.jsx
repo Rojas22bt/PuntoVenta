@@ -50,7 +50,6 @@ function Main() {
         <Route path="/celulares" element={<CelularesPage />} />
 
 
-
         <Route path="/historialcliente" element={<HistorialClientePage />} />
         <Route path="/perfilUsuario" element={<PerfilUsuarioPage />} />
         <Route path="/comentario" element={<ComentarioPage />} />

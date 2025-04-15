@@ -1,18 +1,22 @@
 import React, { useState, useRef } from 'react';
 import '../../Css/ProductoPage.css';
+import { useAuth } from '../../../context/AuthContext';
 
 const ProductoPage = () => {
+
+    const {marca, categoria, almacen} = useAuth();
+
     const [productos, setProductos] = useState([]);
     const [nuevoProducto, setNuevoProducto] = useState({
-        Nombre: '',
-        Precio: '',
-        Stock: '',
-        Modelo: '',
-        Marca: '',
-        Categoria: '',
-        Almacen: '',
-        Estado: '',
-        Imagen: '' // Nuevo campo para la imagen
+        nombre: '',
+        precio: '',
+        stock: '',
+        modelo: '',
+        marca: '',
+        categoria: '',
+        almacen: '',
+        estado: '',
+        imagen: '' // Nuevo campo para la imagen
     });
     const [editIndex, setEditIndex] = useState(null);
     const [showImage, setShowImage] = useState(null); // Estado para mostrar la imagen grande
@@ -28,7 +32,7 @@ const ProductoPage = () => {
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setNuevoProducto({ ...nuevoProducto, Imagen: reader.result });
+                setNuevoProducto({ ...nuevoProducto, imagen: reader.result });
             };
             reader.readAsDataURL(file);
         }
@@ -44,15 +48,15 @@ const ProductoPage = () => {
             setProductos([...productos, { ...nuevoProducto, productoID: productos.length + 1 }]);
         }
         setNuevoProducto({
-            Nombre: '',
-            Modelo: '',
-            Marca: '',
-            Categoria: '',
-            Stock: '',
-            Precio: '',
-            Almacen: '',
-            Estado: '',
-            Imagen: '' // Reiniciar el campo de imagen
+            nombre: '',
+            modelo: '',
+            marca: '',
+            categoria: '',
+            stock: '',
+            precio: '',
+            almacen: '',
+            estado: '',
+            imagen: '' // Reiniciar el campo de imagen
         });
         setEditIndex(null);
         
@@ -93,44 +97,77 @@ const ProductoPage = () => {
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="Nombre">Nombre</label>
-                    <input type="text" name="Nombre" value={nuevoProducto.Nombre} onChange={handleInputChange} className='form-control' required />
+                    <input type="text" name="Nombre" value={nuevoProducto.nombre} onChange={handleInputChange} className='form-control' required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="Modelo">Modelo</label>
-                    <input type="text" name="Modelo" value={nuevoProducto.Modelo} onChange={handleInputChange} className='form-control' required />
+                    <input type="text" name="Modelo" value={nuevoProducto.modelo} onChange={handleInputChange} className='form-control' required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="Marca">Marca</label>
-                    <select name="Marca" value={nuevoProducto.Marca} onChange={handleInputChange} className='form-control' required>
+                    <select 
+                    name="Marca" 
+                    value={nuevoProducto.marca} 
+                    onChange={handleInputChange} 
+                    className='form-control' 
+                    required
+                    >
                         <option value="">Selecciona una Marca</option>
-                        <option value="Quipus">Quipus</option>
+                        {marca.map((mar) =>(
+                            <option key={mar.id} value={mar.id}>
+                                {mar.nombre}
+                            </option>
+                        ))}
                     </select>
                 </div>
+
+
                 <div className="form-group">
                     <label htmlFor="Categoria">Categoría</label>
-                    <select name="Categoria" value={nuevoProducto.Categoria} onChange={handleInputChange} className='form-control' required>
+                    <select 
+                    name="Categoria" 
+                    value={nuevoProducto.categoria} 
+                    onChange={handleInputChange} 
+                    className='form-control' 
+                    required
+                    >
                         <option value="">Selecciona una categoría</option>
-                        <option value="Electrónica">Electr</option>
+                        {categoria.map((cat) =>(
+                            <option key={cat.id} value={cat.id}>
+                                {cat.nombre}
+                            </option>
+                        ))}
                     </select>
                 </div>
                 <div className="form-group">
                     <label htmlFor="Stock">Stock</label>
-                    <input type="number" name="Stock" value={nuevoProducto.Stock} onChange={handleInputChange} className='form-control' required />
+                    <input type="number" name="Stock" value={nuevoProducto.stock} onChange={handleInputChange} className='form-control' required />
                 </div>
                                <div className="form-group">
                     <label htmlFor="Precio">Precio</label>
-                    <input type="number" name="Precio" value={nuevoProducto.Precio} onChange={handleInputChange} className='form-control' required />
+                    <input type="number" name="Precio" value={nuevoProducto.precio} onChange={handleInputChange} className='form-control' required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="Almacen">Almacén</label>
-                    <select name="Almacen" value={nuevoProducto.Almacen} onChange={handleInputChange} className='form-control' required>
+                    <select 
+                    name="Almacen" 
+                    value={nuevoProducto.almacen} 
+                    onChange={handleInputChange} 
+                    className='form-control' 
+                    required
+                    >
                         <option value="">Selecciona un Almacén</option>
+                        {almacen.map((alma) =>(
+                            <option key={alma.id} value={alma.id}>
+                                {alma.descripcion}
+                            </option>
+                        ))}
                         <option value="Almacén A">Almacén A</option>
                     </select>
                 </div>
                 <div className="form-group">
                     <label htmlFor="Estado">Estado</label>
-                    <select name="Estado" value={nuevoProducto.Estado} onChange={handleInputChange} className='form-control' required>
+                    <select name="Estado" value={nuevoProducto.estado} onChange={handleInputChange} className='form-control' required>
                         <option value="">Estado</option>
                         <option value="Disponible">Disponible</option>
                     </select>

@@ -37,7 +37,7 @@ const LoginPage = () => {
           
               const response = await signin(datos); // Esto ya devuelve la respuesta
               await cargarDatos();
-              navigate('/perfilUsuario')
+              navigate('/producto')
           
             } catch (error) {
               console.error("❌ Error en el login:", error);

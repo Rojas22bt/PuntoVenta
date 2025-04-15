@@ -45,6 +45,7 @@ const ProductoPage = () => {
             updatedProductos[editIndex] = nuevoProducto;
             setProductos(updatedProductos);
         } else {
+            console.log(nuevoProducto)
             setProductos([...productos, { ...nuevoProducto, productoID: productos.length + 1 }]);
         }
         setNuevoProducto({

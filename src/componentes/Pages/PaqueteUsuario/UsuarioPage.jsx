@@ -73,21 +73,18 @@ function UsuarioPage() {
   };
 
   const handleRefresh = async () => {
-    setFiltroCorreo('');
-    setFiltroSexo('');
-    setFiltroEstado('');
-    setFiltroLetra('');
-    await fetchUsuarios(); // 👈 fuerza recarga
+    await fetchUsuarios();
   };
 
   const fetchUsuarios = async () => {
     try {
       const nuevosUsuarios = await obtenerUsuariosRequest();
-      {/*setUsuarios(nuevosUsuarios)*/}
+      setUsuarios(nuevosUsuarios);
     } catch (err) {
       console.error("Error al obtener usuarios:", err);
     }
   };
+  
 
   const usuariosFiltrados = usuarios
     .filter((u) =>

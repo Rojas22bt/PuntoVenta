@@ -55,8 +55,6 @@ function UsuarioPage() {
       throw err
     }
     setEditIndex(null);
-    setRefreshKey((prev) => prev + 1); 
-
   };
 
   const handleCancel = () => {
@@ -79,7 +77,7 @@ function UsuarioPage() {
   const fetchUsuarios = async () => {
     try {
       const nuevosUsuarios = await obtenerUsuariosRequest();
-      setUsuarios(nuevosUsuarios);
+      setUsuarios(nuevosUsuarios.data);
     } catch (err) {
       console.error("Error al obtener usuarios:", err);
     }

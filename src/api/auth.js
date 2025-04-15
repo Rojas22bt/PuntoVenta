@@ -31,7 +31,7 @@ export const obtenerUsuariosRequest = () => {
 }
 
 export const obtenerRolesRequest = () => {
-    return instance.get('/roles',{
+    return instance.get('/usuario/roles',{
         withCredentials: true,
         timeout: tiempoEspera
     })

@@ -55,7 +55,6 @@ function CategoriaProductPage() {
             nombre: nombreCategoria
           }
           await crearCategoriaRequest(data);
-          console.log(data);
           setCategorias([...categorias, { id: idCategoria, nombre: nombreCategoria }]);
           setIdCategoria(idCategoria + 1);
         }
@@ -73,7 +72,7 @@ function CategoriaProductPage() {
           await actualizarAlmacenRequest(datoNuevosAlmacen);
 
           const updated = almacenes.map((item, idx) =>
-            idx === editAlmacenIndex ? { ...item, nombre: nombreAlmacen } : item
+            idx === editAlmacenIndex ? { ...item, descripcion: nombreAlmacen } : item
           );
           setAlmacenes(updated);
           setEditAlmacenIndex(null);
@@ -84,7 +83,7 @@ function CategoriaProductPage() {
           }
           console.log(dato2)
           await crearAlmacenRequest(dato2);
-          setAlmacenes([...almacenes, { id: idAlmacen, nombre: nombreAlmacen }]);
+          setAlmacenes([...almacenes, { id: idAlmacen, descripcion: nombreAlmacen }]);
           setIdAlmacen(idAlmacen + 1);
         }
         setNombreAlmacen('');
@@ -127,7 +126,7 @@ function CategoriaProductPage() {
       setNombreCategoria(categorias[index].nombre);
       setEditCategoriaIndex(index);
     } else if (tipo === 'almacen') {
-      setNombreAlmacen(almacenes[index].nombre);
+      setNombreAlmacen(almacenes[index].descripcion);
       setEditAlmacenIndex(index);
     } else if (tipo === 'marca') {
       setNombreMarca(marcas[index].nombre);

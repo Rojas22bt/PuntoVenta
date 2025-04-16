@@ -49,15 +49,19 @@ function MercaderiaPage() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const detalleFinal = mercaderias.map(p => ({
-            producto_id: p.id,
+        const productos = mercaderias.map(p => ({
+            id: p.id,
             cantidad: parseInt(p.cantidad),
             precio_compra: parseFloat(p.precioCosto)
         }));
 
         const dataFinal = {
-            ...nuevaMercaderia,
-            detalle: detalleFinal
+            nro_factura: nuevaMercaderia.NroFactura,
+            fecha: nuevaMercaderia.Fecha,
+            detalle: "nuevaMercaderia.Imagen",
+            cod_autorizacion: nuevaMercaderia.CodAutorizacion,
+            estado:true,
+            productos: productos
         };
 
         console.log("📝 Datos para guardar:", dataFinal);

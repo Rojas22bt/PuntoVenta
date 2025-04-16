@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import '../../Css/UsuarioPage.css';
 import { useAuth } from '../../../context/AuthContext';
 import { actualizarUsuario} from '../../../api/auth';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 function UsuarioPage() {
   const { usuarios, roles,recargarUsuarios } = useAuth(); // Asegúrate que `setUsuarios` exista en el context
@@ -78,10 +82,7 @@ function UsuarioPage() {
     }
 
   };
-
-
   
-
   const usuariosFiltrados = usuarios
     .filter((u) =>
       u.correo.toLowerCase().includes(filtroCorreo.toLowerCase())
@@ -93,7 +94,60 @@ function UsuarioPage() {
     .filter((u) =>
       filtroLetra ? u.nombre.toUpperCase().startsWith(filtroLetra) : true
     );
-
+    const exportarExcel = () => {
+      if (!usuariosFiltrados.length) {
+        alert("No hay usuarios para exportar.");
+        return;
+      }
+  
+      const data = usuariosFiltrados.map((u) => ({
+        ID: u.id,
+        Nombre: u.nombre,
+        Correo: u.correo,
+        Teléfono: u.telefono,
+        "Fecha Nacimiento": u.fecha_nacimiento,
+        Sexo: u.sexo,
+        Rol: roles.find((r) => r.id === u.rol)?.nombre || u.rol,
+        Estado: u.estado ? "Activo" : "Inactivo",
+      }));
+  
+      const ws = XLSX.utils.json_to_sheet(data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Usuarios");
+      const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+      const file = new Blob([excelBuffer], { type: "application/octet-stream" });
+      saveAs(file, `usuarios_filtrados_${new Date().toISOString().slice(0, 10)}.xlsx`);
+    };
+  
+    const exportarPDF = () => {
+      if (!usuariosFiltrados.length) {
+        alert("No hay usuarios para exportar.");
+        return;
+      }
+  
+      const doc = new jsPDF();
+      doc.text("Reporte de Usuarios Filtrados", 20, 20);
+  
+      const data = usuariosFiltrados.map((u) => [
+        u.id,
+        u.nombre,
+        u.correo,
+        u.telefono,
+        u.fecha_nacimiento,
+        u.sexo,
+        roles.find((r) => r.id === u.rol)?.nombre || u.rol,
+        u.estado ? "Activo" : "Inactivo",
+      ]);
+  
+      doc.autoTable({
+        head: [["ID", "Nombre", "Correo", "Teléfono", "Fecha Nacimiento", "Sexo", "Rol", "Estado"]],
+        body: data,
+        startY: 30,
+      });
+  
+      doc.save(`usuarios_filtrados.pdf`);
+    };
+  
   return (
     <div className="usuario-container">
       <h1>Lista de Usuarios</h1>
@@ -136,9 +190,11 @@ function UsuarioPage() {
           <option value="false">Inactivo</option>
         </select>
 
-        <button className="btn btn-primary w-50" onClick={handleRefresh}>
-          Refrescar
-        </button>
+        <div className="button-container-bitacora">
+                <button onClick={handleRefresh} className="btn btn-primary">Refresh</button>
+                <button onClick={exportarExcel} className="btn btn-primary">Reporte Excel</button>
+                <button onClick={exportarPDF} className="btn btn-primary">Reporte PDF</button>
+            </div>
       </div>
 
       {editIndex !== null && (

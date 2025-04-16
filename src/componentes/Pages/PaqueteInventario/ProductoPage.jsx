@@ -2,9 +2,11 @@ import React, { useState, useRef } from 'react';
 import '../../Css/ProductoPage.css';
 import { useAuth } from '../../../context/AuthContext';
 import { crearProductoRequest, actualizarProductoRequest } from '../../../api/auth';
+import Cloudinary from '../Cloudinary';
 
 const ProductoPage = () => {
     const { marcas, categorias, almacenes, cargarProductos, productos } = useAuth();
+    const { message, handleFileChange, uploadImage } = Cloudinary();
 
     const [nuevoProducto, setNuevoProducto] = useState({
         nombre: '',
@@ -44,14 +46,14 @@ const ProductoPage = () => {
             if (editIndex !== null) {
                 const updatedProductos = [...productos];
                 updatedProductos[editIndex] = nuevoProducto;
-                const datosNuevos ={
+                const datosNuevos = {
                     id: nuevoProducto.id,
                     nombre: nuevoProducto.nombre,
                     modelo: nuevoProducto.modelo,
                     precio: nuevoProducto.precio,
                     stock: nuevoProducto.stock,
                     estado: nuevoProducto.estado,
-                    url: "https://fakeimg.pl/250x100/",
+                    url: nuevoProducto.imagen || "https://fakeimg.pl/250x100/",
                     almacen: nuevoProducto.almacen,
                     categoria: nuevoProducto.categoria,
                     marca: nuevoProducto.marca
@@ -65,7 +67,7 @@ const ProductoPage = () => {
                     stock: Number(nuevoProducto.stock),
                     precio: Number(nuevoProducto.precio),
                     estado: nuevoProducto.estado === "true",
-                    url: "https://fakeimg.pl/250x100/",
+                    url: nuevoProducto.imagen || "https://fakeimg.pl/250x100/",
                     almacen: Number(nuevoProducto.almacen),
                     categoria: Number(nuevoProducto.categoria),
                     marca: Number(nuevoProducto.marca)
@@ -114,7 +116,13 @@ const ProductoPage = () => {
             setLoading(false); // Finalizar loading
         }
     };
-
+    const handleUploadImage = async () => {
+        const url = await uploadImage();
+        if (url) {
+            setNuevoProducto(prev => ({ ...prev, imagen: url }));
+        }
+    };
+    
     return (
         <div className="producto-container">
             {loading && (
@@ -206,17 +214,22 @@ const ProductoPage = () => {
                     </select>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="imagen">Imagen</label>
+                    <label>Selecciona una imagen</label>
                     <input
                         type="file"
-                        name="Imagen"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        className='form-control'
-                        required
-                        ref={fileInputRef} // Asignar la referencia aquí
+                        name="file"
+                        className="form-control"
+                        onChange={(e) => handleFileChange(e.target.files[0])}
                     />
                 </div>
+
+                <button className="btn btn-primary mt-2" type="button" onClick={handleUploadImage}>
+                    Subir Imagen
+                </button>
+
+                {loading && <p>Cargando imagen...</p>}
+                {message && <p>{message}</p>}
+
                 <div className="text-center">
                     <button type="submit" className="btn btn-primary">
                         {editIndex !== null ? 'Actualizar Producto' : 'Agregar Producto'}
@@ -260,7 +273,7 @@ const ProductoPage = () => {
                                         <td>{producto.stock}</td>
                                         <td>${parseFloat(producto.precio).toFixed(2)}</td>
                                         <td>{producto.almacen}</td>
-                                        <td>{producto.estado ? 'Activo': 'Inactivo'}</td>
+                                        <td>{producto.estado ? 'Activo' : 'Inactivo'}</td>
                                         <td>
                                             <img
                                                 src={producto.url}

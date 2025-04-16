@@ -37,16 +37,15 @@ const ProductoPage = () => {
             reader.readAsDataURL(file);
         }
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true); // Iniciar loading
         try {
             if (editIndex !== null) {
+                const productoEditado = productos[editIndex]
                 const updatedProductos = [...productos];
                 updatedProductos[editIndex] = nuevoProducto;
-                console.log(updatedProductos);
-                setProductos(updatedProductos);
+                console.log(productoEditado);
             } else {
                 const datos = {
                     nombre: nuevoProducto.nombre,
@@ -60,7 +59,6 @@ const ProductoPage = () => {
                     marca: Number(nuevoProducto.marca)
                 };
                 await crearProductoRequest(datos);
-                setProductos([...productos, { ...nuevoProducto, productoID: productos.length + 1 }]);
             }
             setNuevoProducto({
                 nombre: '',

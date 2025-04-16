@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../Css/FacturacionPage.css';
 
 function FacturacionPage() {
@@ -6,6 +6,14 @@ function FacturacionPage() {
     { nombre: 'Ejemplo Producto', precio: 100, cantidad: 2 },
     { nombre: 'Otro Producto', precio: 50, cantidad: 3 }
   ]);
+
+  const [fecha, setFecha] = useState('');
+
+  useEffect(() => {
+    const hoy = new Date();
+    const fechaFormateada = hoy.toISOString().split('T')[0]; // yyyy-mm-dd
+    setFecha(fechaFormateada);
+  }, []);
 
   const eliminarProducto = (index) => {
     const nuevosProductos = [...productos];
@@ -32,7 +40,7 @@ function FacturacionPage() {
           </div>
           <div className="mb-3">
             <label>Fecha:</label>
-            <input type="date" className="form-control" />
+            <input type="date" className="form-control" value={fecha} readOnly />
           </div>
         </div>
       </div>
@@ -67,7 +75,7 @@ function FacturacionPage() {
         </div>
 
         <div className="filaFinal">
-          <a href="/tarjet" className="btn btn-primary btnTarjeta">
+          <a href="/facturacion/tarjet" className="btn btn-primary btnTarjeta">
             Pagar con Tarjeta
           </a>
           <div className="totalFinal">
@@ -75,9 +83,7 @@ function FacturacionPage() {
             <input type="text" readOnly className="inputTotal" value={calcularTotal()} />
           </div>
         </div>
-
       </div>
-
     </div>
   );
 }

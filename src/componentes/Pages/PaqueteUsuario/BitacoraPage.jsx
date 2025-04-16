@@ -1,19 +1,65 @@
-import React, { useState } from 'react'
-import '../../Css/BitacoraPage.css'
-import { obtenerBitacoraRequest } from '../../../api/auth'
+import React, { useState } from 'react';
+import '../../Css/BitacoraPage.css';
+import { obtenerBitacoraRequest } from '../../../api/auth';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable'; 
+
 
 const BitacoraPage = () => {
-
     const [bitacoras, setBitacoras] = useState([]);
 
     const obtenerBitacora = async () => {
         try {
             const res = await obtenerBitacoraRequest();
-            setBitacoras(res.data)
+            setBitacoras(res.data);
         } catch (error) {
             console.error("Error al obtener la bitácora:", error);
         }
     };
+
+    const exportarExcel = () => {
+        if (!bitacoras.length) {
+            alert("Primero debe listar la bitácora.");
+            return;
+        }
+    
+        const ws = XLSX.utils.json_to_sheet(bitacoras);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Bitacora');
+        const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+        const file = new Blob([excelBuffer], { type: 'application/octet-stream' });
+        saveAs(file, `bitacora_${new Date().toISOString().slice(0,10)}.xlsx`);
+    };
+    
+
+    const exportarPDF = () => {
+        if (!bitacoras.length) {
+            alert("Primero debe listar la bitácora.");
+            return;
+        }
+        const doc = new jsPDF();
+        doc.text('Reporte de Bitácora', 20, 20);
+        const bitacoraData = bitacoras.map(bitacora => [
+            bitacora.id,
+            bitacora.usuario,
+            bitacora.usuario_nombre,
+            bitacora.usuario_correo,
+            bitacora.ip,
+            bitacora.fecha,
+            bitacora.hora,
+            bitacora.accion
+        ]);
+        doc.autoTable({
+            head: [['Id', 'Usuario', 'Nombre', 'Correo', 'IP', 'Fecha', 'Hora', 'Acción']],
+            body: bitacoraData,
+            startY: 30
+        });
+       doc.save('Reporte_Bitacora.pdf');
+    };
+    
+    
 
     return (
         <div className="bitacora-container">
@@ -22,6 +68,12 @@ const BitacoraPage = () => {
                 <div className="button-container-bitacora">
                     <button onClick={obtenerBitacora} className='btn btn-primary'>
                         Listar Bitacora
+                    </button>
+                    <button onClick={exportarExcel} className='btn btn-primary'>
+                        Reporte Excel
+                    </button>
+                    <button onClick={exportarPDF} className='btn btn-primary'>
+                        Reporte PDF
                     </button>
                 </div>
                 <div className="table-responsive"> {/* Contenedor para el scroll horizontal */}

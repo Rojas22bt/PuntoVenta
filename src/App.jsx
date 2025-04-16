@@ -13,13 +13,13 @@ import FacturacionPage from "./componentes/Pages/PaqueteVenta/FacturacionPage";
 import OfertasPage from "./componentes/Pages/PaqueteInventario/OfertasPage";
 import ComputadorasPage from "./componentes/Pages/ComputadorasPage";
 import CelularesPage from "./componentes/Pages/CelularesPage";
-
 import { AusthProvider } from "./context/AuthContext";
 import HistorialClientePage from "./componentes/Pages/PaqueteUsuario/HistorialClientePage";
 import PerfilUsuarioPage from "./componentes/Pages/PaqueteUsuario/PerfilUsuarioPage";
 import ComentarioPage from "./componentes/Pages/PaqueteVenta/ComentarioPage";
-
 import StripeContainer from "./componentes/Pages/StripeContainer"
+
+
 function App() {
 
   return (
@@ -49,10 +49,7 @@ function Main() {
         <Route path="/oferta" element={<OfertasPage />} />
         <Route path="/computadoras" element={<ComputadorasPage />} />
         <Route path="/celulares" element={<CelularesPage />} />
-
-
-        <Route path="/tarjet" element={<StripeContainer/>} />
-
+     <Route path="/facturacion/tarjet" element={<StripeContainer/>} />
         <Route path="/historialcliente" element={<HistorialClientePage />} />
         <Route path="/perfilUsuario" element={<PerfilUsuarioPage />} />
         <Route path="/comentario" element={<ComentarioPage />} />

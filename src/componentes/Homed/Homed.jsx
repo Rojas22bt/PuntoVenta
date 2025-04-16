@@ -5,9 +5,20 @@ import   {HomeDas}  from "../Home/Homedas";
 import { useAuth } from "../../context/AuthContext.jsx";
 
 //--------------------Usuarios-------------//
-import PerfilUsuarioPage from "../Pages/PaqueteUsuario/PerfilUsuarioPage.jsx";
-//-------------------Servicios------------//
+import BitacoraPage from "../Pages/PaqueteUsuario/BitacoraPage.jsx";
+import UsuarioPage from "../Pages/PaqueteUsuario/UsuarioPage.jsx";
+import PrivilegioPage from "../Pages/PaqueteUsuario/PrivilegioPage.jsx";
+import RegisterClientPage from "../Pages/PaqueteUsuario/RegisterClientPage.jsx";
+import HistorialClientePage from "../Pages/PaqueteUsuario/HistorialClientePage.jsx";
 
+//-------------------Inventario------------//
+import ProductoPage from "../Pages/PaqueteInventario/ProductoPage.jsx";
+import MercaderiaPage from "../Pages/PaqueteInventario/MercaderiaPage.jsx";
+import CategoriaProductPage from "../Pages/PaqueteInventario/CaracteristicasPage.jsx";
+import OfertasPage from "../Pages/PaqueteInventario/OfertasPage.jsx";
+
+//-------------------Venta-----------------//
+import ComentarioPage from "../Pages/PaqueteVenta/ComentarioPage.jsx";
 
 import "./Homed.css"
 
@@ -23,13 +34,16 @@ export const Homed = () => {
       <div className="content-container">
         <Routes>
           <Route path="/homeda" element={<HomeDas />} />
-          <Route path="/perfilUsuario" element={<PerfilUsuarioPage />} />
-          {/* <Route path="/perfiles" element={<PerfilDeUsuario />} />
-          <Route path="/permisos" element={<PrivilegioPage />} />
-          <Route path="/vehiculos" element={<VehiculosPage />} />
-          <Route path="/galeriaVeh" element={<GaleriaVehiculosPage />} />
-          <Route path="/regisChofer" element={<AsignacionChoferePage/>} />
-          <Route path="*" element={<div>No encontrado</div>} /> */}
+          <Route path="/bitacora" element={<BitacoraPage />} />
+          <Route path="/usuarios" element={<UsuarioPage />} />
+          <Route path="/register" element={<RegisterClientPage />} />
+          <Route path="/privilegio" element={<PrivilegioPage/>} />
+          <Route path="/historialcliente" element={<HistorialClientePage />} />
+          <Route path="/producto" element={<ProductoPage />} />
+          <Route path="/mercaderia" element={<MercaderiaPage />} />
+          <Route path="/caracteristicas-productos" element={<CategoriaProductPage />} />
+          <Route path="/oferta" element={<OfertasPage />} />
+          <Route path="/comentarios" element={<ComentarioPage />} />
         </Routes>
         <Outlet />
       </div>

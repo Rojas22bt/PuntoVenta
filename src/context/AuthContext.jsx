@@ -31,6 +31,7 @@ export const AuthProvider = ({ children }) => {
 
   const signin = async (credentials) => {
     try {
+        console.log(credentials);
       const datos = await loginRequest(credentials);
       confirm.log(datos.data)
       if (data.token.access && data.token.refresh) {

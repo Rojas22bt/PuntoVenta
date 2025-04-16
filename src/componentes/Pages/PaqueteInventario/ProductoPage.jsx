@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import '../../Css/ProductoPage.css';
 import { useAuth } from '../../../context/AuthContext';
-import { crearProductoRequest } from '../../../api/auth';
+import { crearProductoRequest, actualizarProductoRequest } from '../../../api/auth';
 
 const ProductoPage = () => {
     const { marcas, categorias, almacenes, cargarProductos, productos } = useAuth();
@@ -37,15 +37,16 @@ const ProductoPage = () => {
             reader.readAsDataURL(file);
         }
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true); // Iniciar loading
         try {
             if (editIndex !== null) {
+                const productoEditado = productos[editIndex]
                 const updatedProductos = [...productos];
                 updatedProductos[editIndex] = nuevoProducto;
-                setProductos(updatedProductos);
+                console.log(updatedProductos)
+                console.log(nuevoProducto);
             } else {
                 const datos = {
                     nombre: nuevoProducto.nombre,
@@ -59,7 +60,6 @@ const ProductoPage = () => {
                     marca: Number(nuevoProducto.marca)
                 };
                 await crearProductoRequest(datos);
-                setProductos([...productos, { ...nuevoProducto, productoID: productos.length + 1 }]);
             }
             setNuevoProducto({
                 nombre: '',
@@ -81,6 +81,11 @@ const ProductoPage = () => {
         } finally {
             setLoading(false); // Finalizar loading
         }
+    };
+
+    const handleEdit = (index) => {
+        setNuevoProducto(productos[index]);
+        setEditIndex(index);
     };
 
     const handleListProductos = async () => {

@@ -125,3 +125,11 @@ export const obtenerProductoRequest = () => {
         timeout: tiempoEspera
     })
 }
+
+export const actualizarProductoRequest = data => instance.patch('/inventario/actualizar-producto',
+    data,{
+        headers: {
+            'Content-Type': 'application/json',
+          },  
+    }
+)

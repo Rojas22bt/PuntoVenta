@@ -4,9 +4,7 @@ import { useAuth } from '../../../context/AuthContext';
 import { crearProductoRequest } from '../../../api/auth';
 
 const ProductoPage = () => {
-
-    const { marcas, categorias, almacenes, cargarProductos,
-        productos, } = useAuth();
+    const { marcas, categorias, almacenes, cargarProductos, productos } = useAuth();
 
     const [nuevoProducto, setNuevoProducto] = useState({
         nombre: '',
@@ -17,11 +15,12 @@ const ProductoPage = () => {
         categoria: '',
         almacen: '',
         estado: '',
-        imagen: '' // Nuevo campo para la imagen
+        imagen: ''
     });
     const [editIndex, setEditIndex] = useState(null);
-    const [showImage, setShowImage] = useState(null); // Estado para mostrar la imagen grande
-    const fileInputRef = useRef(null); // Referencia para el input de archivo
+    const [showImage, setShowImage] = useState(null);
+    const [loading, setLoading] = useState(false); // Estado para el loading
+    const fileInputRef = useRef(null);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -41,6 +40,7 @@ const ProductoPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true); // Iniciar loading
         try {
             if (editIndex !== null) {
                 const updatedProductos = [...productos];
@@ -57,10 +57,8 @@ const ProductoPage = () => {
                     almacen: Number(nuevoProducto.almacen),
                     categoria: Number(nuevoProducto.categoria),
                     marca: Number(nuevoProducto.marca)
-
-                }
-                console.log(datos)
-                await crearProductoRequest(datos)
+                };
+                await crearProductoRequest(datos);
                 setProductos([...productos, { ...nuevoProducto, productoID: productos.length + 1 }]);
             }
             setNuevoProducto({
@@ -72,55 +70,48 @@ const ProductoPage = () => {
                 precio: '',
                 almacen: '',
                 estado: '',
-                imagen: '' // Reiniciar el campo de imagen
+                imagen: ''
             });
             setEditIndex(null);
-
-            // Restablecer el input de archivo
             if (fileInputRef.current) {
-                fileInputRef.current.value = null; // Esto restablece el campo de archivo
+                fileInputRef.current.value = null;
             }
         } catch (error) {
-
+            console.error(error);
+        } finally {
+            setLoading(false); // Finalizar loading
         }
     };
 
-    const handleEdit = (index) => {
-        setNuevoProducto(productos[index]);
-        setEditIndex(index);
-    };
-
-    const handleDelete = (index) => {
-        const updatedProductos = productos.filter((_, i) => i !== index);
-        setProductos(updatedProductos);
-    };
-
-    const handleImageClick = (imagen) => {
-        setShowImage(imagen);
-    };
-
-    const handleCloseImage = () => {
-        setShowImage(null);
-    };
     const handleListProductos = async () => {
+        setLoading(true); // Iniciar loading
         try {
-
             await cargarProductos();
             if (productos.length > 0) {
-                console.log("Productos existentes:", productos);
                 alert("Productos existentes: " + productos.map(producto => producto.productoID).join(", "));
             } else {
                 alert("No hay Productos existentes.");
             }
-            
         } catch (err) {
-            throw err
+            console.error(err);
+        } finally {
+            setLoading(false); // Finalizar loading
         }
     };
+
     return (
         <div className="producto-container">
-            <h1>{editIndex !== null ? 'Editar Producto' : 'Agregar Producto'}</h1>
-            <form onSubmit={handleSubmit}>
+            {loading && (
+                <div className="loading-overlay">
+                    <div className="spinner">
+                        <span className="spinner-grow spinner-grow-lg" aria-hidden="true"></span>
+                        <span role="status">Loading...</span>
+                    </div>
+                </div>
+            )}
+            <form className='form-container' onSubmit={handleSubmit}>
+                <h1>{editIndex !== null ? 'Editar Producto' : 'Agregar Producto'}</h1>
+
                 <div className="form-group">
                     <label htmlFor="Nombre">Nombre</label>
                     <input type="text" name="nombre" value={nuevoProducto.nombre} onChange={handleInputChange} className='form-control' required />
@@ -217,11 +208,11 @@ const ProductoPage = () => {
             </form>
 
             <div className="text-center mt-3">
-                <button onClick={handleListProductos} className="btn btn-primary">
-                    Listar Productos Existentes
+                <button onClick={handleListProductos} className="btn btn-primary" disabled={loading}>
+                    'Listar Productos Existentes'
                 </button>
             </div>
-            <div>
+            <div className='form-containe'>
                 <h1>Lista de Productos</h1>
                 <div className="table-responsive">
                     <table className="producto-table">
@@ -236,7 +227,7 @@ const ProductoPage = () => {
                                 <th>Precio</th>
                                 <th>Almacén</th>
                                 <th>Estado</th>
-                                <th>Imagen</th> {/* Nueva columna para la imagen */}
+                                <th>Imagen</th>
                                 <th>Acción</th>
                             </tr>
                         </thead>
@@ -258,12 +249,11 @@ const ProductoPage = () => {
                                                 src={producto.url}
                                                 alt={producto.nombre}
                                                 onClick={() => handleImageClick(producto.url)}
-                                                style={{ width: '50px', height: 'auto', cursor: 'pointer' }} // Imagen pequeña
+                                                style={{ width: '50px', height: 'auto', cursor: 'pointer' }}
                                             />
-                                               </td>
-                                               <td>
+                                        </td>
+                                        <td>
                                             <button onClick={() => handleEdit(index)} className="btn btn-warning">Editar</button>
-                                            <button onClick={() => handleDelete(index)} className="btn btn-danger">Eliminar</button>
                                         </td>
                                     </tr>
                                 ))

@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
     try {
         console.log(credentials);
       const datos = await loginRequest(credentials);
-      confirm.log(datos.data)
+      console.log(datos.data)
       if (data.token.access && data.token.refresh) {
         localStorage.setItem("access", data.token.access);
         localStorage.setItem("refresh", data.token.refresh);

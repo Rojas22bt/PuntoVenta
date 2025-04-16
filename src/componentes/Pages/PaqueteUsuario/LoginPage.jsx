@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
 
-    const { signin, cargarDatos } = useAuth();
+    const { signin, cargarDatos , cargarProductos} = useAuth();
     const navigate = useNavigate();
 
     // Validación con Yup
@@ -35,9 +35,10 @@ const LoginPage = () => {
           
               console.log(datos);
           
-              const response = await signin(datos); // Esto ya devuelve la respuesta
+              await signin(datos); // Esto ya devuelve la respuesta
               await cargarDatos();
-              navigate('/perfilUsuario')
+              await cargarProductos();
+              navigate('/producto')
           
             } catch (error) {
               console.error("❌ Error en el login:", error);

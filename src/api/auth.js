@@ -133,3 +133,10 @@ export const actualizarProductoRequest = data => instance.patch('/inventario/act
           },  
     }
 )
+
+export const crearMercaderiaRequest = data => instance.post('/inventario/mercaderia/crear',data,{
+    headers:{
+        "Content-Type" : "application/json"
+    },
+    withCredentials:true
+})

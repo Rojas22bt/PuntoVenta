@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import '../../Css/MercaderiaPage.css';
 import { useAuth } from '../../../context/AuthContext';
+import { crearMercaderiaRequest } from '../../../api/auth';
 
 function MercaderiaPage() {
     const { productos } = useAuth();
@@ -46,37 +47,40 @@ function MercaderiaPage() {
         setmercaderias(actualizados);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        try {
+            const productos = mercaderias.map(p => ({
+                id: p.id,
+                cantidad: parseInt(p.cantidad),
+                precio_compra: parseFloat(p.precioCosto)
+            }));
 
-        const productos = mercaderias.map(p => ({
-            id: p.id,
-            cantidad: parseInt(p.cantidad),
-            precio_compra: parseFloat(p.precioCosto)
-        }));
+            const dataFinal = {
+                nro_factura: nuevaMercaderia.NroFactura,
+                fecha: nuevaMercaderia.Fecha,
+                detalle: "nuevaMercaderia.Imagen",
+                cod_autorizacion: nuevaMercaderia.CodAutorizacion,
+                estado: true,
+                productos: productos
+            };
 
-        const dataFinal = {
-            nro_factura: nuevaMercaderia.NroFactura,
-            fecha: nuevaMercaderia.Fecha,
-            detalle: "nuevaMercaderia.Imagen",
-            cod_autorizacion: nuevaMercaderia.CodAutorizacion,
-            estado:true,
-            productos: productos
-        };
+            await crearMercaderiaRequest(dataFinal);
 
-        console.log("📝 Datos para guardar:", dataFinal);
+            alert("MercaderiaRegistrada");
 
-        alert("Mercadería lista para enviar. Mira consola.");
-
-        setmercaderias([]);
-        setnuevaMercaderia({
-            Fecha: '',
-            NroFactura: '',
-            CodAutorizacion: '',
-            Imagen: ''
-        });
-        if (fileInputRef.current) {
-            fileInputRef.current.value = null;
+            setmercaderias([]);
+            setnuevaMercaderia({
+                Fecha: '',
+                NroFactura: '',
+                CodAutorizacion: '',
+                Imagen: ''
+            });
+            if (fileInputRef.current) {
+                fileInputRef.current.value = null;
+            }
+        } catch (err) {
+            throw err
         }
     };
 

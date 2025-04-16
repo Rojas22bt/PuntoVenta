@@ -38,7 +38,7 @@ const LoginPage = () => {
               await signin(datos); // Esto ya devuelve la respuesta
               await cargarDatos();
               await cargarProductos();
-              navigate('/mercaderia')
+              navigate('/dasboard/perfilUsuario')
           
             } catch (error) {
               console.error("❌ Error en el login:", error);

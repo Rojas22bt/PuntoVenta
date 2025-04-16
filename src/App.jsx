@@ -17,8 +17,9 @@ import { AusthProvider } from "./context/AuthContext";
 import HistorialClientePage from "./componentes/Pages/PaqueteUsuario/HistorialClientePage";
 import PerfilUsuarioPage from "./componentes/Pages/PaqueteUsuario/PerfilUsuarioPage";
 import ComentarioPage from "./componentes/Pages/PaqueteVenta/ComentarioPage";
-import StripeContainer from "./componentes/Pages/StripeContainer"
+import StripeContainer from "./componentes/Pages/StripeContainer";
 
+import { Homed } from "./componentes/Homed/Homed";
 
 function App() {
 
@@ -55,6 +56,8 @@ function Main() {
         <Route path="/perfilUsuario" element={<PerfilUsuarioPage />} />
         <Route path="/comentario" element={<ComentarioPage />} />
       
+        <Route path="/dasboard/*" element={<Homed/>}/>
+        
       </Routes>
     </>
   )

@@ -202,6 +202,7 @@ const ProductoPage = () => {
                     <select name="estado" value={nuevoProducto.estado} onChange={handleInputChange} className='form-control' required>
                         <option value="">Estado</option>
                         <option value="true">Disponible</option>
+                        <option value="false">Deshabilitar</option>
                     </select>
                 </div>
                 <div className="form-group">
@@ -259,7 +260,7 @@ const ProductoPage = () => {
                                         <td>{producto.stock}</td>
                                         <td>${parseFloat(producto.precio).toFixed(2)}</td>
                                         <td>{producto.almacen}</td>
-                                        <td>{producto.estado}</td>
+                                        <td>{producto.estado ? 'Activo': 'Inactivo'}</td>
                                         <td>
                                             <img
                                                 src={producto.url}

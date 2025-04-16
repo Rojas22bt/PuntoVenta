@@ -118,3 +118,10 @@ export const crearProductoRequest = data => instance.post('/inventario/producto'
     },
     withCredentials:true
 })
+
+export const obtenerProductoRequest = () => {
+    return instance.get('/inventario/obtener-producto',{
+        withCredentials: true,
+        timeout: tiempoEspera
+    })
+}

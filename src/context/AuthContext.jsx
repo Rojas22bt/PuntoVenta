@@ -1,6 +1,7 @@
 import { createContext , useState, useContext, useEffect } from "react";
 import { loginRequest,obtenerUsuariosRequest,obtenerRolesRequest,
-        obtenerAlmacenRequest, obtenerCategoriaRequest, obtenerMarcaRequest
+        obtenerAlmacenRequest, obtenerCategoriaRequest, obtenerMarcaRequest,
+        obtenerProductoRequest
  } from "../api/auth";
 
 
@@ -23,6 +24,7 @@ export const AusthProvider = ({ children }) =>{
     const [marcas, setMarcas] = useState([]);
     const [almacenes, setAlmacenes] = useState([]);
     const [categorias, setCategorias] = useState([]);
+    const [productos, setProductos] = useState([]);
 
     const signin = async ( user ) =>{
         try {
@@ -54,6 +56,16 @@ export const AusthProvider = ({ children }) =>{
               console.log(resAlmacenes.data)
         } catch (err) {
             throw err;
+        }
+    }
+
+    const cargarProductos = async () =>{
+        try {
+           const res =  await obtenerProductoRequest();
+           console.log(res.data)
+           setProductos(res.data)
+        } catch (err) {
+            throw err
         }
     }
 
@@ -101,6 +113,8 @@ export const AusthProvider = ({ children }) =>{
             recargarUsuarios,
             marcas,
             almacenes,
+            cargarProductos,
+            productos,
             categorias,
             usuarios
         }}>

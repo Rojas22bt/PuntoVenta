@@ -3,6 +3,10 @@ import '../../Css/ProductoPage.css';
 import { useAuth } from '../../../context/AuthContext';
 import { crearProductoRequest, actualizarProductoRequest } from '../../../api/auth';
 import Cloudinary from '../Cloudinary';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 const ProductoPage = () => {
     const { marcas, categorias, almacenes, cargarProductos, productos } = useAuth();
@@ -122,7 +126,55 @@ const ProductoPage = () => {
             setNuevoProducto(prev => ({ ...prev, imagen: url }));
         }
     };
-    
+    const generarPDF = () => {
+        const doc = new jsPDF();
+
+        doc.setFontSize(16);
+        doc.text("Reporte de Productos", 70, 10);
+
+        const columns = ["ID", "Nombre", "Modelo", "Marca", "Categoría", "Stock", "Precio", "Almacén", "Estado"];
+        const rows = productos.map(prod => [
+            prod.id,
+            prod.nombre,
+            prod.modelo,
+            prod.marca,
+            prod.categoria,
+            prod.stock,
+            `$${parseFloat(prod.precio).toFixed(2)}`,
+            prod.almacen,
+            prod.estado ? 'Activo' : 'Inactivo'
+        ]);
+
+        doc.autoTable({
+            head: [columns],
+            body: rows
+        });
+
+        doc.save('reporte_productos.pdf');
+    };
+    const generarExcel = () => {
+        const data = productos.map(prod => ({
+            ID: prod.id,
+            Nombre: prod.nombre,
+            Modelo: prod.modelo,
+            Marca: prod.marca,
+            Categoría: prod.categoria,
+            Stock: prod.stock,
+            Precio: parseFloat(prod.precio).toFixed(2),
+            Almacén: prod.almacen,
+            Estado: prod.estado ? 'Activo' : 'Inactivo'
+        }));
+
+        const worksheet = XLSX.utils.json_to_sheet(data);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Productos');
+
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+
+        saveAs(blob, 'reporte_productos.xlsx');
+    };
+
     return (
         <div className="producto-container">
             {loading && (
@@ -239,7 +291,13 @@ const ProductoPage = () => {
 
             <div className="text-center mt-3">
                 <button onClick={handleListProductos} className="btn btn-primary" disabled={loading}>
-                    'Listar Productos Existentes'
+                    Listar Productos Existentes
+                </button>
+                <button onClick={generarPDF} className="btn btn-danger" disabled={productos.length === 0}>
+                    Descargar PDF
+                </button>
+                <button onClick={generarExcel} className="btn btn-success" disabled={productos.length === 0}>
+                    Descargar Excel
                 </button>
             </div>
             <div className='form-containe'>

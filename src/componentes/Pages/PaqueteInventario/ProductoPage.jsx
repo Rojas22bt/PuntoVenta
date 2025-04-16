@@ -42,11 +42,22 @@ const ProductoPage = () => {
         setLoading(true); // Iniciar loading
         try {
             if (editIndex !== null) {
-                const productoEditado = productos[editIndex]
                 const updatedProductos = [...productos];
                 updatedProductos[editIndex] = nuevoProducto;
-                console.log(updatedProductos)
+                const datosNuevos ={
+                    id: nuevoProducto.id,
+                    nombre: nuevoProducto.nombre,
+                    modelo: nuevoProducto.modelo,
+                    precio: nuevoProducto.precio,
+                    stock: nuevoProducto.stock,
+                    estado: nuevoProducto.estado,
+                    url: "https://fakeimg.pl/250x100/",
+                    almacen: nuevoProducto.almacen,
+                    categoria: nuevoProducto.categoria,
+                    marca: nuevoProducto.marca
+                }
                 console.log(nuevoProducto);
+                await actualizarProductoRequest(datosNuevos);
             } else {
                 const datos = {
                     nombre: nuevoProducto.nombre,

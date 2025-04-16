@@ -24,12 +24,12 @@ import { Homed } from "./componentes/Homed/Homed";
 function App() {
 
   return (
-    <AuthProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         <Main />
-      </BrowserRouter>
-    </AuthProvider>
-    
+      </AuthProvider>
+    </BrowserRouter>
+
   )
 }
 
@@ -51,12 +51,12 @@ function Main() {
         <Route path="/oferta" element={<OfertasPage />} />
         <Route path="/computadoras" element={<ComputadorasPage />} />
         <Route path="/celulares" element={<CelularesPage />} />
-       <Route path="/facturacion/tarjet" element={<StripeContainer/>} />
+        <Route path="/facturacion/tarjet" element={<StripeContainer />} />
         <Route path="/historialcliente" element={<HistorialClientePage />} />
         <Route path="/perfilUsuario" element={<PerfilUsuarioPage />} />
         <Route path="/comentario" element={<ComentarioPage />} />
-      
-        <Route path="/dasboard/*" element={<Homed/>}/>
+
+        <Route path="/dasboard/*" element={<Homed />} />
 
       </Routes>
     </>

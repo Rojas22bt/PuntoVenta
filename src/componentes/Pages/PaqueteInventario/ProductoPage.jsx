@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import '../../Css/ProductoPage.css';
 import { useAuth } from '../../../context/AuthContext';
-import { crearProductoRequest } from '../../../api/auth';
+import { crearProductoRequest, actualizarProductoRequest } from '../../../api/auth';
 
 const ProductoPage = () => {
     const { marcas, categorias, almacenes, cargarProductos, productos } = useAuth();
@@ -45,6 +45,7 @@ const ProductoPage = () => {
             if (editIndex !== null) {
                 const updatedProductos = [...productos];
                 updatedProductos[editIndex] = nuevoProducto;
+                console.log(updatedProductos);
                 setProductos(updatedProductos);
             } else {
                 const datos = {
@@ -81,6 +82,11 @@ const ProductoPage = () => {
         } finally {
             setLoading(false); // Finalizar loading
         }
+    };
+
+    const handleEdit = (index) => {
+        setNuevoProducto(productos[index]);
+        setEditIndex(index);
     };
 
     const handleListProductos = async () => {

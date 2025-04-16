@@ -13,7 +13,7 @@ import FacturacionPage from "./componentes/Pages/PaqueteVenta/FacturacionPage";
 import OfertasPage from "./componentes/Pages/PaqueteInventario/OfertasPage";
 import ComputadorasPage from "./componentes/Pages/ComputadorasPage";
 import CelularesPage from "./componentes/Pages/CelularesPage";
-import { AusthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
 import HistorialClientePage from "./componentes/Pages/PaqueteUsuario/HistorialClientePage";
 import PerfilUsuarioPage from "./componentes/Pages/PaqueteUsuario/PerfilUsuarioPage";
 import ComentarioPage from "./componentes/Pages/PaqueteVenta/ComentarioPage";
@@ -24,11 +24,11 @@ import { Homed } from "./componentes/Homed/Homed";
 function App() {
 
   return (
-    <AusthProvider>
+    <AuthProvider>
       <BrowserRouter>
         <Main />
       </BrowserRouter>
-    </AusthProvider>
+    </AuthProvider>
     
   )
 }
@@ -57,7 +57,7 @@ function Main() {
         <Route path="/comentario" element={<ComentarioPage />} />
       
         <Route path="/dasboard/*" element={<Homed/>}/>
-        
+
       </Routes>
     </>
   )

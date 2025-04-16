@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import {
-  loginRequest,
+ loginRequest,
   obtenerUsuariosRequest,
   obtenerRolesRequest,
   obtenerAlmacenRequest,
@@ -31,10 +31,11 @@ export const AuthProvider = ({ children }) => {
 
   const signin = async (credentials) => {
     try {
-      const data = await loginRequest(credentials);
-      if (data.access && data.refresh) {
-        localStorage.setItem("access", data.access);
-        localStorage.setItem("refresh", data.refresh);
+      const datos = await loginRequest(credentials);
+      confirm.log(datos.data)
+      if (data.token.access && data.token.refresh) {
+        localStorage.setItem("access", data.token.access);
+        localStorage.setItem("refresh", data.token.refresh);
         setUser(data.usuario); // puedes hacer otra petición para obtener info del usuario si quieres
       } else {
         throw new Error("Credenciales inválidas");

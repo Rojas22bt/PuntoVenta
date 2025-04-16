@@ -5,9 +5,9 @@ import { crearProductoRequest } from '../../../api/auth';
 
 const ProductoPage = () => {
 
-    const { marcas, categorias, almacenes } = useAuth();
+    const { marcas, categorias, almacenes, cargarProductos,
+        productos, } = useAuth();
 
-    const [productos, setProductos] = useState([]);
     const [nuevoProducto, setNuevoProducto] = useState({
         nombre: '',
         precio: '',
@@ -102,12 +102,19 @@ const ProductoPage = () => {
     const handleCloseImage = () => {
         setShowImage(null);
     };
-    const handleListProductos = () => {
-        if (productos.length > 0) {
-            console.log("Productos existentes:", productos);
-            alert("Productos existentes: " + productos.map(producto => producto.productoID).join(", "));
-        } else {
-            alert("No hay Productos existentes.");
+    const handleListProductos = async () => {
+        try {
+
+            await cargarProductos();
+            if (productos.length > 0) {
+                console.log("Productos existentes:", productos);
+                alert("Productos existentes: " + productos.map(producto => producto.productoID).join(", "));
+            } else {
+                alert("No hay Productos existentes.");
+            }
+            
+        } catch (err) {
+            throw err
         }
     };
     return (
@@ -233,24 +240,24 @@ const ProductoPage = () => {
                                 <th>Acción</th>
                             </tr>
                         </thead>
-                        {/* <tbody>
+                        <tbody>
                             {productos.length > 0 ? (
                                 productos.map((producto, index) => (
-                                    <tr key={producto.productoID}>
-                                        <td>{producto.productoID}</td>
-                                        <td>{producto.Nombre}</td>
-                                        <td>{producto.Modelo}</td>
-                                        <td>{producto.Marca}</td>
-                                        <td>{producto.Categoria}</td>
-                                        <td>{producto.Stock}</td>
-                                        <td>${parseFloat(producto.Precio).toFixed(2)}</td>
-                                        <td>{producto.Almacen}</td>
-                                        <td>{producto.Estado}</td>
+                                    <tr key={producto.id}>
+                                        <td>{producto.id}</td>
+                                        <td>{producto.nombre}</td>
+                                        <td>{producto.modelo}</td>
+                                        <td>{producto.marca}</td>
+                                        <td>{producto.categoria}</td>
+                                        <td>{producto.stock}</td>
+                                        <td>${parseFloat(producto.precio).toFixed(2)}</td>
+                                        <td>{producto.almacen}</td>
+                                        <td>{producto.estado}</td>
                                         <td>
                                             <img
-                                                src={producto.Imagen}
-                                                alt={producto.Nombre}
-                                                onClick={() => handleImageClick(producto.Imagen)}
+                                                src={producto.url}
+                                                alt={producto.nombre}
+                                                onClick={() => handleImageClick(producto.url)}
                                                 style={{ width: '50px', height: 'auto', cursor: 'pointer' }} // Imagen pequeña
                                             />
                                                </td>
@@ -265,7 +272,7 @@ const ProductoPage = () => {
                                     <td colSpan="11">No se encontraron registros de productos.</td>
                                 </tr>
                             )}
-                        </tbody> */}
+                        </tbody>
                     </table>
                 </div>
             </div>

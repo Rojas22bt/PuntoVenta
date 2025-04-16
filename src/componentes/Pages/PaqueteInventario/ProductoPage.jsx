@@ -45,7 +45,8 @@ const ProductoPage = () => {
                 const productoEditado = productos[editIndex]
                 const updatedProductos = [...productos];
                 updatedProductos[editIndex] = nuevoProducto;
-                console.log(productoEditado);
+                console.log(updatedProductos)
+                console.log(nuevoProducto);
             } else {
                 const datos = {
                     nombre: nuevoProducto.nombre,

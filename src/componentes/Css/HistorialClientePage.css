@@ -1,5 +1,8 @@
 .historialConteiner {
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
 }
 
 .input-group {
@@ -7,18 +10,15 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    width: 100%;
+    width: 50%;
     padding: 12px;
 }
-.input-group button{
-    width: 100%;
-    padding: 10px 15px;
-    font-size: 15px;
-}
+
 .table-historial {
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
+    overflow: hidden;
 }
 
 .table-historial th,
@@ -45,30 +45,38 @@
 
 .table-historial th:nth-child(2),
 .table-historial td:nth-child(2) {
-    width: 18%;
+    width: 20%;
 }
 
 .table-historial th:nth-child(3),
 .table-historial td:nth-child(3) {
-    width: 8%;
+    width: 10%;
 }
 
 .table-historial th:nth-child(4),
 .table-historial td:nth-child(4) {
-    width: 18%;
+    width: 20%;
 }
 
 .table-historial th:nth-child(5),
 .table-historial td:nth-child(5) {
-    width: 20%;
+    width: 22%;
 }
 
 #VerImprimir {
     background-color: rgb(247, 211, 50);
     border: none;
-    width: 70%;
+    width: 100%;
     text-align: center;
     font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+#VerImprimir:hover {
+    background-color: rgb(247, 201, 0);
+    cursor: pointer;
 }
 
 .historial-table {
@@ -77,14 +85,21 @@
     padding: 0 20%;
 }
 
+.text-center{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    width: 100%;
+}
+/* Responsive para móviles */
 @media screen and (max-width: 768px) {
     .historial-table {
-        padding: 0; /* Elimina el padding lateral en pantallas pequeñas */
+        padding: 0;
         overflow-x: auto;
     }
 
     .table-historial {
-        min-width: 600px; /* Establece un ancho mínimo para que aparezca el scroll si no cabe */
+        min-width: 600px;
     }
 
     .input-group {
@@ -95,9 +110,13 @@
     .input-group button {
         font-size: 14px;
     }
-}
 
-.btn {
-    margin-left: 5px;
-    width: 75%;
+    .button-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .button-row .btn {
+        width: 90%;
+    }
 }

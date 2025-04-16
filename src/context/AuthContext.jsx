@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import {
- loginRequest,
+  loginRequest,
   obtenerUsuariosRequest,
   obtenerRolesRequest,
   obtenerAlmacenRequest,
@@ -8,6 +8,7 @@ import {
   obtenerMarcaRequest,
   obtenerProductoRequest
 } from "../api/auth";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -20,6 +21,9 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
+
+  const navigate = useNavigate();
+  
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [usuarios, setUsuarios] = useState([]);
@@ -31,17 +35,16 @@ export const AuthProvider = ({ children }) => {
 
   const signin = async (credentials) => {
     try {
-        console.log(credentials);
-      const datos = await loginRequest(credentials);
-      console.log(datos.data)
-      if (data.token.access && data.token.refresh) {
-        localStorage.setItem("access", data.token.access);
-        localStorage.setItem("refresh", data.token.refresh);
-        setUser(data.usuario); // puedes hacer otra petición para obtener info del usuario si quieres
-      } else {
-        throw new Error("Credenciales inválidas");
-      }
+      const res = await loginRequest(credentials);
+      const { access, refresh } = res.data.token;
+
+      localStorage.setItem("access", access);
+      localStorage.setItem("refresh", refresh);
+      localStorage.setItem("usuario", JSON.stringify(res.data.usuario));
+
+      setUser(res.data.usuario);
     } catch (err) {
+      console.error("Error en el login:", err.response?.data || err.message);
       throw err;
     }
   };
@@ -84,58 +87,26 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Refrescar token si es necesario
-  const refreshToken = async () => {
-    const refresh = localStorage.getItem("refresh");
-    if (!refresh) return null;
-
-    try {
-      const res = await fetch("https://web-production-ab6a3.up.railway.app/api/token/refresh/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ refresh }),
-      });
-      const data = await res.json();
-
-      if (res.ok && data.access) {
-        localStorage.setItem("access", data.access);
-        return data.access;
-      } else {
-        throw new Error("No se pudo refrescar el token");
-      }
-    } catch (error) {
-      console.error("Error al refrescar token:", error);
-      return null;
-    }
-  };
-
   useEffect(() => {
     const checkLogin = async () => {
       const access = localStorage.getItem("access");
       const refresh = localStorage.getItem("refresh");
+      const savedUser = localStorage.getItem("usuario");
 
-      if (!access && !refresh) {
+      if (!access || !refresh || !savedUser) {
         setLoading(false);
+        navigate('/login')
         return;
       }
 
       try {
-        // Puedes agregar un endpoint en el backend para validar el token si lo necesitas
-        const userData = await obtenerUsuariosRequest(); // o un endpoint /me si lo tienes
-        setUser(userData.data);
-      } catch (error) {
-        // Si el access token falla, intenta refrescar
-        const newAccess = await refreshToken();
-        if (newAccess) {
-          try {
-            const userData = await obtenerUsuariosRequest();
-            setUser(userData.data);
-          } catch (err) {
-            console.error(err);
-          }
-        } else {
-          setUser(null);
-        }
+        setUser(JSON.parse(savedUser));
+        cargarDatos();
+        recargarUsuarios();
+        cargarProductos();
+      } catch (err) {
+        console.error("Error al cargar usuario desde localStorage", err);
+        setUser(null);
       } finally {
         setLoading(false);
       }

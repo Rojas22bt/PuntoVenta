@@ -1,126 +1,165 @@
-import { createContext , useState, useContext, useEffect } from "react";
-import { loginRequest,obtenerUsuariosRequest,obtenerRolesRequest,
-        obtenerAlmacenRequest, obtenerCategoriaRequest, obtenerMarcaRequest,
-        obtenerProductoRequest
- } from "../api/auth";
-
+import { createContext, useState, useContext, useEffect } from "react";
+import {
+  loginRequest,
+  obtenerUsuariosRequest,
+  obtenerRolesRequest,
+  obtenerAlmacenRequest,
+  obtenerCategoriaRequest,
+  obtenerMarcaRequest,
+  obtenerProductoRequest
+} from "../api/auth";
 
 const AuthContext = createContext();
 
 export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if(!context){
-        throw new Error("useAuth must be used within an AuthProvider");
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
+
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [usuarios, setUsuarios] = useState([]);
+  const [roles, setRoles] = useState([]);
+  const [marcas, setMarcas] = useState([]);
+  const [almacenes, setAlmacenes] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  const [productos, setProductos] = useState([]);
+
+  const signin = async (credentials) => {
+    try {
+      const data = await loginRequest(credentials);
+      if (data.access && data.refresh) {
+        localStorage.setItem("access", data.access);
+        localStorage.setItem("refresh", data.refresh);
+        setUser(data.usuario); // puedes hacer otra petición para obtener info del usuario si quieres
+      } else {
+        throw new Error("Credenciales inválidas");
+      }
+    } catch (err) {
+      throw err;
     }
-    return context;
-}
+  };
 
-export const AusthProvider = ({ children }) =>{
+  const cargarDatos = async () => {
+    try {
+      const uss = await obtenerUsuariosRequest();
+      const ross = await obtenerRolesRequest();
+      const [resCategorias, resMarcas, resAlmacenes] = await Promise.all([
+        obtenerCategoriaRequest(),
+        obtenerMarcaRequest(),
+        obtenerAlmacenRequest(),
+      ]);
 
-    const [ user, setUser ] = useState([]);
-    const [ loading, setLoading] = useState(true);
-    const [usuarios, setUsuarios] = useState([]);
-    const [roles, setRoles] = useState([]);
-    const [marcas, setMarcas] = useState([]);
-    const [almacenes, setAlmacenes] = useState([]);
-    const [categorias, setCategorias] = useState([]);
-    const [productos, setProductos] = useState([]);
-
-    const signin = async ( user ) =>{
-        try {
-            const res = await loginRequest(user);
-            console.log(res.data.usuario)
-            setUser(res.data.usuario);
-            // localStorage.setItem('token', res.data.token);
-        } catch (err) {
-            throw err;
-        }
+      setUsuarios(uss.data);
+      setRoles(ross.data);
+      setCategorias(resCategorias.data);
+      setMarcas(resMarcas.data);
+      setAlmacenes(resAlmacenes.data);
+    } catch (err) {
+      console.error("Error al cargar datos:", err);
     }
-    
-    const cargarDatos = async() =>{
-        try {
-            const uss = await obtenerUsuariosRequest();
-            const ross = await obtenerRolesRequest();
-            setUsuarios(uss.data)
-            setRoles(ross.data)
-            const [resCategorias, resMarcas, resAlmacenes] = await Promise.all([
-                obtenerCategoriaRequest(),
-                obtenerMarcaRequest(),
-                obtenerAlmacenRequest()
-              ]);
-              setCategorias(resCategorias.data); 
-              setMarcas(resMarcas.data);
-              setAlmacenes(resAlmacenes.data);
-              console.log(resCategorias.data)
-              console.log(resMarcas.data)
-              console.log(resAlmacenes.data)
-        } catch (err) {
-            throw err;
-        }
+  };
+
+  const cargarProductos = async () => {
+    try {
+      const res = await obtenerProductoRequest();
+      setProductos(res.data);
+    } catch (err) {
+      console.error("Error al cargar productos:", err);
     }
+  };
 
-    const cargarProductos = async () =>{
-        try {
-           const res =  await obtenerProductoRequest();
-           console.log(res.data)
-           setProductos(res.data)
-        } catch (err) {
-            throw err
-        }
+  const recargarUsuarios = async () => {
+    try {
+      const uss = await obtenerUsuariosRequest();
+      setUsuarios(uss.data);
+    } catch (err) {
+      console.error("Error al recargar usuarios:", err);
     }
+  };
 
-    const recargarUsuarios = async() => {
-        try {
-            const uss = await obtenerUsuariosRequest();
-            setUsuarios(uss.data)
-        } catch (err) {
-            throw err;
-        }
+  // Refrescar token si es necesario
+  const refreshToken = async () => {
+    const refresh = localStorage.getItem("refresh");
+    if (!refresh) return null;
+
+    try {
+      const res = await fetch("https://web-production-ab6a3.up.railway.app/api/token/refresh/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ refresh }),
+      });
+      const data = await res.json();
+
+      if (res.ok && data.access) {
+        localStorage.setItem("access", data.access);
+        return data.access;
+      } else {
+        throw new Error("No se pudo refrescar el token");
+      }
+    } catch (error) {
+      console.error("Error al refrescar token:", error);
+      return null;
     }
+  };
 
-    useEffect(() => {
-        async function checklogin() {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                setLoading(false);
-                return;
-            }
-            try {
-                setLoading(true);
-                const res = await vericarToken(token);
-                if (!res.dat) {
-                    setLoading(false);
-                    return;
-                }
-                setUser(res.data);
-                setLoading(false);
-            } catch (error) {
-                console.error(error);
-                setLoading(false);
-            }
-    
+  useEffect(() => {
+    const checkLogin = async () => {
+      const access = localStorage.getItem("access");
+      const refresh = localStorage.getItem("refresh");
+
+      if (!access && !refresh) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        // Puedes agregar un endpoint en el backend para validar el token si lo necesitas
+        const userData = await obtenerUsuariosRequest(); // o un endpoint /me si lo tienes
+        setUser(userData.data);
+      } catch (error) {
+        // Si el access token falla, intenta refrescar
+        const newAccess = await refreshToken();
+        if (newAccess) {
+          try {
+            const userData = await obtenerUsuariosRequest();
+            setUser(userData.data);
+          } catch (err) {
+            console.error(err);
+          }
+        } else {
+          setUser(null);
         }
+      } finally {
+        setLoading(false);
+      }
+    };
 
-        checklogin();
-    }, []);
+    checkLogin();
+  }, []);
 
-    return (
-        <AuthContext.Provider value={{
-            signin,
-            cargarDatos,
-            user,
-            roles,
-            recargarUsuarios,
-            marcas,
-            almacenes,
-            cargarProductos,
-            productos,
-            categorias,
-            usuarios
-        }}>
-            { children }
-        </AuthContext.Provider>
-    );
-
-
+  return (
+    <AuthContext.Provider
+      value={{
+        signin,
+        user,
+        loading,
+        cargarDatos,
+        cargarProductos,
+        recargarUsuarios,
+        usuarios,
+        roles,
+        marcas,
+        almacenes,
+        categorias,
+        productos,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };

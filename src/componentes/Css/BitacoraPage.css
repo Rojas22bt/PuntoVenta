@@ -42,6 +42,33 @@
   background-color: rgb(50, 119, 247);
   color: white;
 }
+.mb-3 {
+  gap: 20px;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.filtro-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.filtro-item label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.mb-3 input {
+  padding: 6px;
+  font-size: 14px;
+  width: 100%;
+}
+
 
 /* Estilos para dispositivos móviles */
 @media (max-width: 768px) {

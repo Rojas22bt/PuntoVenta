@@ -61,7 +61,7 @@ function Main() {
         <Route path="/historialcliente" element={<HistorialClientePage />} />
         <Route path="/perfilUsuario" element={<PerfilUsuarioPage />} />
         <Route path="/comentario" element={<ComentarioPage />} />
-        <Route path="/catalogo" element={<CatalogoPage />} />
+        <Route path="/catalogo-productos" element={<CatalogoPage />} />
         <Route path="/dasboard/*" element={<Homed />} />
         <Route path="/carrito" element={<CartList />} />
         <Route path="/prueba" element={<AddProductForm />} />

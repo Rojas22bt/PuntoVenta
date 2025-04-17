@@ -5,11 +5,16 @@ import { AiOutlineClose } from 'react-icons/ai';
 function CatalogoPage() {
   return (
     <div className='CatalogoConteiner'>
+      <div className="form-group">
+        <label htmlFor="modelo">Buscar tu Producto</label>
+        <input type="text" name="modelo" placeholder="Escribe el nombre del producto" className="form-control" id='BuscadorCatalogo'/>
+      </div>
       <div className="f">
         <div className="Img1"></div>
         <div className="Img1"></div>
         <div className="Img1"></div>
       </div>
+
       <div id="carouselExampleFade" class="carousel slide carousel-fade">
         <div class="carousel-inner">
           <h1 class="display-1">Ofertas</h1>
@@ -37,7 +42,7 @@ function CatalogoPage() {
         <div className="CatProducto">
           <img src="https://res.cloudinary.com/ddltlpsy1/image/upload/v1744844548/Iphone_11_pro_max_aisxfw.png" alt="CatProducto" className="CatProducto-img" />
           <div className="CatProducto-footer">
-          <h3 className="CatProducto-nombre">CatProducto</h3>
+            <h3 className="CatProducto-nombre">CatProducto</h3>
             <span className="CatProducto-precio">$999</span>
             <button className="btn-mas">+</button>
           </div>
@@ -45,7 +50,7 @@ function CatalogoPage() {
         <div className="CatProducto">
           <img src="https://res.cloudinary.com/ddltlpsy1/image/upload/v1744844530/Iphone_13_pro_v7z62g.png" alt="CatProducto 2" className="CatProducto-img" />
           <div className="CatProducto-footer">
-          <h3 className="CatProducto-nombre">CatProducto</h3>
+            <h3 className="CatProducto-nombre">CatProducto</h3>
             <span className="CatProducto-precio">$999</span>
             <button className="btn-mas">+</button>
           </div>
@@ -53,7 +58,7 @@ function CatalogoPage() {
         <div className="CatProducto">
           <img src="https://res.cloudinary.com/ddltlpsy1/image/upload/v1744844548/Iphone_11_pro_max_aisxfw.png" alt="CatProducto 3" className="CatProducto-img" />
           <div className="CatProducto-footer">
-          <h3 className="CatProducto-nombre">CatProducto</h3>
+            <h3 className="CatProducto-nombre">CatProducto</h3>
             <span className="CatProducto-precio">$999</span>
             <button className="btn-mas">+</button>
           </div>
@@ -61,7 +66,7 @@ function CatalogoPage() {
         <div className="CatProducto">
           <img src="fondo1.jpg" alt="CatProducto 3" className="CatProducto-img" />
           <div className="CatProducto-footer">
-          <h3 className="CatProducto-nombre">CatProducto</h3>
+            <h3 className="CatProducto-nombre">CatProducto</h3>
             <span className="CatProducto-precio">$999</span>
             <button className="btn-mas">+</button>
           </div>
@@ -72,7 +77,7 @@ function CatalogoPage() {
         <div className="CatProducto">
           <img src="fondo1.jpg" alt="CatProducto 1" className="CatProducto-img" />
           <div className="CatProducto-footer">
-          <h3 className="CatProducto-nombre">CatProducto</h3>
+            <h3 className="CatProducto-nombre">CatProducto</h3>
             <span className="CatProducto-precio">$999</span>
             <button className="btn-mas">+</button>
           </div>
@@ -80,7 +85,7 @@ function CatalogoPage() {
         <div className="CatProducto">
           <img src="fondo1.jpg" alt="CatProducto 2" className="CatProducto-img" />
           <div className="CatProducto-footer">
-          <h3 className="CatProducto-nombre">CatProducto</h3>
+            <h3 className="CatProducto-nombre">CatProducto</h3>
             <span className="CatProducto-precio">$999</span>
             <button className="btn-mas">+</button>
           </div>
@@ -88,7 +93,7 @@ function CatalogoPage() {
         <div className="CatProducto">
           <img src="fondo1.jpg" alt="CatProducto 3" className="CatProducto-img" />
           <div className="CatProducto-footer">
-          <h3 className="CatProducto-nombre">CatProducto</h3>
+            <h3 className="CatProducto-nombre">CatProducto</h3>
             <span className="CatProducto-precio">$999</span>
             <button className="btn-mas">+</button>
           </div>
@@ -96,7 +101,7 @@ function CatalogoPage() {
         <div className="CatProducto">
           <img src="fondo1.jpg" alt="CatProducto 3" className="CatProducto-img" />
           <div className="CatProducto-footer">
-          <h3 className="CatProducto-nombre">CatProducto</h3>
+            <h3 className="CatProducto-nombre">CatProducto</h3>
             <span className="CatProducto-precio">$999</span>
             <button className="btn-mas">+</button>
           </div>

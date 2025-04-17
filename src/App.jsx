@@ -20,6 +20,7 @@ import ComentarioPage from "./componentes/Pages/PaqueteVenta/ComentarioPage";
 import StripeContainer from "./componentes/Pages/StripeContainer";
 
 import { Homed } from "./componentes/Homed/Homed";
+import CatalogoPage from "./componentes/Pages/CatalogoPage";
 
 function App() {
 
@@ -55,6 +56,8 @@ function Main() {
         <Route path="/historialcliente" element={<HistorialClientePage />} />
         <Route path="/perfilUsuario" element={<PerfilUsuarioPage />} />
         <Route path="/comentario" element={<ComentarioPage />} />
+        <Route path="/catalogo" element={<CatalogoPage />} />
+    
 
         <Route path="/dasboard/*" element={<Homed />} />
 

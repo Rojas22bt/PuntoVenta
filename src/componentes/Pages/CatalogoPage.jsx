@@ -9,6 +9,7 @@ function CatalogoPage() {
 
   const [busqueda, setBusqueda] = useState('');
   const [filtrados, setFiltrados] = useState([]);
+  const [mensaje, setMensaje] = useState('');
 
   const handleBusqueda = (e) => {
     const valor = e.target.value.toLowerCase();
@@ -21,7 +22,13 @@ function CatalogoPage() {
 
   const agregarAlCarrito = (producto) => {
     addToCart(producto);
+    setMensaje(`"${producto.nombre}" añadido al carrito`);
+
+    setTimeout(() => {
+      setMensaje('');
+    }, 2000);
   };
+
 
   const renderProductos = (listaProductos) => (
     <div className='CatalogoV'>
@@ -51,7 +58,11 @@ function CatalogoPage() {
 
   return (
     <div className='CatalogoConteiner'>
-      {/* Buscador fijo como barra superior */}
+      {mensaje && (
+        <div className="alert alert-success mensaje-carrito">
+          {mensaje}
+        </div>
+      )}
       <div className="form-group" id='BuscadorCatalogo'>
         <label htmlFor="modelo">Busca tu Producto</label>
         <input
@@ -65,7 +76,7 @@ function CatalogoPage() {
         />
       </div>
 
-       <div style={{ marginTop: '120px', width: '100%' }}>
+      <div style={{ marginTop: '120px', width: '100%' }}>
         {busqueda && (
           <>
             <h1 className="display-1">Resultados de búsqueda</h1>

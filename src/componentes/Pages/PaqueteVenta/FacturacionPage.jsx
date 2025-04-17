@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import '../../Css/FacturacionPage.css';
+import { useCart } from '../../../context/CartContext';
+import { useAuth } from '../../../context/AuthContext';
 
 function FacturacionPage() {
-  const [productos, setProductos] = useState([
-    { nombre: 'Ejemplo Producto', precio: 100, cantidad: 2 },
-    { nombre: 'Otro Producto', precio: 50, cantidad: 3 }
-  ]);
+  const { cartItems, cartTotal } = useCart();
+  const { user } = useAuth();
 
   const [fecha, setFecha] = useState('');
 
@@ -15,15 +15,14 @@ function FacturacionPage() {
     setFecha(fechaFormateada);
   }, []);
 
-  const eliminarProducto = (index) => {
-    const nuevosProductos = [...productos];
-    nuevosProductos.splice(index, 1);
-    setProductos(nuevosProductos);
-  };
-
-  const calcularTotal = () => {
-    return productos.reduce((acc, prod) => acc + prod.precio * prod.cantidad, 0);
-  };
+  if (!user) {
+    return (
+      <div className="loader-container">
+        <div className="loader"></div>
+        <p>Cargando datos de usuario...</p>
+      </div>
+    );
+  }
 
   return (
     <div className='conteinerFacturacion'>
@@ -32,12 +31,20 @@ function FacturacionPage() {
         <div className='datosFacturacion'>
           <div className="mb-3">
             <label>Nombre:</label>
-            <input type="text" className="form-control" />
+            <input type="text" className="form-control" value={user.nombre} disabled />
           </div>
           <div className="mb-3">
-            <label>NIT:</label>
-            <input type="number" className="form-control" />
+            <label>Tipo de Documento</label>
+            <select name="documento" id="todavia" className="form-control">
+              <option value="">Seleccione...</option>
+              {user.documentos.map((doc, index) => (
+                <option key={index} value={doc.documento__descripcion}>
+                  {doc.documento__descripcion}
+                </option>
+              ))}
+            </select>
           </div>
+
           <div className="mb-3">
             <label>Fecha:</label>
             <input type="date" className="form-control" value={fecha} readOnly />
@@ -51,6 +58,7 @@ function FacturacionPage() {
           <table className='tablaFacturacion'>
             <thead>
               <tr>
+                <th>ID</th>
                 <th>Producto</th>
                 <th>Precio</th>
                 <th>Cantidad</th>
@@ -58,12 +66,13 @@ function FacturacionPage() {
               </tr>
             </thead>
             <tbody>
-              {productos.map((prod, index) => (
+              {cartItems.map((prod, index) => (
                 <tr key={index}>
+                  <td>{prod.id}</td>
                   <td>{prod.nombre}</td>
-                  <td>{prod.precio}</td>
-                  <td>{prod.cantidad}</td>
-                  <td>{prod.precio * prod.cantidad}</td>
+                  <td>${prod.precio}</td>
+                  <td>{prod.quantity}</td>
+                  <td>${(prod.precio * prod.quantity).toFixed(2)}</td>
                 </tr>
               ))}
             </tbody>
@@ -76,7 +85,12 @@ function FacturacionPage() {
           </a>
           <div className="totalFinal">
             <label>Total:</label>
-            <input type="text" readOnly className="inputTotal" value={calcularTotal()} />
+            <input
+              type="text"
+              readOnly
+              className="inputTotal"
+              value={`$${cartTotal.toFixed(2)}`}
+            />
           </div>
         </div>
       </div>

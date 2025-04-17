@@ -7,7 +7,7 @@
     overflow-x: hidden;
     color: white;
 }
-.form-group {
+#BuscadorCatalogo {
     width: 100%;
     display: flex;
     flex-direction: column;

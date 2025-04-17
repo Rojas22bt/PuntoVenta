@@ -103,7 +103,7 @@
   }
   
   .CatProducto-nombre {
-    font-size: 1.2rem;
+    font-size: 15px;
     margin-top: 7px;
   }
   
@@ -116,12 +116,12 @@
   }
   
   .CatProducto-precio {
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: #01c4ff; 
    font-weight: bold;
    text-align: center;
     background-color: rgba(0, 0, 0, 0.4);
-    padding: 1px 8px;
+    padding: 1px 5px;
     border-radius: 8px;
   }
   
@@ -131,8 +131,8 @@
     border: none;
     border-radius: 10px; 
     font-size: 1.3rem;
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;

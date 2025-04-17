@@ -55,7 +55,6 @@ function FacturacionPage() {
                 <th>Precio</th>
                 <th>Cantidad</th>
                 <th>SubTotal</th>
-                <th>Acción</th>
               </tr>
             </thead>
             <tbody>
@@ -65,9 +64,6 @@ function FacturacionPage() {
                   <td>{prod.precio}</td>
                   <td>{prod.cantidad}</td>
                   <td>{prod.precio * prod.cantidad}</td>
-                  <td>
-                    <button className="btn btn-danger" onClick={() => eliminarProducto(index)}>Eliminar</button>
-                  </td>
                 </tr>
               ))}
             </tbody>

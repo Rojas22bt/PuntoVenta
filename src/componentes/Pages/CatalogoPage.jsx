@@ -30,7 +30,7 @@ function CatalogoPage() {
     <div className='CatalogoConteiner'>
       <div className="form-group" id='BuscadorCatalogo'>
         <label htmlFor="modelo">Busca tu Producto</label>
-        <input type="text" name="modelo" placeholder="Nombre del producto" className="form-control" id='BuscadorCatalogo' />
+        <input type="text" name="modelo" placeholder="Nombre del producto" className="form-control" id='BuscadorCatalogoInput' />
       </div>
 
       <div className="f">

@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import '../Css/CatalogoPage.css';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
+import Fuse from 'fuse.js';
+import VoiceSearch from './VoiceSearch';
 
 function CatalogoPage() {
   const { productos } = useAuth();
@@ -11,28 +13,30 @@ function CatalogoPage() {
   const [filtrados, setFiltrados] = useState([]);
   const [mensaje, setMensaje] = useState('');
 
+  const fuse = useMemo(() => new Fuse(productos, {
+    keys: ['nombre'],
+    threshold: 0.4
+  }), [productos]);
+
+  const normalizarTexto = (texto) =>
+    texto.normalize("NFD").replace(/[\u0300-\u036f.]/g, "").trim().toLowerCase();
+
   const handleBusqueda = (e) => {
-    const valor = e.target.value.toLowerCase();
+    const valor = normalizarTexto(e.target.value);
     setBusqueda(valor);
-    const resultado = productos.filter(p =>
-      p.nombre.toLowerCase().includes(valor)
-    );
+    const resultado = fuse.search(valor).map(r => r.item);
     setFiltrados(resultado);
   };
 
   const agregarAlCarrito = (producto) => {
     addToCart(producto);
     setMensaje(`"${producto.nombre}" añadido al carrito`);
-
-    setTimeout(() => {
-      setMensaje('');
-    }, 2000);
+    setTimeout(() => setMensaje(''), 2000);
   };
 
-
-  const renderProductos = (listaProductos) => (
+  const renderProductos = (lista) => (
     <div className='CatalogoV'>
-      {listaProductos.map(producto => (
+      {lista.map(producto => (
         <div className="CatProducto" key={producto.id}>
           <img src={producto.url} alt={producto.nombre} className="CatProducto-img" />
           <div className="CatProducto-footer">
@@ -58,33 +62,40 @@ function CatalogoPage() {
 
   return (
     <div className='CatalogoConteiner'>
-      {mensaje && (
-        <div className="alert alert-success mensaje-carrito">
-          {mensaje}
-        </div>
-      )}
+      {mensaje && <div className="alert alert-success mensaje-carrito">{mensaje}</div>}
+
       <div className="form-group" id='BuscadorCatalogo'>
         <label htmlFor="modelo">Busca tu Producto</label>
-        <input
-          type="text"
-          name="modelo"
-          placeholder="Nombre del producto"
-          className="form-control"
-          id='BuscadorCatalogoInput'
-          value={busqueda}
-          onChange={handleBusqueda}
-        />
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexDirection:'column' }}>
+          <input
+            type="text"
+            name="modelo"
+            placeholder="Nombre del producto"
+            className="form-control"
+            id='BuscadorCatalogoInput'
+            value={busqueda}
+            onChange={handleBusqueda}
+            style={{minWidth:'250px'}}
+          />
+          <VoiceSearch
+            productos={productos}
+            setBusqueda={setBusqueda}
+            setFiltrados={setFiltrados}
+            agregarAlCarrito={agregarAlCarrito}
+            setMensaje={setMensaje}
+            normalizarTexto={normalizarTexto}
+            fuse={fuse}
+          />
+        </div>
       </div>
 
       <div style={{ marginTop: '120px', width: '100%' }}>
-        {busqueda && (
+        {busqueda ? (
           <>
             <h1 className="display-1">Resultados de búsqueda</h1>
             {filtrados.length > 0 ? renderProductos(filtrados) : <p>No se encontraron productos.</p>}
           </>
-        )}
-
-        {!busqueda && (
+        ) : (
           <>
             <div className="f">
               <div className="Img1"></div>
@@ -107,11 +118,9 @@ function CatalogoPage() {
               </div>
               <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span className="visually-hidden">Previous</span>
               </button>
               <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
                 <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                <span className="visually-hidden">Next</span>
               </button>
             </div>
 

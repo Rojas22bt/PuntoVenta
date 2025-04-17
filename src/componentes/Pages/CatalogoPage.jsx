@@ -6,8 +6,8 @@ function CatalogoPage() {
   return (
     <div className='CatalogoConteiner'>
       <div className="form-group">
-        <label htmlFor="modelo">Buscar tu Producto</label>
-        <input type="text" name="modelo" placeholder="Escribe el nombre del producto" className="form-control" id='BuscadorCatalogo'/>
+        <label htmlFor="modelo">Busca tu Producto</label>
+        <input type="text" name="modelo" placeholder="Nombre del producto" className="form-control" id='BuscadorCatalogo'/>
       </div>
       <div className="f">
         <div className="Img1"></div>

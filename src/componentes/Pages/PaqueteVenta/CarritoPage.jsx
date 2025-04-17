@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { useCart } from "../../../context/CartContext";
 import '../../Css/Carrito.css';
+import { useNavigate } from "react-router-dom";
 
 const CartList = () => {
+
+    const navigate = useNavigate();
+
     const { cartItems, removeFromCart, clearCart, cartTotal, updateQuantity } = useCart();
     const [mostrarRecomendaciones, setMostrarRecomendaciones] = useState(true);
 
@@ -40,7 +44,7 @@ const CartList = () => {
                 <div className="footerCarrito">
                     <p><strong>Total:</strong> ${cartTotal.toFixed(2)}</p>
                     <button className="btnVaciar" onClick={clearCart}>🧹 Vaciar carrito</button>
-                    <button className="btnPagar" onClick={clearCart}>💳 Seguir con el pago</button>
+                    <button className="btnPagar" onClick={() => navigate('/facturacion')}>💳 Seguir con el pago</button>
                 </div>
             </div>
 

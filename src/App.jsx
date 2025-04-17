@@ -58,7 +58,6 @@ function Main() {
         <Route path="/comentario" element={<ComentarioPage />} />
         <Route path="/catalogo" element={<CatalogoPage />} />
     
-
         <Route path="/dasboard/*" element={<Homed />} />
 
       </Routes>

@@ -1,9 +1,11 @@
 import React from 'react';
 import '../Css/CatalogoPage.css';
 import { useAuth } from '../../context/AuthContext';
+import { useCart } from '../../context/CartContext';
 
 function CatalogoPage() {
   const { productos } = useAuth();
+  const { addToCart } = useCart();
 
   const renderProductosPorCategoria = (categoriaId, titulo) => (
     <>
@@ -17,7 +19,16 @@ function CatalogoPage() {
               <div className="CatProducto-footer">
                 <h3 className="CatProducto-nombre">{producto.nombre}</h3>
                 <span className="CatProducto-precio">${producto.precio}</span>
-                <button className="btn-mas">+</button>
+                <button
+                  className="btn-mas"
+                  onClick={() => addToCart({
+                    id: producto.id,
+                    nombre: producto.nombre,
+                    precio: producto.precio
+                  })}                  
+                >
+                  +
+                </button>
               </div>
             </div>
           ))

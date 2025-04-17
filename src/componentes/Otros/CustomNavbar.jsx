@@ -7,7 +7,7 @@ const CustomNavbar = () => {
     <Navbar bg="dark" variant="dark" expand="lg" sticky="top" collapseOnSelect>
       <Container>
         {/* Logo / Marca */}
-        <Navbar.Brand as={Link} to="/">
+        <Navbar.Brand as={Link} to="/prueba">
           Mi App
         </Navbar.Brand>
 

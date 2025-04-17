@@ -21,12 +21,18 @@ import StripeContainer from "./componentes/Pages/StripeContainer";
 
 import { Homed } from "./componentes/Homed/Homed";
 
+import { CartProvider } from "./context/CartContext";
+import CartList from "./componentes/Pages/PaqueteVenta/CarritoPage";
+import AddProductForm from "./componentes/Pages/PaqueteVenta/PruebaPage";
+
 function App() {
 
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Main />
+        <CartProvider>
+          <Main />
+        </CartProvider>
       </AuthProvider>
     </BrowserRouter>
 
@@ -57,6 +63,8 @@ function Main() {
         <Route path="/comentario" element={<ComentarioPage />} />
 
         <Route path="/dasboard/*" element={<Homed />} />
+        <Route path="/carrito" element={<CartList />} />
+        <Route path="/prueba" element={<AddProductForm />} />
 
       </Routes>
     </>

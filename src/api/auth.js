@@ -168,3 +168,12 @@ export const obtenerOferAdmitaRequest = data => {
         timeout: tiempoEspera
     })
 }
+
+
+///------------venta--------/*
+export const crearFacturacionRequest = data => instance.post('/venta/factura', data,{
+    headers:{
+        "Content-Type": "application/json"
+    },
+    withCredentials: true
+})

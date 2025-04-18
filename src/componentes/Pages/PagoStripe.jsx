@@ -51,6 +51,9 @@ const CheckoutForm = ({ total, onPagoExitoso }) => {
 
         try {
             console.log(total)
+            if (onPagoExitoso) {
+                onPagoExitoso(); 
+              }
             const res = await fetch("https://web-production-ab6a3.up.railway.app/api/venta/crear-pago", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -78,9 +81,6 @@ const CheckoutForm = ({ total, onPagoExitoso }) => {
                 await clearCart();
                 const card = elements.getElement(CardElement);
                 card.clear();
-                if (onPagoExitoso) {
-                    onPagoExitoso(); 
-                  }
             }
         } catch (err) {
             console.error("❌ Error:", err);

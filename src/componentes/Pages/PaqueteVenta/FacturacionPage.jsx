@@ -3,6 +3,7 @@ import '../../Css/FacturacionPage.css';
 import StripePayment from '../PagoStripe';
 import { useCart } from '../../../context/CartContext';
 import { useAuth } from '../../../context/AuthContext';
+import { crearFacturacionRequest } from '../../../api/auth';
 
 function FacturacionPage() {
   const { cartItems, cartTotal } = useCart();
@@ -31,16 +32,19 @@ function FacturacionPage() {
   const ofertas = cartItems.filter(item => item.tipo === 'oferta');
 
   // Armar JSON para enviar al backend
-  const construirPayload = () => ({
+  const construirPayload =  () => ({
     factura: {
       nit: "12345678",
-      razon_social: user.nombre,
-      fecha_emision: fecha,
-      total: cartTotal
+      descripcion: "venta de productos varios",
+      fecha: fecha,
+      precio_unidad: 950,
+      precio_total: Number(cartTotal),
+      cod_autorizacion: "ABC-123",
+      estado: true
     },
     transaccion: {
       detalle: "Pago con tarjeta",
-      metodo_pago: 2 // puedes adaptarlo según tu sistema
+      metodo_pago: 1 // puedes adaptarlo según tu sistema
     },
     nota_venta: {
       descripcion: "Venta realizada en tienda central",
@@ -56,11 +60,21 @@ function FacturacionPage() {
     }))
   });
 
-  const handleEnviar = () => {
-    const payload = construirPayload();
-    console.log("📦 Payload a enviar:", payload);
-    // Aquí podrías usar fetch/axios para enviarlo a tu backend:
-    // await enviarFactura(payload);
+  const handleEnviar =async () => {
+    try { 
+      const payload = construirPayload();
+      console.log("📦 Payload a enviar:", payload);
+      const res = await crearFacturacionRequest(payload);
+      console.log(res.data)
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        const mensaje = error.response.data?.[0] || "Error de validación";
+        alert(`❌ ${mensaje}`);
+      } else {
+        console.error("❌ Error inesperado:", error);
+        alert("❌ Ocurrió un error inesperado");
+      }
+    }
   };
 
   return (

@@ -154,3 +154,17 @@ export const crearOfertaRequest = data => instance.post('/venta/oferta/register'
     },
     withCredentials:true
 })
+
+export const obtenerOfertaRequest = data => {
+    return instance.get('/venta/obtener-ofertas-activas',{
+        withCredentials: true,
+        timeout: tiempoEspera
+    })
+}
+
+export const obtenerOferAdmitaRequest = data => {
+    return instance.get('/venta/obtener-ofertas',{
+        withCredentials: true,
+        timeout: tiempoEspera
+    })
+}

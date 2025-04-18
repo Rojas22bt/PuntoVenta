@@ -3,17 +3,20 @@ import '../../Css/OfertasPage.css';
 import { useAuth } from '../../../context/AuthContext';
 // import { crearOfertaRequest } // ← aquí deberías importar tu función real para enviar la oferta
 import { crearOfertaRequest } from '../../../api/auth';
+import { input } from 'framer-motion/client';
 
 function OfertasPage() {
-    const { productos } = useAuth();
+    const { productos, ofertasAdmi, cargarProductosAdmi } = useAuth();
 
     const [mercaderias, setMercaderias] = useState([]);
     const [busquedaID, setBusquedaID] = useState('');
     const [busquedaNombre, setBusquedaNombre] = useState('');
     const [resultadosBusqueda, setResultadosBusqueda] = useState([]);
+    const [editandoIndex, setEditandoIndex] = useState(null);
+    const [ofertaEditada, setOfertaEditada] = useState(null);
 
     const [nuevaOferta, setNuevaOferta] = useState({
-        descripcion:'',
+        descripcion: '',
         fecha_inicio: '',
         fecha_fin: '',
         precio_oferta: '',
@@ -75,7 +78,7 @@ function OfertasPage() {
 
             setMercaderias([]);
             setNuevaOferta({
-                descripcion:'',
+                descripcion: '',
                 fecha_inicio: '',
                 fecha_fin: '',
                 precio_oferta: '',
@@ -106,6 +109,43 @@ function OfertasPage() {
         setBusquedaID('');
         setBusquedaNombre('');
         setResultadosBusqueda([]);
+    };
+
+
+    const handleEdit = (index) => {
+        setEditandoIndex(index);
+        setOfertaEditada({ ...ofertasAdmi[index] });
+    };
+    
+    const handleCancelarEdicion = () => {
+        setEditandoIndex(null);
+        setOfertaEditada(null);
+    };
+    
+    const handleCambiarOfertaEditada = (campo, valor) => {
+        setOfertaEditada(prev => ({
+            ...prev,
+            [campo]: valor
+        }));
+    };
+    
+    const handleGuardarOferta = async () => {
+        try {
+            const updated = {
+                ...ofertaEditada,
+                estado: ofertaEditada.estado === "true" || ofertaEditada.estado === true
+            };
+            console.log("📝 Actualizando oferta:", updated);
+            // Aquí deberías llamar a tu función para actualizar oferta, por ejemplo:
+            // await actualizarOfertaRequest(updated);
+            alert("✅ Oferta actualizada (simulado)");
+            setEditandoIndex(null);
+            setOfertaEditada(null);
+            cargarProductosAdmi(); // volver a cargar
+        } catch (error) {
+            console.error("❌ Error al actualizar oferta:", error);
+            alert("❌ Error al actualizar la oferta");
+        }
     };
 
     return (
@@ -233,6 +273,111 @@ function OfertasPage() {
                     <button type="submit" className="btn btn-primary">Registrar Oferta</button>
                 </div>
             </form>
+
+            <div className='form-containe'>
+    <h1>Lista de Ofertas</h1>
+    <div className="table-responsive">
+        <table className="producto-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Descripcion</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Precio</th>
+                    <th>Estado</th>
+                    <th>Imagen</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {ofertasAdmi.length > 0 ? (
+                    ofertasAdmi.map((ofer, index) => (
+                        <tr key={ofer.id}>
+                            <td>{ofer.id}</td>
+                            <td>
+                                {editandoIndex === index ? (
+                                    <input
+                                        value={ofertaEditada.descripcion}
+                                        onChange={(e) => handleCambiarOfertaEditada('descripcion', e.target.value)}
+                                    />
+                                ) : (
+                                    ofer.descripcion
+                                )}
+                            </td>
+                            <td>{ofer.fecha_inicio}</td>
+                            <td>
+                                {editandoIndex === index ? (
+                                    <input
+                                        type="date"
+                                        value={ofertaEditada.fecha_final}
+                                        onChange={(e) => handleCambiarOfertaEditada('fecha_final', e.target.value)}
+                                    />
+                                ) : (
+                                    ofer.fecha_final
+                                )}
+                            </td>
+                            <td>
+                                {editandoIndex === index ? (
+                                    <input
+                                    type='number'
+                                    value={ofertaEditada.precio}
+                                    onChange={(e) => handleCambiarOfertaEditada('precio', e.target.value)}  
+                                    />
+                                ):(
+                                    ofer.precio
+                                )}
+                            </td>
+                            <td>
+                                {editandoIndex === index ? (
+                                    <select
+                                        value={ofertaEditada.estado.toString()}
+                                        onChange={(e) => handleCambiarOfertaEditada('estado', e.target.value)}
+                                    >
+                                        <option value="true">Activo</option>
+                                        <option value="false">Inactivo</option>
+                                    </select>
+                                ) : (
+                                    ofer.estado ? 'Activo' : 'Inactivo'
+                                )}
+                            </td>
+                            <td>
+                                {editandoIndex === index ? (
+                                    <input
+                                        type="text"
+                                        value={ofertaEditada.url}
+                                        onChange={(e) => handleCambiarOfertaEditada('url', e.target.value)}
+                                    />
+                                ) : (
+                                    <img
+                                        src={ofer.url}
+                                        alt={ofer.descripcion}
+                                        style={{ width: '50px', height: 'auto', cursor: 'pointer' }}
+                                    />
+                                )}
+                            </td>
+                            <td>
+                                {editandoIndex === index ? (
+                                    <>
+                                        <button onClick={handleGuardarOferta} className="btn btn-success">Guardar</button>
+                                        <button onClick={handleCancelarEdicion} className="btn btn-secondary">Cancelar</button>
+                                    </>
+                                ) : (
+                                    <button onClick={() => handleEdit(index)} className="btn btn-warning">Editar</button>
+                                )}
+                            </td>
+                        </tr>
+                    ))
+                ) : (
+                    <tr>
+                        <td colSpan="8">No se encontraron registros de ofertas.</td>
+                    </tr>
+                )}
+            </tbody>
+        </table>
+    </div>
+</div>
+
         </div>
     );
 }

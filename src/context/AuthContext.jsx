@@ -7,7 +7,9 @@ import {
   obtenerCategoriaRequest,
   obtenerMarcaRequest,
   obtenerProductoRequest,
-  obtenerProductoAdmiRequest
+  obtenerProductoAdmiRequest,
+  obtenerOfertaRequest,
+  obtenerOferAdmitaRequest
 } from "../api/auth";
 import { useNavigate } from "react-router-dom";
 
@@ -33,6 +35,8 @@ export const AuthProvider = ({ children }) => {
   const [almacenes, setAlmacenes] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [productos, setProductos] = useState([]);
+  const [ofertas, setOfertas] = useState([]);
+  const [ofertasAdmi, setOfertasAdmi] = useState([]);
   const [productosAdmi, setProductosAdmi] = useState([]);
 
   const signin = async (credentials) => {
@@ -55,10 +59,11 @@ export const AuthProvider = ({ children }) => {
     try {
       const uss = await obtenerUsuariosRequest();
       const ross = await obtenerRolesRequest();
-      const [resCategorias, resMarcas, resAlmacenes] = await Promise.all([
+      const [resCategorias, resMarcas, resAlmacenes,resOferta] = await Promise.all([
         obtenerCategoriaRequest(),
         obtenerMarcaRequest(),
         obtenerAlmacenRequest(),
+        obtenerOfertaRequest(),
       ]);
 
       setUsuarios(uss.data);
@@ -66,6 +71,8 @@ export const AuthProvider = ({ children }) => {
       setCategorias(resCategorias.data);
       setMarcas(resMarcas.data);
       setAlmacenes(resAlmacenes.data);
+      console.log(resOferta.data)
+      setOfertas(resOferta.data)
     } catch (err) {
       console.error("Error al cargar datos:", err);
     }
@@ -74,6 +81,8 @@ export const AuthProvider = ({ children }) => {
   const cargarProductosAdmi = async () => {
     try {
       const res = await obtenerProductoAdmiRequest();
+      const ofer = await obtenerOferAdmitaRequest();
+      setOfertasAdmi(ofer.data)
       setProductosAdmi(res.data);
     } catch (err) {
       console.error("Error al cargar productosAdmi:", err);
@@ -137,6 +146,8 @@ export const AuthProvider = ({ children }) => {
         cargarProductos,
         recargarUsuarios,
         cargarProductosAdmi,
+        ofertasAdmi,
+        ofertas,
         productosAdmi,
         usuarios,
         roles,

@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
 
-    const { signin, cargarDatos , cargarProductos} = useAuth();
+    const { signin, cargarDatos , cargarProductos, cargarProductosAdmi} = useAuth();
     const navigate = useNavigate();
 
     // Validación con Yup
@@ -38,6 +38,7 @@ const LoginPage = () => {
               await signin(datos); // Esto ya devuelve la respuesta
               await cargarDatos();
               await cargarProductos();
+              await cargarProductosAdmi();
               navigate('/dasboard/perfilUsuario')
           
             } catch (error) {

@@ -9,7 +9,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
 const ProductoPage = () => {
-    const { marcas, categorias, almacenes, cargarProductos, productos } = useAuth();
+    const { marcas, categorias, almacenes, cargarProductosAdmi, productosAdmi } = useAuth();
     const { message, handleFileChange, uploadImage } = Cloudinary();
 
     const [nuevoProducto, setNuevoProducto] = useState({
@@ -48,7 +48,7 @@ const ProductoPage = () => {
         setLoading(true); // Iniciar loading
         try {
             if (editIndex !== null) {
-                const updatedProductos = [...productos];
+                const updatedProductos = [...productosAdmi];
                 updatedProductos[editIndex] = nuevoProducto;
                 const datosNuevos = {
                     id: nuevoProducto.id,
@@ -101,16 +101,16 @@ const ProductoPage = () => {
     };
 
     const handleEdit = (index) => {
-        setNuevoProducto(productos[index]);
+        setNuevoProducto(productosAdmi[index]);
         setEditIndex(index);
     };
 
     const handleListProductos = async () => {
         setLoading(true); // Iniciar loading
         try {
-            await cargarProductos();
-            if (productos.length > 0) {
-                alert("Productos existentes: " + productos.map(producto => producto.productoID).join(", "));
+            await cargarProductosAdmi();
+            if (productosAdmi.length > 0) {
+                alert("Productos existentes: " + productosAdmi.map(producto => producto.productoID).join(", "));
             } else {
                 alert("No hay Productos existentes.");
             }
@@ -133,7 +133,7 @@ const ProductoPage = () => {
         doc.text("Reporte de Productos", 70, 10);
 
         const columns = ["ID", "Nombre", "Modelo", "Marca", "Categoría", "Stock", "Precio", "Almacén", "Estado"];
-        const rows = productos.map(prod => [
+        const rows = productosAdmi.map(prod => [
             prod.id,
             prod.nombre,
             prod.modelo,
@@ -153,7 +153,7 @@ const ProductoPage = () => {
         doc.save('reporte_productos.pdf');
     };
     const generarExcel = () => {
-        const data = productos.map(prod => ({
+        const data = productosAdmi.map(prod => ({
             ID: prod.id,
             Nombre: prod.nombre,
             Modelo: prod.modelo,
@@ -293,10 +293,10 @@ const ProductoPage = () => {
                 <button onClick={handleListProductos} className="btn btn-primary" disabled={loading}>
                     Listar Productos Existentes
                 </button>
-                <button onClick={generarPDF} className="btn btn-danger" disabled={productos.length === 0}>
+                <button onClick={generarPDF} className="btn btn-danger" disabled={productosAdmi.length === 0}>
                     Descargar PDF
                 </button>
-                <button onClick={generarExcel} className="btn btn-success" disabled={productos.length === 0}>
+                <button onClick={generarExcel} className="btn btn-success" disabled={productosAdmi.length === 0}>
                     Descargar Excel
                 </button>
             </div>
@@ -320,8 +320,8 @@ const ProductoPage = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {productos.length > 0 ? (
-                                productos.map((producto, index) => (
+                            {productosAdmi.length > 0 ? (
+                                productosAdmi.map((producto, index) => (
                                     <tr key={producto.id}>
                                         <td>{producto.id}</td>
                                         <td>{producto.nombre}</td>

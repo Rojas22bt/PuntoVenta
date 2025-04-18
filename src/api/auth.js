@@ -126,6 +126,13 @@ export const obtenerProductoRequest = () => {
     })
 }
 
+export const obtenerProductoAdmiRequest = () => {
+    return instance.get('/inventario/obtener-producto',{
+        withCredentials: true,
+        timeout: tiempoEspera
+    })
+}
+
 export const actualizarProductoRequest = data => instance.patch('/inventario/actualizar-producto',
     data,{
         headers: {

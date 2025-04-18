@@ -6,7 +6,8 @@ import {
   obtenerAlmacenRequest,
   obtenerCategoriaRequest,
   obtenerMarcaRequest,
-  obtenerProductoRequest
+  obtenerProductoRequest,
+  obtenerProductoAdmiRequest
 } from "../api/auth";
 import { useNavigate } from "react-router-dom";
 
@@ -32,6 +33,7 @@ export const AuthProvider = ({ children }) => {
   const [almacenes, setAlmacenes] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [productos, setProductos] = useState([]);
+  const [productosAdmi, setProductosAdmi] = useState([]);
 
   const signin = async (credentials) => {
     try {
@@ -66,6 +68,15 @@ export const AuthProvider = ({ children }) => {
       setAlmacenes(resAlmacenes.data);
     } catch (err) {
       console.error("Error al cargar datos:", err);
+    }
+  };
+
+  const cargarProductosAdmi = async () => {
+    try {
+      const res = await obtenerProductoAdmiRequest();
+      setProductosAdmi(res.data);
+    } catch (err) {
+      console.error("Error al cargar productosAdmi:", err);
     }
   };
 
@@ -104,6 +115,7 @@ export const AuthProvider = ({ children }) => {
         cargarDatos();
         recargarUsuarios();
         cargarProductos();
+        cargarProductosAdmi();
       } catch (err) {
         console.error("Error al cargar usuario desde localStorage", err);
         setUser(null);
@@ -124,6 +136,8 @@ export const AuthProvider = ({ children }) => {
         cargarDatos,
         cargarProductos,
         recargarUsuarios,
+        cargarProductosAdmi,
+        productosAdmi,
         usuarios,
         roles,
         marcas,

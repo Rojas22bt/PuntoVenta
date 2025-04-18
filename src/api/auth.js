@@ -120,7 +120,7 @@ export const crearProductoRequest = data => instance.post('/inventario/producto'
 })
 
 export const obtenerProductoRequest = () => {
-    return instance.get('/inventario/obtener-producto',{
+    return instance.get('/inventario/obtener-productos-activos',{
         withCredentials: true,
         timeout: tiempoEspera
     })

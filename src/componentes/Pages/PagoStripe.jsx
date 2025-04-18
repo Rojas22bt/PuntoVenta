@@ -50,10 +50,12 @@ const CheckoutForm = ({ total, onPagoExitoso }) => {
         setLoading(true);
 
         try {
-            console.log(total)
-            if (onPagoExitoso) {
-                onPagoExitoso(); 
-              }
+
+            const facturaOk = await onPagoExitoso();
+            if (!facturaOk) {
+                setLoading(false);
+                return;
+            }
             const res = await fetch("https://web-production-ab6a3.up.railway.app/api/venta/crear-pago", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -129,9 +131,9 @@ const CheckoutForm = ({ total, onPagoExitoso }) => {
 
 const StripePayment = ({ total, onPagoExitoso }) => (
     <Elements stripe={stripePromise}>
-      <CheckoutForm total={total} onPagoExitoso={onPagoExitoso} />
+        <CheckoutForm total={total} onPagoExitoso={onPagoExitoso} />
     </Elements>
-  );
-  
+);
+
 
 export default StripePayment;

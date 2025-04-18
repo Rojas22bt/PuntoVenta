@@ -60,12 +60,13 @@ function FacturacionPage() {
     }))
   });
 
-  const handleEnviar =async () => {
-    try { 
+  const handleEnviar = async () => {
+    try {
       const payload = construirPayload();
       console.log("📦 Payload a enviar:", payload);
       const res = await crearFacturacionRequest(payload);
-      console.log(res.data)
+      console.log(res.data);
+      return true;
     } catch (error) {
       if (error.response && error.response.status === 400) {
         const mensaje = error.response.data?.[0] || "Error de validación";
@@ -74,8 +75,10 @@ function FacturacionPage() {
         console.error("❌ Error inesperado:", error);
         alert("❌ Ocurrió un error inesperado");
       }
+      return false;
     }
   };
+  
 
   return (
     <div className='conteinerFacturacion'>

@@ -223,3 +223,11 @@
 .display-1{
   margin-top: 80px;
 }
+
+
+
+.col-md-8{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

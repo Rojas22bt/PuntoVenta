@@ -6,7 +6,7 @@ import Fuse from 'fuse.js';
 import VoiceSearch from './VoiceSearch';
 
 function CatalogoPage() {
-  const { productos } = useAuth();
+  const { productos, ofertas } = useAuth();
   const { addToCart } = useCart();
 
   const [busqueda, setBusqueda] = useState('');
@@ -29,7 +29,7 @@ function CatalogoPage() {
   };
 
   const agregarAlCarrito = (producto) => {
-    addToCart(producto);
+    addToCart({ ...producto, tipo: 'producto' });
     setMensaje(`"${producto.nombre}" añadido al carrito`);
     setTimeout(() => setMensaje(''), 2000);
   };
@@ -66,7 +66,7 @@ function CatalogoPage() {
 
       <div className="form-group" id='BuscadorCatalogo'>
         <label htmlFor="modelo">Busca tu Producto</label>
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexDirection:'column' }}>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexDirection: 'column' }}>
           <input
             type="text"
             name="modelo"
@@ -75,7 +75,7 @@ function CatalogoPage() {
             id='BuscadorCatalogoInput'
             value={busqueda}
             onChange={handleBusqueda}
-            style={{minWidth:'250px'}}
+            style={{ minWidth: '250px' }}
           />
           <VoiceSearch
             productos={productos}
@@ -103,26 +103,74 @@ function CatalogoPage() {
               <div className="Img1"></div>
             </div>
 
-            <div id="carouselExampleFade" className="carousel slide carousel-fade">
+            <div
+              id="carouselExampleFade"
+              className="carousel slide carousel-fade"
+            >
               <div className="carousel-inner">
-                <h1 className="display-1">Ofertas</h1>
-                <div className="carousel-item active">
-                  <img src="https://res.cloudinary.com/ddltlpsy1/image/upload/v1744853633/ihpones_12s_c4ukqo.png" className="d-block w-100" alt="Oferta 1" />
-                </div>
-                <div className="carousel-item">
-                  <img src="https://res.cloudinary.com/ddltlpsy1/image/upload/v1744844534/Iphones_12s_jtwqmz.png" className="d-block w-100" alt="Oferta 2" />
-                </div>
-                <div className="carousel-item">
-                  <img src="https://res.cloudinary.com/ddltlpsy1/image/upload/v1744844535/Iphones_X_eooxvj.png" className="d-block w-100" alt="Oferta 3" />
-                </div>
+                <h1 className="display-1 text-center mb-4">Ofertas</h1>
+                {ofertas.map((oferta, index) => (
+                  <div
+                    key={oferta.id}
+                    className={`carousel-item ${index === 0 ? 'active' : ''}`}
+                  >
+                    <div className="container py-3">
+                      <div className="row justify-content-center text-center">
+                        <div className="col-12 col-md-8">
+                          <img
+                            src={oferta.url}
+                            alt={oferta.descripcion}
+                            className="img-fluid mb-3"
+                            style={{
+                              maxHeight: '250px',
+                              objectFit: 'contain',
+                              width: '100%',
+                            }}
+                          />
+                          <h4 className="mb-1">{oferta.descripcion}</h4>
+                          <p className="mb-1">
+                            Precio oferta: ${parseFloat(oferta.precio).toFixed(2)}
+                          </p>
+                          <button
+                            className="btn btn-success"
+                            onClick={() => {
+                              addToCart({ ...oferta, tipo: 'oferta' });
+                              setMensaje(`Oferta "${oferta.descripcion}" añadida al carrito`);
+                              setTimeout(() => setMensaje(''), 2000);
+                            }}
+                          >
+                            Añadir al carrito
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+
+              <button
+                className="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExampleFade"
+                data-bs-slide="prev"
+              >
                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span className="visually-hidden">Anterior</span>
               </button>
-              <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+              <button
+                className="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselExampleFade"
+                data-bs-slide="next"
+              >
                 <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                <span className="visually-hidden">Siguiente</span>
               </button>
             </div>
+
+
+
+
 
             {renderProductosPorCategoria(1, "Celulares")}
             {renderProductosPorCategoria(2, "Computadoras")}

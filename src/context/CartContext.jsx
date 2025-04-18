@@ -38,36 +38,45 @@ export const CartProvider = ({ children }) => {
   
 
   // Agregar producto (con id obligatorio)
-  const addToCart = (producto) => {
+  const addToCart = (nuevoItem) => {
     setCartItems((prevItems) => {
-      const itemExistente = prevItems.find((item) => item.id === producto.id);
+      const itemExistente = prevItems.find(
+        (item) => item.id === nuevoItem.id && item.tipo === nuevoItem.tipo
+      );
       if (itemExistente) {
         return prevItems.map((item) =>
-          item.id === producto.id
+          item.id === nuevoItem.id && item.tipo === nuevoItem.tipo
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       } else {
-        return [...prevItems, { ...producto, quantity: 1 }];
+        return [...prevItems, { ...nuevoItem, quantity: 1 }];
       }
     });
   };
+  
 
-  const removeFromCart = (id) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  const removeFromCart = (id, tipo) => {
+    setCartItems((prevItems) =>
+      prevItems.filter((item) => !(item.id === id && item.tipo === tipo))
+    );
   };
+  
 
   const clearCart = () => {
     setCartItems([]);
   };
 
-  const updateQuantity = (id, quantity) => {
+  const updateQuantity = (id, tipo, quantity) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === id ? { ...item, quantity: Number(quantity) } : item
+        item.id === id && item.tipo === tipo
+          ? { ...item, quantity: Number(quantity) }
+          : item
       )
     );
   };
+  
 
   const cartTotal = cartItems.reduce(
     (total, item) => total + item.precio * item.quantity,

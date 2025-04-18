@@ -26,19 +26,46 @@ const CartList = () => {
                             <span>Precio</span>
                             <span>Acciones</span>
                         </li>
-                        {cartItems.map((item) => (
-                            <li key={item.id} className="filaProducto">
+
+                        {/* 🧺 Productos */}
+                        {cartItems.filter(item => item.tipo === 'producto').map((item) => (
+                            <li key={`producto-${item.id}`} className="filaProducto">
                                 <span>{item.nombre}</span>
                                 <input
                                     type="number"
                                     min={1}
                                     value={item.quantity}
-                                    onChange={(e) => updateQuantity(item.id, e.target.value)}
+                                    onChange={(e) => updateQuantity(item.id, item.tipo, e.target.value)}
                                 />
                                 <span>${item.precio}</span>
-                                <button onClick={() => removeFromCart(item.id)}>Eliminar</button>
+                                <button onClick={() => removeFromCart(item.id, item.tipo)}>Eliminar</button>
                             </li>
                         ))}
+
+                        {/* 🎁 Ofertas */}
+                        {cartItems.filter(item => item.tipo === 'oferta').length > 0 && (
+                            <>
+                                <li className="encabezado" style={{ marginTop: '30px' }}>
+                                    <span>Oferta</span>
+                                    <span>Cantidad</span>
+                                    <span>Precio</span>
+                                    <span>Acciones</span>
+                                </li>
+                                {cartItems.filter(item => item.tipo === 'oferta').map((item) => (
+                                    <li key={`oferta-${item.id}`} className="filaProducto">
+                                        <span>{item.descripcion}</span>
+                                        <input
+                                            type="number"
+                                            min={1}
+                                            value={item.quantity}
+                                            onChange={(e) => updateQuantity(item.id, item.tipo, e.target.value)}
+                                        />
+                                        <span>${item.precio}</span>
+                                        <button onClick={() => removeFromCart(item.id, item.tipo)}>Eliminar</button>
+                                    </li>
+                                ))}
+                            </>
+                        )}
                     </ul>
                 </div>
                 <div className="footerCarrito">

@@ -153,7 +153,7 @@ function FacturacionPage() {
         )}
 
         <div className="filaFinal">
-          <StripePayment total={cartTotal} />
+        <StripePayment total={cartTotal} onPagoExitoso={handleEnviar} />
           <div className="totalFinal">
             <label>Total:</label>
             <input

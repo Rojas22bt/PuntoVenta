@@ -140,3 +140,10 @@ export const crearMercaderiaRequest = data => instance.post('/inventario/mercade
     },
     withCredentials:true
 })
+
+export const crearOfertaRequest = data => instance.post('/venta/oferta/register',data,{
+    headers:{
+        "Content-Type" : "application/json"
+    },
+    withCredentials:true
+})

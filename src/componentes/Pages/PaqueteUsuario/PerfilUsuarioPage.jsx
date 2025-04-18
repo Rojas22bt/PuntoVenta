@@ -6,17 +6,21 @@ function PerfilUsuarioPage() {
 
     const { user } = useAuth();
 
+
     const [nit, setNit] = useState('');
     const [ci, setCI] = useState('');
 
     useEffect(() => {
-        if (user.documentos && Array.isArray(user.documentos)) {
+        if (user?.documentos && Array.isArray(user.documentos)) {
             user.documentos.forEach((doc) => {
-                if (doc.documento__descripcion === "Carnet de Identidad") setCI(doc.numero);     // ID 1 es CI
-                if (doc.documento__descripcion === "NIT") setNit(doc.numero);    // ID 2 es NIT
+                if (doc.documento__descripcion === "Carnet de Identidad") setCI(doc.numero);
+                if (doc.documento__descripcion === "NIT") setNit(doc.numero);
             });
         }
-    }, [user.documentos]);
+    }, [user]);
+
+    if (!user) return <p>Cargando usuario...</p>;
+    
 
     return (
         <div className='conteinerPerfilUsuario'>

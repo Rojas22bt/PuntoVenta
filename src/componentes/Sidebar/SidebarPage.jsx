@@ -16,7 +16,7 @@ export const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
 
 
-  const { logout } = useAuth(); // Usa el método logout
+  const { logout, handleLogout} = useAuth(); // Usa el método logout
   const navigate = useNavigate(); // Hook para redirección
 
   // Estado para manejar dropdowns
@@ -36,9 +36,13 @@ export const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
   };
 
-  const handleLogout = async () => {
-    await logout(); // Llama a logout del contexto
-    navigate("/login"); // Redirige al login después de cerrar sesión
+  const Logout = () => {
+    try {
+      handleLogout(); // Llama a logout del contexto
+      window.location.href = "/login"; // Redirige al login después de cerrar sesión
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   return (
@@ -120,7 +124,7 @@ export const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
       {/*  salirrrrrr */}
       <div className="link-container">
-        <button onClick={handleLogout} className="links">
+        <button onClick={Logout} className="links">
           <div className="link-icon"><MdLogout /></div>
           {sidebarOpen && <span>Salir</span>}
         </button>

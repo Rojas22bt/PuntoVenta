@@ -1,23 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import '../../Css/LoginPage.css'
+import '../../Css/LoginPage.css';
 import { useAuth } from '../../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
-
-    const { signin, cargarDatos , cargarProductos, cargarProductosAdmi} = useAuth();
+    const { signin, cargarDatos, cargarProductos, cargarProductosAdmi } = useAuth();
     const navigate = useNavigate();
 
-    // Validación con Yup
+    const [loading, setLoading] = useState(false);
+
     const validationSchema = Yup.object({
-        email: Yup.string()
-            .email("Correo inválido")
-            .required("El correo es obligatorio"),
-        password: Yup.string()
-            .min(6, "La contraseña debe tener al menos 6 caracteres")
-            .required("La contraseña es obligatoria"),
+        email: Yup.string().email("Correo inválido").required("El correo es obligatorio"),
+        password: Yup.string().min(6, "La contraseña debe tener al menos 6 caracteres").required("La contraseña es obligatoria"),
     });
 
     const formik = useFormik({
@@ -25,33 +21,30 @@ const LoginPage = () => {
             email: "",
             password: "",
         },
-        validationSchema: validationSchema,
+        validationSchema,
         onSubmit: async (values) => {
+            setLoading(true);
             try {
-              const datos = {
-                correo: values.email,
-                password: values.password
-              };
-          
-              console.log(datos);
-          
-              await signin(datos); // Esto ya devuelve la respuesta
-              await cargarDatos();
-              await cargarProductos();
-              await cargarProductosAdmi();
-              navigate('/dasboard/perfilUsuario')
-          
-            } catch (error) {
-              console.error("❌ Error en el login:", error);
-          
-              const mensaje =
-                error?.response?.data?.message || "Error de conexión con el servidor";
-          
-              alert("❌ " + mensaje);
-            }
-        }  
-    });
+                const datos = {
+                    correo: values.email,
+                    password: values.password,
+                };
 
+                await signin(datos);
+                await cargarDatos();
+                await cargarProductos();
+                await cargarProductosAdmi();
+
+                navigate('/dasboard/perfil-usuario');
+            } catch (error) {
+                console.error("❌ Error en el login:", error);
+                const mensaje = error?.response?.data?.message || "Error de conexión con el servidor";
+                alert("❌ " + mensaje);
+            } finally {
+                setLoading(false);
+            }
+        }
+    });
 
     return (
         <div className="contenedorLogin">
@@ -59,9 +52,7 @@ const LoginPage = () => {
                 <h2 className='text-primary'>Iniciar Sesión</h2>
                 <form onSubmit={formik.handleSubmit} className='formulario'>
                     <div className="mb-3">
-                        <label htmlFor="email" className="form-label">
-                            Correo Electrónico
-                        </label>
+                        <label htmlFor="email" className="form-label">Correo Electrónico</label>
                         <input
                             type="email"
                             className="form-control"
@@ -74,10 +65,9 @@ const LoginPage = () => {
                             <div className="text-danger">{formik.errors.email}</div>
                         )}
                     </div>
+
                     <div className="mb-3">
-                        <label htmlFor="password" className="form-label">
-                            Contraseña
-                        </label>
+                        <label htmlFor="password" className="form-label">Contraseña</label>
                         <input
                             type="password"
                             className="form-control"
@@ -91,13 +81,26 @@ const LoginPage = () => {
                         )}
                     </div>
 
-                    <button type="submit" className="btn btn-outline-success">
-                        Ingresar
+                    <button
+                        type="submit"
+                        className="btn btn-outline-success d-flex align-items-center gap-2"
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <>
+                                <div className="spinner-border spinner-border-sm text-success" role="status"></div>
+                                Cargando...
+                            </>
+                        ) : (
+                            <>
+                                <i className="bi bi-box-arrow-in-right"></i> Ingresar
+                            </>
+                        )}
                     </button>
                 </form>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default LoginPage
+export default LoginPage;

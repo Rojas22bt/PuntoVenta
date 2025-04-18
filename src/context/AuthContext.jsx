@@ -55,6 +55,11 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.clear();
+    setUser(null);
+  };
+
   const cargarDatos = async () => {
     try {
       const uss = await obtenerUsuariosRequest();
@@ -146,6 +151,7 @@ export const AuthProvider = ({ children }) => {
         cargarProductos,
         recargarUsuarios,
         cargarProductosAdmi,
+        handleLogout,
         ofertasAdmi,
         ofertas,
         productosAdmi,

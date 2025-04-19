@@ -8,9 +8,21 @@ import { crearFacturacionRequest } from '../../../api/auth';
 function FacturacionPage() {
   const { cartItems, cartTotal } = useCart();
   const { user } = useAuth();
-
+  const [totalPagarProdcucto, setTotalPagarProduct] = useState(0);
   const [fecha, setFecha] = useState('');
   const [tipoDocumento, setTipoDocumento] = useState('');
+  const [iniciaPuntos, setIniciaPuntos] = useState(false);
+  const [totalOriginal, setTotalOriginal] = useState(0);
+  const [puntos, setPuntos] =useState(0);
+  
+
+  const puedeUsarPuntos = puntos >= 10;
+
+  useEffect(() => {
+    setTotalOriginal(cartTotal);
+    setTotalPagarProduct(cartTotal);
+    setPuntos(Number(user?.puntos || 0));
+  }, [cartTotal, user]);
 
   useEffect(() => {
     const hoy = new Date();
@@ -32,7 +44,7 @@ function FacturacionPage() {
   const ofertas = cartItems.filter(item => item.tipo === 'oferta');
 
   // Armar JSON para enviar al backend
-  const construirPayload =  () => ({
+  const construirPayload = () => ({
     factura: {
       nit: "12345678",
       descripcion: "venta de productos varios",
@@ -49,7 +61,8 @@ function FacturacionPage() {
     nota_venta: {
       descripcion: "Venta realizada en tienda central",
       documento_usuario: tipoDocumento,
-      usuario: user.id
+      usuario: user.id,
+      usar_puntos: iniciaPuntos,
     },
     productos: productos.map(p => ({
       id: p.id,
@@ -79,7 +92,24 @@ function FacturacionPage() {
       return false;
     }
   };
+
+  const manejarClick = () => {
+    if (puedeUsarPuntos) {
+      const nuevoEstado = !iniciaPuntos;
+      setIniciaPuntos(nuevoEstado);
   
+      if (nuevoEstado) {
+        const descuento = totalOriginal - (totalOriginal * (puntos / 100));
+        setTotalPagarProduct(descuento);
+      } else {
+        setTotalPagarProduct(totalOriginal); // restaurar el original
+      }
+    }
+  };
+
+  
+  
+
 
   return (
     <div className='conteinerFacturacion'>
@@ -110,6 +140,37 @@ function FacturacionPage() {
             <label>Fecha:</label>
             <input type="date" className="form-control" value={fecha} readOnly />
           </div>
+
+          <div className="mb-1">
+            <label><strong>Puntos disponibles:</strong></label>
+            <input
+              type="number"
+              className="form-control"
+              value={puntos}
+              disabled
+              style={{
+                backgroundColor: puntos < 10 ? '#f8d7da' : '#d4edda',
+                color: puntos < 10 ? '#721c24' : '#155724',
+                fontWeight: 'bold',
+              }}
+            />
+
+            {puedeUsarPuntos ? (
+              <button
+                type="button"
+                className={`btn mt-2 ${iniciaPuntos ? 'btn-success' : 'btn-outline-success'}`}
+                onClick={manejarClick}
+              >
+                {iniciaPuntos ? '✅ Puntos activados' : 'Usar puntos para este pago'}
+              </button>
+            ) : (
+              <small className="text-danger d-block mt-1">
+                Necesitas al menos <strong>10 puntos</strong> para poder usarlos.
+              </small>
+            )}
+          </div>
+
+
         </div>
       </div>
 
@@ -171,14 +232,14 @@ function FacturacionPage() {
         )}
 
         <div className="filaFinal">
-        <StripePayment total={cartTotal} onPagoExitoso={handleEnviar} />
+          <StripePayment total={totalPagarProdcucto} onPagoExitoso={handleEnviar} />
           <div className="totalFinal">
             <label>Total:</label>
             <input
               type="text"
               readOnly
               className="inputTotal"
-              value={`$${cartTotal.toFixed(2)}`}
+              value={`$${totalPagarProdcucto.toFixed(2)}`}
             />
           </div>
         </div>

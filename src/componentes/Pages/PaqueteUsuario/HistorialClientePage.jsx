@@ -4,50 +4,55 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { obtenerHistotialCliente } from '../../../api/auth';
+import { useAuth } from '../../../context/AuthContext';
 
 function HistorialClientePage() {
+    const { user } = useAuth();
+
     const [nombreUsuario, setNombreUsuario] = useState('');
     const [historial, setHistorial] = useState([]);
     const [mostrarTabla, setMostrarTabla] = useState(false);
     const [desde, setDesde] = useState('');
     const [hasta, setHasta] = useState('');
 
+    const listarHistorial = (comprobantes) => {
+        const datosConvertidos = comprobantes.map(comprobante => ({
+            fecha: comprobante.fecha,
+            documento: comprobante.documento_usuario,
+            tipo: "Factura",
+            montoTotal: comprobante.precio_total,
+            detalles: [...(comprobante.detalles_productos || []), ...(comprobante.detalles_ofertas || [])]
+        }));
 
-    useEffect(() => {
-        const fetchNombreUsuario = async () => {
-            try {
-                const response = await fetch('/api/usuario');
-                const data = await response.json();
-                setNombreUsuario(data.nombre);
-            } catch (error) {
-                console.error('Error al obtener el nombre del usuario:', error);
-            }
-        };
-
-        fetchNombreUsuario();
-    }, []);
-
-    const listarHistorial = () => {
-        const datos = [
-            { fecha: '2026-10-01', documento: '123456', tipo: 'CI', montoTotal: 100 },
-            { fecha: '2025-10-02', documento: '654321', tipo: 'NIT', montoTotal: 200 },
-            { fecha: '2024-11-10', documento: '789012', tipo: 'CI', montoTotal: 300 },
-        ];
-
-        // Convertimos las fechas
-        const desdeFecha = desde ? new Date(desde + 'T00:00:00') : null;
-        const hastaFecha = hasta ? new Date(hasta + 'T23:59:59') : null;
-        
-        const historialFiltrado = datos.filter(item => {
-            const fechaItem = new Date(item.fecha + 'T00:00:00');
-            if (desdeFecha && fechaItem < desdeFecha) return false;
-            if (hastaFecha && fechaItem > hastaFecha) return false;
-            return true;
-        });
-        
-        setHistorial(historialFiltrado);
+        setHistorial(datosConvertidos);
         setMostrarTabla(true);
     };
+
+    const obtenerBk = async () => {
+        try {
+            const data = {
+                correo: user.correo,
+                fecha_inicio: desde,
+                fecha_fin: hasta
+            };
+
+            const response = await obtenerHistotialCliente(data);
+
+            if (response.data.comprobantes && response.data.comprobantes.length > 0) {
+                listarHistorial(response.data.comprobantes);
+                setNombreUsuario(response.data.nombre);
+            } else {
+                alert("No hay comprobantes disponibles en el rango indicado.");
+                setHistorial([]);
+                setMostrarTabla(false);
+            }
+        } catch (error) {
+            console.error("Error al obtener el historial del cliente:", error);
+            alert("Ocurrió un error al consultar el historial.");
+        }
+    };
+
     const exportarExcel = () => {
         if (!historial.length) {
             alert("No hay datos para exportar.");
@@ -93,6 +98,7 @@ function HistorialClientePage() {
 
         doc.save(`historial_cliente_${new Date().toISOString().slice(0, 10)}.pdf`);
     };
+
     const exportarPDFUnic = (item) => {
         const doc = new jsPDF();
 
@@ -106,8 +112,25 @@ function HistorialClientePage() {
         doc.text(`Tipo: ${item.tipo}`, 20, 70);
         doc.text(`Monto Total: Bs ${item.montoTotal}`, 20, 80);
 
+        if (item.detalles && item.detalles.length) {
+            const detalleData = item.detalles.map(d => [
+                d.producto || d.oferta || "Ítem",
+                d.cantidad || 1,
+                d.precio_unitario || d.precio_oferta || 0,
+                d.subtotal || 0
+            ]);
+
+            doc.autoTable({
+                head: [["Item", "Cantidad", "Precio Unitario", "Subtotal"]],
+                body: detalleData,
+                startY: 90,
+            });
+        }
+
         doc.save(`comprobante_${item.documento}.pdf`);
     };
+
+    if (!user) return <p>Cargando usuario...</p>;
 
     return (
         <div className='historialConteiner'>
@@ -134,7 +157,7 @@ function HistorialClientePage() {
                     />
                 </div>
                 <div className="text-center">
-                    <button type="button" className="btn btn-primary" onClick={listarHistorial}>
+                    <button type="button" className="btn btn-primary" onClick={obtenerBk}>
                         Listar Historial
                     </button>
                     <button className="btn btn-success" onClick={exportarExcel}>
@@ -169,7 +192,6 @@ function HistorialClientePage() {
                                         <button id='VerImprimir' className="btn btn-secondary no-border" onClick={() => exportarPDFUnic(item)}>
                                             Ver/Imprimir
                                         </button>
-
                                     </td>
                                 </tr>
                             ))}

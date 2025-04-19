@@ -48,6 +48,7 @@ function FacturacionPage() {
     },
     nota_venta: {
       descripcion: "Venta realizada en tienda central",
+      documento_usuario: tipoDocumento,
       usuario: user.id
     },
     productos: productos.map(p => ({
@@ -99,7 +100,7 @@ function FacturacionPage() {
             >
               <option value="">Seleccione...</option>
               {user.documentos.map((doc, index) => (
-                <option key={index} value={doc.documento__descripcion}>
+                <option key={index} value={doc.numero}>
                   {doc.documento__descripcion}
                 </option>
               ))}

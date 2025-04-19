@@ -28,8 +28,8 @@ const CustomNavbar = () => {
               </Nav.Link>
             ) : (
               <Nav.Link as={Link} to="/">
-                Inicio
-              </Nav.Link>
+              Inicio
+            </Nav.Link>
             )}
             <Nav.Link as={Link} to="/catalogo-productos">
               Comentarios

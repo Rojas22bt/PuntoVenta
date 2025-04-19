@@ -170,6 +170,12 @@ export const obtenerOferAdmitaRequest = data => {
 }
 
 
+export const obtenerHistotialCliente = data => instance.post('/venta/obtener-comprobante-usuario',data,{
+    headers:{
+        "Content-Type": "application/json"
+    },
+    withCredentials: true
+})
 ///------------venta--------/*
 export const crearFacturacionRequest = data => instance.post('/venta/factura', data,{
     headers:{

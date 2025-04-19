@@ -27,7 +27,7 @@ export const Homed = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const { user } = useAuth();
 
-  if (!user) return <Navigate to="/login" replace />;
+  // if (!user) return <Navigate to="/login" replace />;
 
   return (
     <div className={`containe12 ${sidebarOpen ? "active12" : ""}`}>

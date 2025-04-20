@@ -8,7 +8,7 @@
     background-size:cover;      /* para que cubra todo */
     background-position: center; /* centrado */
     background-repeat: no-repeat;
-    padding: 10px;
+  width: 100%;
   }
   
   .cardRegister {
@@ -16,10 +16,10 @@
     flex-direction: column;
     background-color: rgba(201, 194, 194, 0.7);
     border-radius: 12px;
-    padding: 30px;
+    padding: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     width: 100%;
-    max-width: 500px;
+    max-width: 700px;
   }
 
   .cardRegister h2{
@@ -29,10 +29,6 @@
   .formulario input {
     margin-bottom: 10px;
   }
-
-   .formulario #inpt{
-        min-width: 300px;
-   }
 
    .formulario{
     height: auto;

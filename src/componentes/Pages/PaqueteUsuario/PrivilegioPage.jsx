@@ -95,7 +95,7 @@ function PrivilegioPage() {
             <h1>Gestión de Privilegios</h1>
             <div className='contenedorPrivilegios'>
                 <div className='contenedorRol'>
-                    <h2>Seleccionar Rol</h2>
+                    <h2 id='rolsito'>Seleccionar Rol</h2>
                     <select
                         name="rol"
                         className="form-control"

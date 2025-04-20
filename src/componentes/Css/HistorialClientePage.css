@@ -2,7 +2,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px;
+    padding: 5px;
+    
 }
 
 .input-group {
@@ -10,8 +11,9 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    width: 50%;
-    padding: 12px;
+    width: 100%;
+    padding: 5px;
+    
 }
 
 .table-historial {
@@ -19,6 +21,7 @@
     border-collapse: collapse;
     table-layout: fixed;
     overflow: hidden;
+
 }
 
 .table-historial th,
@@ -87,36 +90,9 @@
 
 .text-center{
     display: flex;
-    justify-content: center;
-    margin: 20px 0;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    margin-top: 1px;
     width: 100%;
-}
-/* Responsive para móviles */
-@media screen and (max-width: 768px) {
-    .historial-table {
-        padding: 0;
-        overflow-x: auto;
-    }
-
-    .table-historial {
-        min-width: 600px;
-    }
-
-    .input-group {
-        padding: 10px;
-        gap: 8px;
-    }
-
-    .input-group button {
-        font-size: 14px;
-    }
-
-    .button-row {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .button-row .btn {
-        width: 90%;
-    }
 }

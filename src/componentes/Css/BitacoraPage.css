@@ -1,13 +1,16 @@
 .bitacora-container {
   width: 100%;
-  padding: 20px;
+  padding: 10px;
   overflow-x: auto;
   background-color: #f4f4f9;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 1200px;
+  max-width: 750px;
+  flex-direction: column;
+  display: flex;
   margin: auto;
   align-items: center;
+  
 }
 
 .title {
@@ -17,8 +20,10 @@
 
 .button-container-bitacora {
   display: flex;
-  justify-content: center;
-  margin: 20px 0;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  margin-top: 1px;
 }
 
 .bitacora-table {
@@ -43,11 +48,11 @@
   color: white;
 }
 .mb-3 {
-  gap: 20px;
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
-  width: 100%;
+   display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  margin-top: 1px;
 }
 
 .filtro-item {

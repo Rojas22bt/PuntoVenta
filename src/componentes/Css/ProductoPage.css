@@ -1,9 +1,9 @@
 .producto-container {
-    padding: 5px 15%;
+    padding: 5px;
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 .producto-table {
@@ -28,8 +28,8 @@
 }
 
 .btn {
-    margin-left: 5px;
-    width: 75%;
+
+    width: 100%;
 }
 
 .modal {
@@ -99,7 +99,7 @@
 
 .form-container {
     background-color: white;
-    padding: 20px;
+    padding: 10px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin: 20px 0;

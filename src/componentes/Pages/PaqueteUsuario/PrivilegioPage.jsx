@@ -78,7 +78,7 @@ function PrivilegioPage() {
             const res = await actualizarPermisosRequest(payload);
             console.log(res.data)
             if (res.data.mensaje) {
-                setMensajeExitoso("Cambios guardados exitosamente");
+                alert(res.data.mensaje)
                 setPrivilegiosOriginales(privilegios); // actualizamos referencia
             } else {
                 setMensajeExitoso("Error al guardar cambios");

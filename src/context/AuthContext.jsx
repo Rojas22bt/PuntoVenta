@@ -12,6 +12,7 @@ import {
   obtenerOferAdmitaRequest,
   obtenerPermisos,
   obtenerCalificacion,
+  crearBitacoraRequest,
 } from "../api/auth";
 import { useNavigate } from "react-router-dom";
 
@@ -51,6 +52,13 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("access", access);
       localStorage.setItem("refresh", refresh);
       localStorage.setItem("usuario", JSON.stringify(res.data.usuario));
+
+      const data ={
+        usuario_id: Number(res.data.usuario.id),
+        accion: "Inicio de sesion"
+      }
+
+      await crearBitacoraRequest(data)
 
       setUser(res.data.usuario);
     } catch (err) {

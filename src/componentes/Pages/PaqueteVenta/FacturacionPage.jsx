@@ -4,7 +4,6 @@ import StripePayment from '../PagoStripe';
 import { useCart } from '../../../context/CartContext';
 import { useAuth } from '../../../context/AuthContext';
 import { crearFacturacionRequest } from '../../../api/auth';
-import CalificacionesPage from '../CalificacionesPage';
 
 
 function FacturacionPage() {
@@ -15,8 +14,9 @@ function FacturacionPage() {
   const [tipoDocumento, setTipoDocumento] = useState('');
   const [iniciaPuntos, setIniciaPuntos] = useState(false);
   const [totalOriginal, setTotalOriginal] = useState(0);
-  const [puntos, setPuntos] =useState(0);
-  const [pagoExitoso, setPagoExitoso] = useState(false);
+  const [puntos, setPuntos] = useState(0);
+  const [mostrarOpcionComentario, setMostrarOpcionComentario] = useState(false);
+
 
 
   const puedeUsarPuntos = puntos >= 10;
@@ -83,9 +83,9 @@ function FacturacionPage() {
       console.log("📦 Payload a enviar:", payload);
       const res = await crearFacturacionRequest(payload);
       console.log(res.data);
-      setPagoExitoso(true);
+      setMostrarOpcionComentario(true);
       return true;
-   
+
     } catch (error) {
       if (error.response && error.response.status === 400) {
         const mensaje = error.response.data?.[0] || "Error de validación";
@@ -102,7 +102,7 @@ function FacturacionPage() {
     if (puedeUsarPuntos) {
       const nuevoEstado = !iniciaPuntos;
       setIniciaPuntos(nuevoEstado);
-  
+
       if (nuevoEstado) {
         const descuento = totalOriginal - (totalOriginal * (puntos / 100));
         setTotalPagarProduct(descuento);
@@ -111,11 +111,6 @@ function FacturacionPage() {
       }
     }
   };
-  if (pagoExitoso) {
-    return <CalificacionesPage />;
-  }
-  
-
 
 
   return (
@@ -250,6 +245,18 @@ function FacturacionPage() {
             />
           </div>
         </div>
+        {mostrarOpcionComentario && (
+          <div className="comentario-exito mt-2 p-2 border rounded shadow-sm text-center bg-light">
+            <h4 className="text-success">✅ ¡Gracias por tu compra!</h4>
+            <p className="mt-5">¿Te gustaría dejar tu calificación?</p>
+            <a href="/calificacion" className="btn btn-primary mt-5">
+              Dejar Calificación
+            </a>
+            <a href="/dasboard/perfil-usuario" className="btn btn-danger mt-5">
+              En otro Momento
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );

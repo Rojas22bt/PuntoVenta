@@ -1,0 +1,33 @@
+.rating-container {
+    text-align: center;
+    padding: 30px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    font-family: sans-serif;
+  }
+  
+  .stars {
+    margin: 15px 0;
+  }
+  
+  .star {
+    font-size: 40px;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  
+  .star:hover,
+  .star.selected {
+    color: gold;
+  }
+  
+  .thanks-message {
+    margin-top: 15px;
+    color: green;
+    font-weight: bold;
+  }
+  

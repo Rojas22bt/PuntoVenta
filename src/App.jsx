@@ -24,6 +24,7 @@ import CatalogoPage from "./componentes/Pages/CatalogoPage";
 import { CartProvider } from "./context/CartContext";
 import CartList from "./componentes/Pages/PaqueteVenta/CarritoPage";
 import AddProductForm from "./componentes/Pages/PaqueteVenta/PruebaPage";
+import CalificacionesPage from "./componentes/Pages/CalificacionesPage";
 
 function App() {
 
@@ -65,6 +66,7 @@ function Main() {
         <Route path="/dasboard/*" element={<Homed />} />
         <Route path="/carrito" element={<CartList />} />
         <Route path="/prueba" element={<AddProductForm />} />
+        <Route path="/calificacion" element={<CalificacionesPage />} />
 
       </Routes>
     </>

@@ -4,6 +4,8 @@ import StripePayment from '../PagoStripe';
 import { useCart } from '../../../context/CartContext';
 import { useAuth } from '../../../context/AuthContext';
 import { crearFacturacionRequest } from '../../../api/auth';
+import CalificacionesPage from '../CalificacionesPage';
+
 
 function FacturacionPage() {
   const { cartItems, cartTotal } = useCart();
@@ -14,7 +16,8 @@ function FacturacionPage() {
   const [iniciaPuntos, setIniciaPuntos] = useState(false);
   const [totalOriginal, setTotalOriginal] = useState(0);
   const [puntos, setPuntos] =useState(0);
-  
+  const [pagoExitoso, setPagoExitoso] = useState(false);
+
 
   const puedeUsarPuntos = puntos >= 10;
 
@@ -80,7 +83,9 @@ function FacturacionPage() {
       console.log("📦 Payload a enviar:", payload);
       const res = await crearFacturacionRequest(payload);
       console.log(res.data);
+      setPagoExitoso(true);
       return true;
+   
     } catch (error) {
       if (error.response && error.response.status === 400) {
         const mensaje = error.response.data?.[0] || "Error de validación";
@@ -106,9 +111,11 @@ function FacturacionPage() {
       }
     }
   };
+  if (pagoExitoso) {
+    return <CalificacionesPage />;
+  }
+  
 
-  
-  
 
 
   return (

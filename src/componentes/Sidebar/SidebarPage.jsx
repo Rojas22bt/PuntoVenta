@@ -16,7 +16,7 @@ export const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
 
 
-  const { logout, handleLogout} = useAuth(); // Usa el método logout
+  const { logout, handleLogout } = useAuth(); // Usa el método logout
   const navigate = useNavigate(); // Hook para redirección
 
   // Estado para manejar dropdowns
@@ -63,7 +63,10 @@ export const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
         className="link-container"
         onClick={() => setIsPaquete1Open(!isPaquete1Open)}
       >
-        <h3 className="dropdown-label">Usuario</h3>
+        <h3 className="dropdown-label">
+          {sidebarOpen ? "Usuario" : "U"}
+        </h3>
+
       </div>
       {isPaquete1Open &&
         enlaceUsuario.map(({ label, icon, to }) => (
@@ -85,7 +88,9 @@ export const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
         className="link-container"
         onClick={() => setIsPaquete2Open(!isPaquete2Open)}
       >
-        <h3 className="dropdown-label">Inventario</h3>
+        <h3 className="dropdown-label">
+          {sidebarOpen ? "Inventario" : "I"}
+        </h3>
       </div>
       {isPaquete2Open &&
         enlaceInventario.map(({ label, icon, to }) => (
@@ -104,7 +109,9 @@ export const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
       {/* Paquete 3 - Ventas (vacío por ahora) */}
       <div className="link-container" onClick={() => setIsPaquete40pen(!isPaquete40pen)}>
-        <h3 className="dropdown-label">Venta</h3>
+        <h3 className="dropdown-label">
+          {sidebarOpen ? "Venta" : "V"}
+        </h3>
       </div>
       {
         isPaquete40pen &&
@@ -187,7 +194,7 @@ const enlaceInventario = [
 
 ];
 
-const enlaceVenta =[
+const enlaceVenta = [
   {
     label: "Comprobantes",
     icon: <MdOutlineAnalytics />,

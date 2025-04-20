@@ -169,7 +169,6 @@ function CategoriaProductPage() {
                 id="categoriaInput"
                 value={nombreCategoria}
                 onChange={(e) => setNombreCategoria(e.target.value)}
-                placeholder="Ej: Bebidas, Muebles..."
                 required
               />
             </div>
@@ -226,7 +225,6 @@ function CategoriaProductPage() {
                 id="almacenInput"
                 value={nombreAlmacen}
                 onChange={(e) => setNombreAlmacen(e.target.value)}
-                placeholder="Ej: Central, Secundario..."
                 required
               />
             </div>
@@ -283,7 +281,6 @@ function CategoriaProductPage() {
                 id="marcaInput"
                 value={nombreMarca}
                 onChange={(e) => setNombreMarca(e.target.value)}
-                placeholder="Ej: Coca-Cola, LG..."
                 required
               />
             </div>

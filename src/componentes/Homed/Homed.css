@@ -1,6 +1,6 @@
 :root {
     --sidebar-collapsed-width: 100px;
-    --sidebar-expanded-width: 260px;
+    --sidebar-expanded-width: 210px;
     --transition-speed: 0.3s;
     --primary-color: #1d2430;
     --accent-color: #0d9488;
@@ -28,7 +28,7 @@
     display: grid;
     grid-template-columns: var(--sidebar-collapsed-width) auto;
     transition: grid-template-columns var(--transition-speed);
-    min-height: 100vh;
+    min-height: 10vh;
   }
   
   .containe12.active12 {
@@ -79,7 +79,8 @@
   }
   
   .dropdown-label {
-    font-size: 14px;
+    font-size: 15px;
+    text-align: center;
     font-weight: 500;
     margin: 0.5rem 0;
     color: #000000;

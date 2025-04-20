@@ -210,4 +210,12 @@ export const crearFacturacionRequest = data => instance.post('/venta/factura', d
     withCredentials: true
 })
 
+export const crearBitacoraRequest = data => instance.post('/usuario/crear-bitacora', data,{
+    headers:{
+        "Content-Type": "application/json"
+    },
+    withCredentials: true
+})
+
+
 

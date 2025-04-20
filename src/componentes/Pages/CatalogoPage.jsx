@@ -175,6 +175,7 @@ function CatalogoPage() {
             {renderProductosPorCategoria(1, "Celulares")}
             {renderProductosPorCategoria(2, "Computadoras")}
             {renderProductosPorCategoria(3, "Accesorios")}
+            {renderProductosPorCategoria(4, "Dispositivos")}
           </>
         )}
       </div>

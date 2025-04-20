@@ -31,11 +31,8 @@ const CustomNavbar = () => {
               Inicio
             </Nav.Link>
             )}
-            <Nav.Link as={Link} to="/catalogo-productos">
-              Comentarios
-            </Nav.Link>
-            <Nav.Link as={Link} to="/catalogo-productos">
-              Nuestra Calificacion
+            <Nav.Link as={Link} to="/">
+              Sobre Nosotros
             </Nav.Link>
 
             {/* Dropdown de categorías */}

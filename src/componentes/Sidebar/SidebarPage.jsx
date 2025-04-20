@@ -196,18 +196,8 @@ const enlaceInventario = [
 
 const enlaceVenta = [
   {
-    label: "Comprobantes",
-    icon: <MdOutlineAnalytics />,
-    to: "/dasboard/comprobante",
-  },
-  {
     label: "Comentarios",
     icon: <MdOutlineAnalytics />,
     to: "/dasboard/comentarios",
-  },
-  {
-    label: "Calificaciones",
-    icon: <MdOutlineAnalytics />,
-    to: "/dasboard/calificaciones",
   }
 ]

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import  {Sidebar} from "../Sidebar/SidebarPage.jsx";
+import React, { useState, useEffect} from "react";
+import { Sidebar } from "../Sidebar/SidebarPage.jsx";
 import { Routes, Route, Navigate, Outlet } from "react-router-dom";
-import   {HomeDas}  from "../Home/Homedas";
+import { HomeDas } from "../Home/Homedas";
 import { useAuth } from "../../context/AuthContext.jsx";
+import ProtectedRoute from "../../protected/ProtectedRoute.jsx";
 
 //--------------------Usuarios-------------//
 import BitacoraPage from "../Pages/PaqueteUsuario/BitacoraPage.jsx";
@@ -20,14 +21,26 @@ import OfertasPage from "../Pages/PaqueteInventario/OfertasPage.jsx";
 
 //-------------------Venta-----------------//
 import ComentarioPage from "../Pages/PaqueteVenta/ComentarioPage.jsx";
+import SinAcceso from "../Pages/SinAcceso.jsx";
 
 import "./Homed.css"
 
 export const Homed = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const { user } = useAuth();
+  const [esperandoAuth, setEsperandoAuth] = useState(true);
 
-  // if (!user) return <Navigate to="/login" replace />;
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setEsperandoAuth(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!user && !esperandoAuth) {
+    return <Navigate to="/login" replace />;
+  }
 
   return (
     <div className={`containe12 ${sidebarOpen ? "active12" : ""}`}>
@@ -35,17 +48,82 @@ export const Homed = () => {
       <div className="content-container">
         <Routes>
           <Route path="/homeda" element={<HomeDas />} />
-          <Route path="/bitacora" element={<BitacoraPage />} />
-          <Route path="/usuarios" element={<UsuarioPage />} />
+          <Route
+            path="/bitacora"
+            element={
+              <ProtectedRoute permisoRequerido="ver ventana bitácora">
+                <BitacoraPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/usuarios"
+            element={
+              <ProtectedRoute permisoRequerido="ver ventana usuarios">
+                <UsuarioPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/privilegio"
+            element={
+              <ProtectedRoute permisoRequerido="ver ventana permisos">
+                <PrivilegioPage  />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/historialcliente"
+            element={
+              <ProtectedRoute permisoRequerido="ver ventana historial de cliente">
+                <HistorialClientePage  />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/producto"
+            element={
+              <ProtectedRoute permisoRequerido="ver ventana productos">
+                <ProductoPage  />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/mercaderia"
+            element={
+              <ProtectedRoute permisoRequerido="ver ventana mercadería">
+                <MercaderiaPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/caracteristicas-productos"
+            element={
+              <ProtectedRoute permisoRequerido="ver ventana características">
+                <CategoriaProductPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/oferta"
+            element={
+              <ProtectedRoute permisoRequerido="ver ventana ofertas">
+                <OfertasPage  />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="/register" element={<RegisterClientPage />} />
-          <Route path="/privilegio" element={<PrivilegioPage/>} />
-          <Route path="/historialcliente" element={<HistorialClientePage />} />
-          <Route path="/producto" element={<ProductoPage />} />
-          <Route path="/mercaderia" element={<MercaderiaPage />} />
-          <Route path="/caracteristicas-productos" element={<CategoriaProductPage />} />
-          <Route path="/oferta" element={<OfertasPage />} />
           <Route path="/comentarios" element={<ComentarioPage />} />
-          <Route path="/perfil-usuario" element={<PerfilUsuarioPage/>} />
+          <Route path="/perfil-usuario" element={<PerfilUsuarioPage />} />
+          <Route path="/sin-acceso" element={<SinAcceso />} />
         </Routes>
         <Outlet />
       </div>

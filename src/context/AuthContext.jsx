@@ -9,7 +9,8 @@ import {
   obtenerProductoRequest,
   obtenerProductoAdmiRequest,
   obtenerOfertaRequest,
-  obtenerOferAdmitaRequest
+  obtenerOferAdmitaRequest,
+  obtenerPermisos
 } from "../api/auth";
 import { useNavigate } from "react-router-dom";
 
@@ -38,6 +39,7 @@ export const AuthProvider = ({ children }) => {
   const [ofertas, setOfertas] = useState([]);
   const [ofertasAdmi, setOfertasAdmi] = useState([]);
   const [productosAdmi, setProductosAdmi] = useState([]);
+  const [permisos, setPermisos] = useState([]);
 
   const signin = async (credentials) => {
     try {
@@ -64,11 +66,12 @@ export const AuthProvider = ({ children }) => {
     try {
       const uss = await obtenerUsuariosRequest();
       const ross = await obtenerRolesRequest();
-      const [resCategorias, resMarcas, resAlmacenes,resOferta] = await Promise.all([
+      const [resCategorias, resMarcas, resAlmacenes,resOferta,resPermiso] = await Promise.all([
         obtenerCategoriaRequest(),
         obtenerMarcaRequest(),
         obtenerAlmacenRequest(),
         obtenerOfertaRequest(),
+        obtenerPermisos(),
       ]);
 
       setUsuarios(uss.data);
@@ -76,8 +79,8 @@ export const AuthProvider = ({ children }) => {
       setCategorias(resCategorias.data);
       setMarcas(resMarcas.data);
       setAlmacenes(resAlmacenes.data);
-      console.log(resOferta.data)
-      setOfertas(resOferta.data)
+      setOfertas(resOferta.data);
+      setPermisos(resPermiso.data);
     } catch (err) {
       console.error("Error al cargar datos:", err);
     }
@@ -161,6 +164,7 @@ export const AuthProvider = ({ children }) => {
         almacenes,
         categorias,
         productos,
+        permisos,
       }}
     >
       {children}

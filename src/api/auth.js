@@ -176,6 +176,20 @@ export const obtenerHistotialCliente = data => instance.post('/venta/obtener-com
     },
     withCredentials: true
 })
+
+export const actualizarPermisosRequest = data => instance.post('/usuario/actualizar-permiso',data,{
+    headers:{
+        "Content-Type": "application/json"
+    },
+    withCredentials: true
+})
+
+export const obtenerPermisos = () => {
+    return instance.get('/usuario/permisos',{
+        withCredentials: true,
+        timeout: tiempoEspera
+    })
+}
 ///------------venta--------/*
 export const crearFacturacionRequest = data => instance.post('/venta/factura', data,{
     headers:{
@@ -183,3 +197,5 @@ export const crearFacturacionRequest = data => instance.post('/venta/factura', d
     },
     withCredentials: true
 })
+
+

@@ -1,48 +1,94 @@
 import React, { useState, useEffect } from 'react';
-import '../../Css/PrivilegioPage.css'
+import '../../Css/PrivilegioPage.css';
+import { useAuth } from '../../../context/AuthContext';
+import { actualizarPermisosRequest } from '../../../api/auth';
 
 function PrivilegioPage() {
+    const { roles, permisos } = useAuth();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [privilegios, setPrivilegios] = useState([]);
-    const [rolSeleccionado, setRolSeleccionado] = useState("administrador");
-    const [mensajeExitoso, setMensajeExitoso] = useState("");
+    const [rolSeleccionado, setRolSeleccionado] = useState('');
+    const [mensajeExitoso, setMensajeExitoso] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [privilegiosOriginales, setPrivilegiosOriginales] = useState([]);
+
 
     useEffect(() => {
-        const permisosSimulados = {
-            administrador: [
-                { id: 1, Descripcion: 'Acceso total', Estado: true },
-                { id: 2, Descripcion: 'Gestión de usuarios', Estado: true },
-                { id: 3, Descripcion: 'Configuración del sistema', Estado: true },
-            ],
-            empleado: [
-                { id: 4, Descripcion: 'Acceso limitado', Estado: false },
-                { id: 5, Descripcion: 'Ver reportes', Estado: true },
-                { id: 6, Descripcion: 'Modificar perfil', Estado: true },
-            ],
-            cliente: [
-                { id: 7, Descripcion: 'Acceso básico', Estado: true },
-                { id: 8, Descripcion: 'Ver productos', Estado: true },
-                { id: 9, Descripcion: 'Realizar pedidos', Estado: false },
-            ],
-        };
-        setPrivilegios(permisosSimulados[rolSeleccionado] || []);
-    }, [rolSeleccionado]);
+        if (permisos && rolSeleccionado) {
+            setLoading(true);
+            const timer = setTimeout(() => {
+                const filtrados = permisos.filter(p => p.rol === parseInt(rolSeleccionado));
+                setPrivilegios(filtrados);
+                setPrivilegiosOriginales(filtrados); // guardamos copia original
+                setLoading(false);
+            }, 300);
+            return () => clearTimeout(timer);
+        }
+    }, [rolSeleccionado, permisos]);
+
+
+
+    useEffect(() => {
+        if (!rolSeleccionado && roles.length > 0) {
+            setRolSeleccionado(roles[0].id.toString()); // o directamente roles[0].id si no haces parseInt luego
+        }
+    }, [roles]);
+
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
     const manejarCambio = (id) => {
-        setPrivilegios((prevState) =>
-            prevState.map((privilegio) =>
-                privilegio.id === id ? { ...privilegio, Estado: !privilegio.Estado } : privilegio
+        setPrivilegios(prev =>
+            prev.map(priv =>
+                priv.id === id ? { ...priv, estado: !priv.estado } : priv
             )
         );
     };
 
     const manejarCambioRol = (event) => {
         setRolSeleccionado(event.target.value);
+        setIsMenuOpen(false);
+        setMensajeExitoso('');
     };
+
+    const guardarCambios = async () => {
+        const cambios = privilegios.filter((p) => {
+            const original = privilegiosOriginales.find(o => o.id === p.id);
+            return original && original.estado !== p.estado;
+        });
+    
+        if (cambios.length === 0) {
+            setMensajeExitoso("No hay cambios para guardar.");
+            return;
+        }
+    
+        const payload = {
+            rolActualizo: parseInt(rolSeleccionado),
+            permisos: cambios.map(p => ({
+                id: p.id,
+                estado: p.estado
+            }))
+        };
+    
+
+        console.log(payload)
+        try {
+            const res = await actualizarPermisosRequest(payload);
+            console.log(res.data)
+            if (res.data.mensaje) {
+                alert(res.data.mensaje)
+                setPrivilegiosOriginales(privilegios); // actualizamos referencia
+            } else {
+                setMensajeExitoso("Error al guardar cambios");
+            }
+        } catch (error) {
+            console.error("Error al enviar al backend:", error);
+            setMensajeExitoso("Error de conexión");
+        }
+    };
+    
 
     return (
         <div className='principalPrivilegio'>
@@ -50,39 +96,57 @@ function PrivilegioPage() {
             <div className='contenedorPrivilegios'>
                 <div className='contenedorRol'>
                     <h2>Seleccionar Rol</h2>
-                    <select name="rol" id='soyRol' value={rolSeleccionado} onChange={manejarCambioRol}>
-                        <option value="administrador">Administrador</option>
-                        <option value="empleado">Empleado</option>
-                        <option value="cliente">Cliente</option>
+                    <select
+                        name="rol"
+                        className="form-control"
+                        value={rolSeleccionado}
+                        onChange={manejarCambioRol}
+                        required
+                    >
+                        <option value="">Seleccione rol</option>
+                        {roles.map((rol) => (
+                            <option key={rol.id} value={rol.id}>
+                                {rol.nombre}
+                            </option>
+                        ))}
                     </select>
                 </div>
-                <div className='contenedorPrivilegios'>
-                    <button onClick={toggleMenu} className="toggle-menu">
-                        Privilegios {isMenuOpen ? "▲" : "▼"}
-                    </button>
-                    {isMenuOpen && (
-                        <div className="submenu">
-                            <ul className="privileges-list">
-                                {privilegios.map((privilegio) => (
-                                    <li key={privilegio.id} className="privilege-item">
-                                        <span className="privilege-name">{privilegio.Descripcion}</span>
-                                        <button
-                                            onClick={() => manejarCambio(privilegio.id)}
-                                            className={`privilege-button ${privilegio.Estado ? 'active' : 'inactive'}`}
-                                        >
-                                            {privilegio.Estado ? 'OK' : 'NO'}
+
+                {rolSeleccionado && (
+                    <div className='contenedorPrivilegios'>
+                        <button onClick={toggleMenu} className="toggle-menu">
+                            Privilegios {isMenuOpen ? "▲" : "▼"}
+                        </button>
+                        {isMenuOpen && (
+                            <div className="submenu">
+                                {loading ? (
+                                    <p className="mensaje-cargando">Cargando privilegios...</p>
+                                ) : (
+                                    <>
+                                        <ul className="privileges-list">
+                                            {privilegios.map((privilegio) => (
+                                                <li key={privilegio.id} className="privilege-item">
+                                                    <span className="privilege-name">{privilegio.privilegio_nombre}</span>
+                                                    <button
+                                                        onClick={() => manejarCambio(privilegio.id)}
+                                                        className={`privilege-button ${privilegio.estado ? 'active' : 'inactive'}`}
+                                                    >
+                                                        {privilegio.estado ? 'OK' : 'NO'}
+                                                    </button>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                        <button onClick={guardarCambios} className="save-changes">
+                                            Guardar Cambios
                                         </button>
-                                    </li>
-                                ))}
-                            </ul>
-                            <button onClick={() => setMensajeExitoso("Cambios guardados exitosamente")} className="save-changes">
-                                Guardar Cambios
-                            </button>
-                        </div>
-                    )}
-                </div>
+                                    </>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
-            {/* Mostrar el mensaje de éxito si existe */}
+
             {mensajeExitoso && (
                 <div className="mensaje-exito">
                     {mensajeExitoso}

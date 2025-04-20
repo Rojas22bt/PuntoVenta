@@ -184,8 +184,20 @@ export const actualizarPermisosRequest = data => instance.post('/usuario/actuali
     withCredentials: true
 })
 
+export const crearCalificacionRequest = data => instance.post('/usuario/calificacion',data,{
+    headers:{
+        "Content-Type": "application/json"
+    },
+    withCredentials: true
+})
 export const obtenerPermisos = () => {
     return instance.get('/usuario/permisos',{
+        withCredentials: true,
+        timeout: tiempoEspera
+    })
+}
+export const obtenerCalificacion = () => {
+    return instance.get('/usuario/obtener-calificacion',{
         withCredentials: true,
         timeout: tiempoEspera
     })

@@ -44,3 +44,19 @@
     margin: 1rem 0 0.5rem 0;
   }
   
+  .estrella {
+    font-size: 44px;
+    color: gold;
+    margin-right: 3px;
+  }
+  
+  .estrella.vacia {
+    color: #ccc;
+  }
+  
+  .calificacion-estrellas {
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+  }
+  

@@ -1,136 +1,46 @@
-.home_fondo {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: #1a1a1a;
-    background-image: radial-gradient(ellipse 80% 80% at 50% -20%, rgba(120, 119, 198, 0.3), rgba(255, 255, 255, 0));
-}
-
-.home_fondoG {
-    flex: 1;
-    box-sizing: border-box;
-}
-
-.home_titulo {
+.titleSobreNosotros{
     font-size: 2.5rem;
-    color: white;
-    margin: 10px 0;
-}
-
-.home_titulo2 {
-    font-size: 1rem;
-    color: white;
-    margin: 0;
+    color: #1f2937;
     text-align: center;
-}
-
-.home-image-container {
+    margin: 2rem 0 1rem 0;
+  }
+.zona-personal {
     display: flex;
+    flex-direction: row;         /* Cambiado de column a row */
     justify-content: center;
-    flex-wrap: wrap; /* Permite que las imágenes se envuelvan */
-    margin-top: 10px;
-}
-
-.image-wrapper {
+    gap: 2rem;
+    padding: 2.5rem 1rem;
+    min-height: 50vh;
+    flex-wrap: wrap;             /* Para que se acomode en pantallas pequeñas */
+  }
+  
+  .tarjeta-personal {
+    width: 100%;
+    max-width: 22rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
     text-align: center;
-    flex: 1 1 30%; /* Permite que las imágenes ocupen un 30% del ancho del contenedor */
-    max-width: 200px; /* Limita el ancho máximo de cada imagen */
-    margin: 10px; /* Espaciado entre imágenes */
-}
-
-.imageComCel {
-    width: 100%; /* Asegura que la imagen ocupe el 100% del ancho del contenedor */
-    height: auto; /* Mantiene la proporción de la imagen */
-}
-
-.image-name {
-    color: white;
-    margin-top: 5px;
-}
-
-.section {
-    width: 90%;
-    margin: 10px auto; /* Centra el contenido */
-    display: flex;
-    flex-direction: column; /* Cambia a columna para mejor visualización en móviles */
-    align-items: center; /* Centra el contenido */
-}
-
-.section-title {
-    font-size: 1.5rem;
-    color: white;
-    margin-bottom: 10px;
-}
-
-.footer {
-    background-color: #1a1a1a;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-}
-
-.search-container {
+    overflow: hidden; /* para que los bordes redondeados afecten a la imagen también */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    background-color: rgba(48, 105, 96, 0.1);
+    justify-content: start;
+  }
+  
+  .imagen-personal {
     width: 100%;
-    padding: 10px;
-}
-
-.search-container h1 {
-    text-align: center;
-}
-
-.search-input {
-    padding: 8px;
-    width: 60%; 
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    text-align: center;
-    color: rgba(255, 0, 0, 0.5); 
-}
-
-#indicador {
-    width: auto;
-}
-
-
-@media (max-width: 768px) {
-    .home_titulo {
-        font-size: 2rem; 
-    }
-
-    .section-title {
-        font-size: 1.2rem; 
-    }
-
-    .image-wrapper {
-        flex: 1 1 45%; 
-        max-width: 150px; 
-    }
-
-    .search-input {
-        width: 80%; 
-    }
-}
-
-@media (max-width: 480px) {
-    .home_titulo {
-        font-size: 1.5rem; 
-    }
-
-    .section-title {
-        font-size: 20px;
-        text-align: center;
-    }
-
-    .image-wrapper {
-        flex: 1 1 100%; /* Las imágenes ocupan el 100% del ancho en pantallas muy pequeñas */
-        max-width: 100%; 
-    }
-
-    .search-input {
-        width: 90%; 
-    }
-}
+    max-height: 16rem;
+    object-fit: contain;
+    margin: 0;            /* Quitamos el margen */
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+    display: block;
+  }
+  
+  .nombre-personal {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 1rem 0 0.5rem 0;
+  }
+  

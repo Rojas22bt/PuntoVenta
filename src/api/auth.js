@@ -190,8 +190,20 @@ export const crearCalificacionRequest = data => instance.post('/usuario/califica
     },
     withCredentials: true
 })
+export const crearComentarioRequest = data => instance.post('/usuario/comentario',data,{
+    headers:{
+        "Content-Type": "application/json"
+    },
+    withCredentials: true
+})
 export const obtenerPermisos = () => {
     return instance.get('/usuario/permisos',{
+        withCredentials: true,
+        timeout: tiempoEspera
+    })
+}
+export const obtenerComentario = () => {
+    return instance.get('/usuario/obtener-comentario',{
         withCredentials: true,
         timeout: tiempoEspera
     })

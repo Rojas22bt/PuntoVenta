@@ -59,4 +59,15 @@
     display: flex;
     justify-content: center;
   }
+  .comentario-usuario {
+    margin-top: 1rem;
+    padding: 1rem;
+     border-radius: 12px;
+  }
+  
+  .comentario {
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #28b9fc;
+  }
   
